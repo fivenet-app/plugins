@@ -203,3 +203,14 @@ RegisterNUICallback('setWaypointPLZ', function(data, cb)
 
 	cb(true)
 end)
+
+-- Written by mcnuggets
+function loadAnimDict(dict)
+    if not HasAnimDictLoaded(dict) then
+		RequestAnimDict(dict)
+
+		while not HasAnimDictLoaded(dict) do
+			Wait(10)
+		end
+	end
+end
