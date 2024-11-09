@@ -28,9 +28,15 @@ local function timeclockTrack(job --[[string]], identifier --[[string]], clockOn
 		end)
 	else
 		MySQL.update([[
-			UPDATE `fivenet_jobs_timeclock` fjt INNER JOIN `users` u ON (u.`id` = fjt.`user_id`)
-			SET fjt.`end_time` = CURRENT_TIMESTAMP
-			WHERE u.`identifier` = ? AND fjt.`user_id` = u.`id` AND fjt.`start_time` IS NOT NULL AND fjt.`end_time` IS NULL
+			UPDATE `fivenet_jobs_timeclock` fjt
+				INNER JOIN `users` u ON (u.`id` = fjt.`user_id`)
+			SET
+				fjt.`spent_time` = `fjt`.`spent_time` + CAST((TIMESTAMPDIFF(SECOND, `fjt`.`start_time`, CURRENT_TIMESTAMP) / 3600) AS DECIMAL(10, 2)),
+				fjt.`start_time` = NULL
+			WHERE
+				u.`identifier` = ?
+				AND fjt.`user_id` = u.`id`
+				AND fjt.`start_time` IS NOT NULL;
 			]],
 			{ identifier })
 	end
