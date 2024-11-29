@@ -5,9 +5,10 @@ local function timeclockTrack(job --[[string]], identifier --[[string]], clockOn
 	if clockOn then
 		-- Run select query to see if a timeclock entry needs to be created or updated
 		MySQL.query([[
-			SELECT u.`id` AS `userId`, fjt.`start_time` AS `startTime`
+			SELECT fjt.`user_id`, fjt.`date`, fjt.`start_time`
 			FROM `fivenet_jobs_timeclock` fjt INNER JOIN `users` u ON (u.`id` = fjt.`user_id`)
 			WHERE u.`identifier` = ? AND fjt.`user_id` = u.`id`
+			ORDER BY fjt.`date`
 			LIMIT 1
 			]],
 			{ identifier },
@@ -21,10 +22,10 @@ local function timeclockTrack(job --[[string]], identifier --[[string]], clockOn
 				MySQL.update([[
 					INSERT INTO `fivenet_jobs_timeclock`
 					(`job`, `user_id`, `date`)
-					VALUES(?, ?, CURRENT_TIMESTAMP)
+					VALUES(?, (SELECT `id` FROM `users` WHERE `identifier` = ? LIMIT 1), CURRENT_DATE)
 					ON DUPLICATE KEY UPDATE `start_time` = VALUES(`start_time`)
 					]],
-					{ job, result.userId })
+					{ job, identifier })
 		end)
 	else
 		MySQL.update([[
