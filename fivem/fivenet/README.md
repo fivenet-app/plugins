@@ -3,10 +3,38 @@
 This is a very basic FiveM plugin for FiveNet.
 It enables the use of the tablet in-game, tracks user locations, and certain events if setup correctly.
 
+Please note that a bunch of custom events are necessary to be added to ESX plugin code for FiveNet to reach its full potential.
+
 ## Requirements
 
-Coming soon
+* FiveM Server version `10488` and higher.
+* Running FiveNet instance (server, worker)
+  * Depending on if FiveNet uses the gameserver's database, might need FiveNet's DBSync credentials.
+
+## Configuration
+
+* `Config.WebURL` - Needs to be your FiveNet's instance URL, the default one `"https://fivenet.app"` is pointing to FiveNet's documentation page.
 
 ## Event List
 
-Coming soon
+FiveM base events such as `onResourceStart`, etc. are not listed.
+
+| Name                            | Type     | Description                                                                               | File                                                                                                       |
+| ------------------------------- | -------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `esx:playerLoaded`              | Base ESX | Player/Character loaded                                                                                          | [`server/events.lua`](server/events.lua)                                                                   |
+| `esx:playerDropped`             | Base ESX | Player/Character dropped/quit server                                                                                          | [`server/tracking.lua`](server/tracking.lua), [`server/events/timeclock.lua`](server/events/timeclock.lua) |
+| `esx_multichar:onCharTransfer`  | Custom   | Custom event added after a char has been transfered.                                      | [`server/events.lua`](server/events.lua)                                                                   |
+| `esx:setJob`                    | Base ESX | Event should be already triggered by ESX accordingly when a char is selected/logged into. | [`server/events/timeclock.lua`](server/events/timeclock.lua)                                               |
+| `esx_billing:sentBill`          | Custom   | Custom event sent after a bill has been sent to an user.                                                                                          | [`server/events/billing.lua`](server/events/billing.lua)                                                   |
+| `esx_billing:removedBill`       | Custom   |                                                                                          | [`server/events/billing.lua`](server/events/billing.lua)                                                   |
+| `esx_billing:paidBill`          | Custom   |                                                                                           | [`server/events/billing.lua`](server/events/billing.lua)                                                   |
+| `esx_license:addLicense`        | Custom   |                                                                                           | [`server/events/licenses.lua`](server/events/licenses.lua)                                                 |
+| `esx_license:removeLicense`     | Custom   |                                                                                           | [`server/events/licenses.lua`](server/events/licenses.lua)                                                 |
+| `esx_prison:jailPlayer`         | Custom   |                                                                                           | [`server/events/police.lua`](server/events/police.lua)                                                     |
+| `esx_prison:unjailedByPlayer`   | Custom   |                                                                                           | [`server/events/police.lua`](server/events/police.lua)                                                     |
+| `esx_prison:escapePoliceNotify` | Custom   |                                                                                           | [`server/events/police.lua`](server/events/police.lua)                                                     |
+| `esx_policeJob:panicButton`     | Custom   |                                                                                           | [`server/events/police.lua`](server/events/police.lua)                                                     |
+| `esx_society:fired`             | Custom   |                                                                                           | [`server/events/society.lua`](server/events/society.lua)                                                   |
+| `esx_society:gradeChanged`      | Custom   |                                                                                           | [`server/events/society.lua`](server/events/society.lua)                                                   |
+| `esx_society:hired`             | Custom   |                                                                                           | [`server/events/society.lua`](server/events/society.lua)                                                   |
+

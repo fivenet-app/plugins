@@ -3,28 +3,35 @@ Config = {}
 -- Your FiveNet URL without a trailing slash
 Config.WebURL = "https://fivenet.app"
 
-Config.EnableTracking = true -- Enable the tracking of players
-Config.TrackingJobs = {  -- Those jobs will be tracked
+-- Enable the tracking of players
+Config.EnableTracking = true
+-- Theses jobs will be tracked
+Config.TrackingJobs = {
 	["ambulance"] = true,
 	["doj"] = true,
 	["police"] = true,
 }
-Config.TrackingItem = "radio" -- Players without this item will be updated as 'hidden', set false otherwise
-Config.TrackingInterval = 3000 -- Interval in ms until positions will be updated
+-- Players without this item will be updated as 'hidden', set false (without quotes) otherwise
+Config.TrackingItem = "radio"
+-- Interval in ms until positions will be updated
+Config.TrackingInterval = 3000
 
-Config.TimeclockJobs = { -- These jobs will be timeclocked tracked
+-- These jobs will be timeclocked tracked
+Config.TimeclockJobs = {
 	["ambulance"] = true,
 	["doj"] = true,
     ["police"] = true,
-    -- Can also be other jobs that are onDuty enabled
+    -- Can also be other jobs that are ESX `onDuty` enabled
 }
 
 Config.Events = {}
-Config.Events.BillingJobs = { -- Jobs bills that will cause an user activity to be created for the billing cycle events
+-- Jobs bills that will cause an user activity to be created for the billing cycle events
+Config.Events.BillingJobs = {
 	["doj"] = true,
 	["police"] = true,
 }
 
+-- Name of the Discord OAuth2 provider from the FiveNet server config
 Config.DiscordOAuth2Provider = "discord"
 
 Config.Dispatches = {}
@@ -33,6 +40,7 @@ Config.Dispatches.CivilProtectionJobs = {
 }
 
 Config.UserProps = {}
+-- Which blood types to set for users if it isn't set yet (on join)
 Config.UserProps.BloodTypes = {
 	"A+", "A-",
     "B+", "B-",
