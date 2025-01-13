@@ -1,4 +1,4 @@
--- FiveNet Account - Social Login
+-- FiveNet Account - Social Login connection
 function addOrSetDiscordIdentifier(license --[[string]], externalId --[[string]], username --[[string]])
 	-- Check if user has a FiveNet account
 	MySQL.query('SELECT `id` FROM `fivenet_accounts` WHERE `license` = ? LIMIT 1', { getLicenseFromIdentifier(license) },
@@ -10,10 +10,10 @@ function addOrSetDiscordIdentifier(license --[[string]], externalId --[[string]]
 			MySQL.update([[
 				INSERT INTO `fivenet_oauth2_accounts`
 				(`account_id`, `provider`, `external_id`, `username`, `avatar`)
-				VALUES(?, ?, ? , ?, 'https://cdn.discordapp.com/embed/avatars/0.png')
-				ON DUPLICATE KEY UPDATE `external_id` = VALUES(`external_id`)
+				VALUES(?, ?, ?, ?, 'https://cdn.discordapp.com/embed/avatars/0.png')
+				ON DUPLICATE KEY UPDATE `external_id` = VALUES(`external_id`), `username` = VALUES(`username`)
 				]],
-				{ result.id, Config.DiscordOAuth2Provider, getLicenseFromIdentifier(externalId), username })
+				{ result.id, Config.Discord.OAuth2Provider, getLicenseFromIdentifier(externalId), username })
 	end)
 end
 

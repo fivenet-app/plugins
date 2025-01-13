@@ -1,20 +1,21 @@
 Config = {}
 
 -- Your FiveNet URL without a trailing slash
-Config.WebURL = "https://fivenet.app"
+Config.WebURL = "https://demo.fivenet.app"
 
+Config.Tracking = {}
 -- Enable the tracking of players
-Config.EnableTracking = true
+Config.Tracking.Enable = true
 -- Theses jobs will be tracked
-Config.TrackingJobs = {
+Config.Tracking.Jobs = {
 	["ambulance"] = true,
 	["doj"] = true,
 	["police"] = true,
 }
 -- Players without this item will be updated as 'hidden', set false (without quotes) otherwise
-Config.TrackingItem = "radio"
+Config.Tracking.Item = "radio"
 -- Interval in ms until positions will be updated
-Config.TrackingInterval = 3000
+Config.Tracking.Interval = 3000
 
 -- These jobs will be timeclocked tracked
 Config.TimeclockJobs = {
@@ -31,8 +32,11 @@ Config.Events.BillingJobs = {
 	["police"] = true,
 }
 
+Config.Discord = {}
+-- Automatically create discord OAuth2 connections when a player joining has a discord id
+Config.Discord.ConnectOnJoin = true
 -- Name of the Discord OAuth2 provider from the FiveNet server config
-Config.DiscordOAuth2Provider = "discord"
+Config.Discord.OAuth2Provider = "discord"
 
 Config.Dispatches = {}
 Config.Dispatches.CivilProtectionJobs = {
@@ -40,6 +44,8 @@ Config.Dispatches.CivilProtectionJobs = {
 }
 
 Config.UserProps = {}
+-- If enabled will set the blood type for an user on "join/loaded" event
+Config.UserProps.SetBloodType = true
 -- Which blood types to set for users if it isn't set yet (on join)
 Config.UserProps.BloodTypes = {
 	"A+", "A-",
@@ -47,3 +53,9 @@ Config.UserProps.BloodTypes = {
     "AB+", "AB-",
     "O+", "O-",
 }
+
+Config.Hotkey = {}
+-- If the tablet hotkey should be registered
+Config.Hotkey.Enable = true
+-- Tablet hotkey key
+Config.Hotkey.Key = "F5"

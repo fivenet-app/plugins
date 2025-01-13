@@ -1,0 +1,42 @@
+{
+    "name": "nuxt-app",
+    "private": true,
+    "type": "module",
+    "license": "Apache-2.0",
+    "scripts": {
+        "build": "cd ui && nuxt build",
+        "dev": "cd ui && nuxt dev",
+        "generate": "cd ui && nuxt generate",
+        "preview": "cd ui && nuxt preview",
+        "postinstall": "cd ui && nuxt prepare"
+    },
+    "dependencies": {
+        "@iconify-json/mdi": "1.2.2",
+        "@nuxt/eslint": "0.7.5",
+        "@nuxt/fonts": "0.10.3",
+        "@nuxt/ui": "2.20.0",
+        "@pinia/nuxt": "0.9.0",
+        "@vueuse/nuxt": "12.4.0",
+        "nuxt": "3.15.1",
+        "pinia": "2.3.0",
+        "pinia-plugin-persistedstate": "4.2.0",
+        "vue": "3.5.13",
+        "vue-router": "4.5.0"
+    },
+    "devDependencies": {
+        "@citizenfx/client": "2.0.12255-1",
+        "@citizenfx/server": "2.0.12255-1",
+        "@total-typescript/ts-reset": "0.6.1",
+        "@types/node": "22.10.5",
+        "eslint": "9.18.0",
+        "eslint-config-prettier": "9.1.0",
+        "eslint-plugin-prettier": "5.2.1",
+        "eslint-plugin-vue": "9.32.0",
+        "prettier": "3.4.2",
+        "prettier-plugin-organize-imports": "4.1.0",
+        "prettier-plugin-tailwindcss": "0.6.9",
+        "sass-embedded": "^1.83.1",
+        "typescript": "5.7.3"
+    },
+    "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
+}

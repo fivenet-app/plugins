@@ -1,17 +1,22 @@
 fx_version 'cerulean'
 game 'gta5'
 
-author 'Galexrt'
+author 'Galexrt and FiveNet contributors'
+description 'FiveNet Plugin for FiveM servers.'
+version '0.0.1'
 
 lua54 'yes'
 
-ui_page "html/index.html"
+ui_page "ui/.output/public/index.html"
 
 files {
-	'html/index.html',
-	'html/index.js',
-	'html/style.css',
-	'html/images/*.png',
+	'ui/.output/public/**/*.html',
+    'ui/.output/public/**/*.js',
+    'ui/.output/public/**/*.css',
+    'ui/.output/public/**/*.woff',
+    'ui/.output/public/**/*.woff2',
+    'ui/.output/public/**/*.json',
+	'ui/.output/public/**/*.png',
 }
 
 server_scripts {

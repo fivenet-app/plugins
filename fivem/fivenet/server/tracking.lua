@@ -12,16 +12,16 @@ local function deletePosition(identifier)
 end
 
 local function checkIfPlayerHidden(xPlayer)
-	return not xPlayer.job.onDuty or (Config.TrackingItem and not xPlayer.getInventoryItem(Config.TrackingItem))
+	return not xPlayer.job.onDuty or (Config.Tracking.Item and not xPlayer.getInventoryItem(Config.Tracking.Item))
 end
 
-if Config.EnableTracking then
+if Config.Tracking.Enable then
 	CreateThread(function()
 		while true do
 			local queries = {}
 
 			for playerId, xPlayer in pairs(ESX.GetExtendedPlayers()) do
-				if Config.TrackingJobs[xPlayer.job.name] then
+				if Config.Tracking.Jobs[xPlayer.job.name] then
 					local update = true
 
 					if playerLocations[xPlayer.identifier] then
@@ -60,7 +60,7 @@ if Config.EnableTracking then
 
 			MySQL.transaction(queries)
 
-			Wait(Config.TrackingInterval)
+			Wait(Config.Tracking.Interval)
 		end
 	end)
 
@@ -70,12 +70,12 @@ if Config.EnableTracking then
 
 		deletePosition(xPlayer.identifier)
 	end)
-end
 
--- Resource Start
-AddEventHandler('onResourceStart', function(resourceName)
-	if resourceName == GetCurrentResourceName() and GetConvar('fnet_clear_on_start', 'false') == 'true' then
-		-- Truncate user locations table on resource (re-)start
-		MySQL.update('DELETE FROM `fivenet_user_locations`')
-	end
-end)
+	-- Resource Start
+	AddEventHandler('onResourceStart', function(resourceName)
+		if resourceName == GetCurrentResourceName() and GetConvar('fnet_clear_on_start', 'false') == 'true' then
+			-- Truncate user locations table on resource (re-)start
+			MySQL.update('DELETE FROM `fivenet_user_locations`')
+		end
+	end)
+end

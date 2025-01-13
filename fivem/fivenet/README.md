@@ -8,6 +8,7 @@ Please note that a bunch of custom events are necessary to be added to ESX plugi
 ## Requirements
 
 * FiveM Server version `10488` and higher.
+* ESX Framework (most ESX usages in the code can easily be replaced with your framework of choice or your own implementation)
 * Running FiveNet instance (server, worker)
   * Depending on if FiveNet uses the gameserver's database, might need FiveNet's DBSync credentials.
 
@@ -21,12 +22,12 @@ FiveM base events such as `onResourceStart`, etc. are not listed.
 
 | Name                            | Type     | Description                                                                               | File                                                                                                       |
 | ------------------------------- | -------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `esx:playerLoaded`              | Base ESX | Player/Character loaded                                                                                          | [`server/events.lua`](server/events.lua)                                                                   |
-| `esx:playerDropped`             | Base ESX | Player/Character dropped/quit server                                                                                          | [`server/tracking.lua`](server/tracking.lua), [`server/events/timeclock.lua`](server/events/timeclock.lua) |
-| `esx_multichar:onCharTransfer`  | Custom   | Custom event added after a char has been transfered.                                      | [`server/events.lua`](server/events.lua)                                                                   |
+| `esx:playerLoaded`              | Base ESX | Player/Character loaded                                                                   | [`server/events/player_props.lua`](server/events/player_props.lua)                                         |
+| `esx:playerDropped`             | Base ESX | Player/Character dropped/quit server                                                      | [`server/tracking.lua`](server/tracking.lua), [`server/events/timeclock.lua`](server/events/timeclock.lua) |
+| `esx_multichar:onCharTransfer`  | Custom   | Custom event added after a char has been transfered.                                      | [`server/events/char_transfer.lua`](server/events/char_transfer.lua)                                       |
 | `esx:setJob`                    | Base ESX | Event should be already triggered by ESX accordingly when a char is selected/logged into. | [`server/events/timeclock.lua`](server/events/timeclock.lua)                                               |
-| `esx_billing:sentBill`          | Custom   | Custom event sent after a bill has been sent to an user.                                                                                          | [`server/events/billing.lua`](server/events/billing.lua)                                                   |
-| `esx_billing:removedBill`       | Custom   |                                                                                          | [`server/events/billing.lua`](server/events/billing.lua)                                                   |
+| `esx_billing:sentBill`          | Custom   | Custom event sent after a bill has been sent to an user.                                  | [`server/events/billing.lua`](server/events/billing.lua)                                                   |
+| `esx_billing:removedBill`       | Custom   |                                                                                           | [`server/events/billing.lua`](server/events/billing.lua)                                                   |
 | `esx_billing:paidBill`          | Custom   |                                                                                           | [`server/events/billing.lua`](server/events/billing.lua)                                                   |
 | `esx_license:addLicense`        | Custom   |                                                                                           | [`server/events/licenses.lua`](server/events/licenses.lua)                                                 |
 | `esx_license:removeLicense`     | Custom   |                                                                                           | [`server/events/licenses.lua`](server/events/licenses.lua)                                                 |
@@ -37,4 +38,3 @@ FiveM base events such as `onResourceStart`, etc. are not listed.
 | `esx_society:fired`             | Custom   |                                                                                           | [`server/events/society.lua`](server/events/society.lua)                                                   |
 | `esx_society:gradeChanged`      | Custom   |                                                                                           | [`server/events/society.lua`](server/events/society.lua)                                                   |
 | `esx_society:hired`             | Custom   |                                                                                           | [`server/events/society.lua`](server/events/society.lua)                                                   |
-
