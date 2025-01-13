@@ -5,6 +5,8 @@ It enables the use of the tablet in-game, tracks user locations, and certain eve
 
 Please note that a bunch of custom events are necessary to be added to ESX plugin code for FiveNet to reach its full potential.
 
+> For screenshots, please go to [README.md](../../README.md#fivem-plugin).
+
 ## Requirements
 
 * FiveM Server version `10488` and higher.
