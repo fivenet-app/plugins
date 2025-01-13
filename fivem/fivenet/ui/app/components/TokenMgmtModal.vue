@@ -89,10 +89,8 @@ async function openRegistration(): Promise<void> {
                     <div class="inline-flex w-full justify-center gap-2">
                         <div class="inline-flex gap-1.5">
                             <UInput
-                                v-for="(part, idx) in registrationToken.split('')"
-                                :key="idx"
                                 disabled
-                                :model-value="part"
+                                :model-value="registrationToken"
                                 size="xl"
                                 :ui="{ base: 'text-center text-white font-semibold' }"
                             />
