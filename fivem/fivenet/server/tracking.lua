@@ -64,6 +64,31 @@ if Config.Tracking.Enable then
 		end
 	end)
 
+	-- If player comes on duty, add them to the locations table ASAP
+	AddEventHandler('esx:onSetDuty', function(source, jobName, onDuty)
+		local xPlayer = ESX.GetPlayerFromId(source)
+		if not xPlayer then return end
+
+		if onDuty then
+			-- If player is hidden, we don't bother adding them to the locations table now
+			if checkIfPlayerHidden(xPlayer) then return end
+
+			local coords = GetEntityCoords(GetPlayerPed(source))
+
+			MySQL.update(locationUpdateQuery, {
+				["identifier"] = xPlayer.identifier,
+				["job"] = xPlayer.job.name,
+				["x"] = coords.x,
+				["y"] = coords.y,
+				["hidden"] = 0,
+			})
+
+			playerLocations[identifier] = coords
+		else
+			deletePosition(identifier)
+		end
+	end)
+
 	AddEventHandler('esx:playerDropped', function(source)
 		local xPlayer = ESX.GetPlayerFromId(source)
 		if not xPlayer then return end

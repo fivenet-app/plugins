@@ -33,8 +33,7 @@ end
 local function createTablet()
 	deleteTablet()
 
-	local object = CreateObject(objectHash, 0, 0, 0, true, true, false)
-	tablet = object
+	tablet = CreateObject(objectHash, 0, 0, 0, true, true, false)
 end
 
 function OpenTablet()
@@ -144,7 +143,6 @@ RegisterNUICallback('closeTablet', function(data, cb)
 end)
 
 RegisterNUICallback('focusTablet', function(data, cb)
-	print('focusTablet', data.state)
 	blockInputs = data.state or false
 
 	cb(true)
@@ -158,7 +156,7 @@ RegisterCommand('tabletfix', function()
 	TriggerEvent('fivenet:viewTablet', false)
 	blockInputs = false
 
-	SendNUIMessage({type = 'fixTablet', webUrl = Config.WebURL})
+	SendNUIMessage({type = 'tabletfix', webUrl = Config.WebURL})
 end)
 
 CreateThread(function()
@@ -240,6 +238,12 @@ RegisterNUICallback('openTokenMgmt', function(data, cb)
 	end
 
 	TriggerServerEvent('fivenet:openTokenMgmt')
+
+	cb(true)
+end)
+
+RegisterNUICallback('openURLInWindow', function(data, cb)
+	SendNUIMessage({type = 'openURLInWindow', url = data.url})
 
 	cb(true)
 end)

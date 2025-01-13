@@ -2,12 +2,12 @@
 -- the job user activity tracking
 
 local function lookupLicenseLabel(type)
-    local response = MySQL.query.await('SELECT `label` FROM `licenses` WHERE `type` = ? LIMIT 1', { type })
-    if response then
-        return response[1].label or ''
-    end
+	local response = MySQL.query.await('SELECT `label` FROM `licenses` WHERE `type` = ? LIMIT 1', { type })
+	if response then
+		return response[1].label or ''
+	end
 
-    return ''
+	return ''
 end
 
 AddEventHandler('esx_license:addLicense', function(sourceXPlayer, targetXPlayer, type)
@@ -15,6 +15,6 @@ AddEventHandler('esx_license:addLicense', function(sourceXPlayer, targetXPlayer,
 end)
 
 AddEventHandler('esx_license:removeLicense', function(sourceXPlayer, targetXPlayer, type)
-    -- You should look up and pass the license name as the last argument
+	-- You should look up and pass the license name as the last argument
 	addUserActivity(sourceXPlayer.identifier, targetXPlayer.identifier, 0, 'Plugin.Licenses', type, '', lookupLicenseLabel(type))
 end)

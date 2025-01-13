@@ -21,8 +21,8 @@ Config.Tracking.Interval = 3000
 Config.TimeclockJobs = {
 	["ambulance"] = true,
 	["doj"] = true,
-    ["police"] = true,
-    -- Can also be other jobs that are ESX `onDuty` enabled
+	["police"] = true,
+	-- Can also be other jobs that are ESX `onDuty` enabled
 }
 
 Config.Events = {}
@@ -49,9 +49,9 @@ Config.UserProps.SetBloodType = true
 -- Which blood types to set for users if it isn't set yet (on join)
 Config.UserProps.BloodTypes = {
 	"A+", "A-",
-    "B+", "B-",
-    "AB+", "AB-",
-    "O+", "O-",
+	"B+", "B-",
+	"AB+", "AB-",
+	"O+", "O-",
 }
 
 Config.Hotkey = {}
