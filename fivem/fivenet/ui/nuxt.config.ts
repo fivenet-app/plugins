@@ -28,7 +28,28 @@ export default defineNuxtConfig({
     },
 
     ui: {
-        safelistColors: ['primary', 'secondary', 'tertiary', 'info', 'success', 'warning', 'error', 'gray'],
+        safelistColors: [
+            // Primary - Default
+            'primary',
+            'green',
+            'teal',
+            'cyan',
+            'sky',
+            'blue',
+            'indigo',
+            'violet',
+            // Custom
+            'error',
+            'warn',
+            'info',
+            'success',
+            // Gray Colors
+            'slate',
+            'cool',
+            'zinc',
+            'neutral',
+            'stone',
+        ],
     },
 
     icon: {

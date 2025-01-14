@@ -75,6 +75,13 @@ export type NUIMessage =
           text: string;
       }
     | {
+          type: 'setTabletColors';
+          data: {
+              primary: string;
+              gray: string;
+          };
+      }
+    | {
           type: undefined;
       };
 
@@ -102,7 +109,6 @@ export async function onNUIMessage(event: MessageEvent<NUIMessage>): Promise<voi
         useTablet().isTabletOpen.value = false;
     } else if (event.data.type === 'fixTablet') {
         tabletStore.setBaseUrl(event.data.webUrl);
-
         tabletStore.setPath('/api/clear-site-data');
 
         useTimeoutFn(() => {
@@ -112,6 +118,10 @@ export async function onNUIMessage(event: MessageEvent<NUIMessage>): Promise<voi
         }, 3000);
     } else if (event.data.type === 'copyToClipboard') {
         copyToClipboard(event.data.text);
+    } else if (event.data.type === 'setTabletColors') {
+        const appConfig = useAppConfig();
+        appConfig.ui.primary = event.data.data.primary;
+        appConfig.ui.gray = event.data.data.gray;
     } else {
         logger.error('Message - Unknown message type received', event);
     }

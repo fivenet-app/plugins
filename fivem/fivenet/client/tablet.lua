@@ -248,6 +248,12 @@ RegisterNUICallback('openURLInWindow', function(data, cb)
 	cb(true)
 end)
 
+RegisterNUICallback('setTabletColors', function(data, cb)
+	SendNUIMessage({type = 'setTabletColors', data = data})
+
+	cb(true)
+end)
+
 -- Written by mcnuggets
 function loadAnimDict(dict)
 	if not HasAnimDictLoaded(dict) then

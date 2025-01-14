@@ -66,6 +66,7 @@ async function openRegistration(): Promise<void> {
             <UContainer class="flex flex-col gap-y-2">
                 <UFormGroup v-if="username" label="Dein Benutzername">
                     <div class="inline-flex w-full justify-center gap-2">
+                        <div class="inline-flex gap-1.5">
                         <UInput
                             disabled
                             :model-value="username"
@@ -74,12 +75,14 @@ async function openRegistration(): Promise<void> {
                             class="flex-1"
                             :ui="{ base: 'text-center text-white font-semibold' }"
                         />
+                    </div>
 
                         <UButton
                             icon="i-mdi-clipboard-plus"
                             color="black"
                             size="xl"
                             label="Kopieren"
+                            class="flex-1"
                             @click="username ? copyToClipboard(username) : copyToClipboard(registrationToken)"
                         />
                     </div>
@@ -101,6 +104,7 @@ async function openRegistration(): Promise<void> {
                             color="black"
                             size="xl"
                             label="Kopieren"
+                            class="flex-1"
                             @click="username ? copyToClipboard(username) : copyToClipboard(registrationToken)"
                         />
                     </div>
