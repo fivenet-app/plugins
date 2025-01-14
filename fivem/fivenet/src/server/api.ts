@@ -1,5 +1,5 @@
-import { GetStatusResponse, RegisterAccountResponse } from "@fivenet-app/gen/services/sync/sync";
-import { syncClient } from "./client.js";
+import { GetStatusResponse, RegisterAccountResponse } from '@fivenet-app/gen/services/sync/sync';
+import { syncClient } from './client';
 
 async function GetStatus(): Promise<GetStatusResponse> {
     const call = syncClient.getStatus({});

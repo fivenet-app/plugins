@@ -1,19 +1,21 @@
 {
     "compilerOptions": {
-        "noImplicitAny": false,
-        "noEmitOnError": true,
-        "removeComments": false,
-        "sourceMap": true,
-        "target": "ES2017",
+        "baseUrl": ".",
+        "module": "CommonJS",
+        "moduleResolution": "node",
+        "target": "ES6",
+        "jsx": "react",
         "strict": true,
         "esModuleInterop": true,
+        "lib": ["ES2017"],
+        "noImplicitAny": false,
+        "noEmitOnError": true,
         "allowSyntheticDefaultImports": true,
-        "module": "CommonJS",
         "types": ["@citizenfx/server", "@types/node"],
-        "lib": ["ES2020"]
+        "forceConsistentCasingInFileNames": true
     },
     "include": [
       "./src/**/*.ts"
     ],
-    "exclude": ["**/node_modules", "**/__tests__/*"]
+    "exclude": ["**/__tests__/*", "./ui/**/*"]
 }

@@ -1,5 +1,5 @@
-import { AddActivityRequest, AddActivityResponse } from "@fivenet-app/gen/services/sync/sync";
-import { syncClient } from "./client.js";
+import { AddActivityRequest, AddActivityResponse } from '@fivenet-app/gen/services/sync/sync';
+import { syncClient } from './client';
 
 type Activity = AddActivityRequest['activity'];
 async function AddActivity(activity: Activity): Promise<AddActivityResponse> {

@@ -24,7 +24,7 @@ server_scripts {
 	'config/server.lua',
 	'server/*.lua',
 	'server/events/*.lua',
-	'dist/server/*.js'
+	'dist/server.js'
 }
 
 shared_scripts {

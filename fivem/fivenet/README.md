@@ -10,13 +10,18 @@ Please note that a bunch of custom events are necessary to be added to ESX plugi
 ## Requirements
 
 * FiveM Server version `10488` and higher.
+    * Webpack and Yarn Builder Plugins
 * ESX Framework (most ESX usages in the code can easily be replaced with your framework of choice or your own implementation)
 * Running FiveNet instance (server, worker)
-  * Depending on if FiveNet uses the gameserver's database, might need FiveNet's DBSync credentials.
+    * Depending on if FiveNet uses the gameserver's database, might need FiveNet's DBSync credentials.
 
-## Installation
+## Building
 
-TODO
+FiveM servers with the yarn builder will auto build the FiveNet script parts needed for the plugin, but not the UI.
+
+```console
+yarn run build
+```
 
 ## Configuration
 

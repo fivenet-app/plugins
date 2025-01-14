@@ -7,7 +7,7 @@ const TARGET_ENTRIES = [
         target: 'node16',
         entryPoints: ['src/server/index.ts'],
         platform: 'node',
-        outdir: './dist/server/',
+        outfile: './dist/server.js',
     },
 ];
 
