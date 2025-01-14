@@ -14,9 +14,20 @@ Please note that a bunch of custom events are necessary to be added to ESX plugi
 * Running FiveNet instance (server, worker)
   * Depending on if FiveNet uses the gameserver's database, might need FiveNet's DBSync credentials.
 
+## Installation
+
+TODO
+
 ## Configuration
 
-* `Config.WebURL` - Needs to be your FiveNet's instance URL, the default one `"https://fivenet.app"` is pointing to FiveNet's documentation page.
+The config is split into `client.lua` and `server.lua` in the [`config/` directory](config/).
+
+Config hints:
+
+* `client.lua`:
+    * `Config.WebURL` - Needs to be your FiveNet's instance URL, the default one `"https://fivenet.app"` is pointing to FiveNet's documentation page.
+* `server.lua`:
+    * `Config.API` section - Make sure to set the host (`Config.API.Host`) and token (`Config.API.Token`) that your FiveNet instance uses for the sync API.
 
 ## Event List
 

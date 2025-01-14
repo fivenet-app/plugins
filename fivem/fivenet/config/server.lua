@@ -1,7 +1,11 @@
 Config = {}
 
--- Your FiveNet URL without a trailing slash
-Config.WebURL = "https://demo.fivenet.app"
+-- !!! Make sure to configure your FiveNet API credentials correctly here!
+Config.API = {}
+-- Your FiveNet Hostname, must be with port if your port is not 443,
+-- requires the FiveNet instance to be using HTTPS.
+Config.API.Host = "demo.fivenet.app"
+Config.API.Token = "YOUR_SYNC_API_TOKEN"
 
 Config.Tracking = {}
 -- Enable the tracking of players
@@ -53,9 +57,3 @@ Config.UserProps.BloodTypes = {
 	"AB+", "AB-",
 	"O+", "O-",
 }
-
-Config.Hotkey = {}
--- If the tablet hotkey should be registered
-Config.Hotkey.Enable = true
--- Tablet hotkey key
-Config.Hotkey.Key = "F5"

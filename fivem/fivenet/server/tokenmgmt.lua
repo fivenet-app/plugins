@@ -17,32 +17,6 @@ local function isRegistered(license --[[string]])
 	return false, nil
 end
 
--- DO NOT change this, the token length is currently hard coded
-local TokenLength = 6
-
-local function generateToken()
-	local token = ''
-	for i = 1, TokenLength do
-		token = token..math.random(1, 9)
-	end
-
-	return token
-end
-
-local function createToken(license --[[string]])
-	local token = generateToken()
-
-	MySQL.update('INSERT INTO fivenet_accounts (enabled, license, reg_token) VALUES(?, ?, ?) ON DUPLICATE KEY UPDATE reg_token = ?', { 1, license, token, token })
-	return token
-end
-
-local function resetPassword(license)
-	local token = generateToken()
-
-	MySQL.update('UPDATE fivenet_accounts SET password = NULL, reg_token = ? WHERE license = ?', { token, license })
-	return token
-end
-
 AddEventHandler('fivenet:resetPassword', function()
 	local source = source
 	local xPlayer = ESX.GetPlayerFromId(source)
@@ -50,10 +24,9 @@ AddEventHandler('fivenet:resetPassword', function()
 
 	local license = getLicenseFromIdentifier(xPlayer.identifier)
 
-	local registered = isRegistered(license)
-	local token = resetPassword(license)
+	local data = exports[GetCurrentResourceName()]:RegisterAccount(license, true)
 
-	TriggerClientEvent('fivenet:resetPassword', source, registered, token)
+	TriggerClientEvent('fivenet:resetPassword', source, data.username, data.regToken)
 end)
 
 function openTokenMgmt(source)
@@ -62,12 +35,9 @@ function openTokenMgmt(source)
 
 	local license = getLicenseFromIdentifier(xPlayer.identifier)
 
-	local registered, token = isRegistered(license)
-	if not registered and not token then
-		token = createToken(license)
-	end
+	local data = exports[GetCurrentResourceName()]:RegisterAccount(license, false)
 
-	TriggerClientEvent('fivenet:registration', source, registered, token)
+	TriggerClientEvent('fivenet:registration', source, data.username, data.regToken)
 end
 
 AddEventHandler('fivenet:openTokenMgmt', function()
@@ -76,5 +46,10 @@ AddEventHandler('fivenet:openTokenMgmt', function()
 end)
 
 RegisterCommand('fivenet', function(source)
+	if source == 0 then
+		print('/fivenet command is only for players!')
+		return
+	end
+
 	openTokenMgmt(source)
 end)

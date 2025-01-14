@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "noImplicitAny": false,
+        "noEmitOnError": true,
+        "removeComments": false,
+        "sourceMap": true,
+        "target": "ES2017",
+        "strict": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "module": "CommonJS",
+        "types": ["@citizenfx/server", "@types/node"],
+        "lib": ["ES2020"]
+    },
+    "include": [
+      "./src/**/*.ts"
+    ],
+    "exclude": ["**/node_modules", "**/__tests__/*"]
+}

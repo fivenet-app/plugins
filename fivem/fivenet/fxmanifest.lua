@@ -20,18 +20,19 @@ files {
 }
 
 server_scripts {
-	'@es_extended/imports.lua',
 	'@oxmysql/lib/MySQL.lua',
+	'config/server.lua',
 	'server/*.lua',
-	'server/events/*.lua'
+	'server/events/*.lua',
+	'dist/server/*.js'
 }
 
 shared_scripts {
-	'@es_extended/imports.lua',
-	'config.lua'
+	'@es_extended/imports.lua'
 }
 
 client_scripts {
+	'config/client.lua',
 	'client/*.lua'
 }
 
