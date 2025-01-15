@@ -7,6 +7,10 @@ version '1.0.0'
 
 lua54 'yes'
 
+dependencies {
+    'yarn'
+}
+
 ui_page "ui/.output/public/index.html"
 
 files {
