@@ -11,7 +11,7 @@
         "webpack": "node --max_old_space_size=4096 node_modules/webpack/bin/webpack.js"
     },
     "dependencies": {
-        "@fivenet-app/gen": "0.9.3-3",
+        "@fivenet-app/gen": "0.9.3-4",
         "@grpc/grpc-js": "1.12.5",
         "@protobuf-ts/grpc-transport": "2.9.4"
     },

@@ -24,6 +24,7 @@ files {
 }
 
 server_scripts {
+	'@es_extended/imports.lua',
 	'@oxmysql/lib/MySQL.lua',
 	'config/server.lua',
 	'server/*.lua',
