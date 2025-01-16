@@ -4,7 +4,7 @@ Config = {}
 Config.API = {}
 -- Your FiveNet Hostname, must be with port if your port is not 443,
 -- requires the FiveNet instance to be using HTTPS.
-Config.API.Host = "demo.fivenet.app"
+Config.API.Host = "localhost:8080"
 Config.API.Token = "YOUR_SYNC_API_TOKEN"
 
 Config.Tracking = {}

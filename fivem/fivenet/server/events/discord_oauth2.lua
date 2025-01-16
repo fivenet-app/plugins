@@ -5,7 +5,7 @@ if Config.Discord.ConnectOnJoin and Config.Discord.OAuth2Provider ~= '' then
 		local identifier = ESX.GetIdentifier(source)
 
 		if identifier and discordId then
-			addOrSetDiscordIdentifier(identifier, discordId, GetPlayerName(newID))
+			addOAuth2DiscordIdentifier(identifier, discordId, GetPlayerName(newID))
 		end
 	end)
 end

@@ -11,5 +11,3 @@ async function AddActivity(activity: Activity): Promise<AddActivityResponse> {
     return response;
 }
 exports('AddActivity', AddActivity);
-
-// TODO add wrappers for each oneof type of Activity

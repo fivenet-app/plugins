@@ -1,21 +1,21 @@
 -- Jail
 AddEventHandler('esx_prison:jailPlayer', function(pPlayer, xPlayer, time --[[number]])
 	local data = { jailChange = { seconds = time, admin = false }}
-	addUserActivity(pPlayer.identifier, xPlayer.identifier, 12, reason, json.encode(data))
+	addUserActivity(pPlayer.identifier, xPlayer.identifier, 12, reason, data)
 end)
 
 AddEventHandler('esx_prison:unjailedByPlayer', function(xPlayer, pPlayer, _, type --[[ 'police'/ 'admin']])
 	local data = { jailChange = { seconds = 0, admin = type == 'admin' and true or false }}
-	addUserActivity(pPlayer.identifier, xPlayer.identifier, 12, '', json.encode(data))
+	addUserActivity(pPlayer.identifier, xPlayer.identifier, 12, '', data)
 end)
 
 AddEventHandler('esx_prison:escapePoliceNotify', function(xPlayer)
 	local data = { jailChange = { seconds = -1, admin = false }}
-	addUserActivity(xPlayer.identifier, xPlayer.identifier, 12, '', json.encode(data))
+	addUserActivity(xPlayer.identifier, xPlayer.identifier, 12, '', data)
 
 	-- Set user wanted + user activity
 	data = { wantedChange = { wanted = true }}
-	addUserActivity(xPlayer.identifier, xPlayer.identifier, 6, Config.Events.JailEscapeReason, json.encode(data))
+	addUserActivity(xPlayer.identifier, xPlayer.identifier, 6, Config.Events.JailEscapeReason, data)
 	setUserWantedState(xPlayer.identifier, true)
 end)
 

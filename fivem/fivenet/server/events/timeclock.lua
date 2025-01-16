@@ -3,6 +3,7 @@ local function timeclockTrack(job --[[string]], identifier --[[string]], clockOn
 	if not Config.TimeclockJobs[job] then return end
 
 	if clockOn then
+		-- TODO replace mysql with `setTimeclockEntry` function
 		-- Run select query to see if a timeclock entry needs to be created or updated
 		MySQL.query([[
 			SELECT fjt.`user_id`, fjt.`date`, fjt.`start_time`

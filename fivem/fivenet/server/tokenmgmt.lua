@@ -8,15 +8,6 @@ function getLicenseFromIdentifier(identifier --[[string]])
 	return string.sub(identifier, start + 1, -1)
 end
 
-local function isRegistered(license --[[string]])
-	local query = MySQL.single.await('SELECT username, reg_token FROM fivenet_accounts WHERE license = ?', { license })
-	if query then
-		return query.username, query.reg_token
-	end
-
-	return false, nil
-end
-
 AddEventHandler('fivenet:resetPassword', function()
 	local source = source
 	local xPlayer = ESX.GetPlayerFromId(source)

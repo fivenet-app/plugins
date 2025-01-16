@@ -193,10 +193,10 @@
     "@eslint/core" "^0.10.0"
     levn "^0.4.1"
 
-"@fivenet-app/gen@0.9.3-2":
-  version "0.9.3-2"
-  resolved "https://registry.yarnpkg.com/@fivenet-app/gen/-/gen-0.9.3-2.tgz#aea63500af518f66dbafd77e3b102fb0713224e6"
-  integrity sha512-LV/h2EXYOPVCj0I67zRVpZtblaWCSZp3WaSbM2YWKDOByqWJ1kKN8VdpDICREebE+PQ5JECeIoNuGD4vxu4pOw==
+"@fivenet-app/gen@0.9.3-3":
+  version "0.9.3-3"
+  resolved "https://registry.yarnpkg.com/@fivenet-app/gen/-/gen-0.9.3-3.tgz#ce9a245b342414647ab708388e51ddaf8434d17f"
+  integrity sha512-DaQQ9HyCPQfz+a+Lt2K6IaMeeRNgTXFkIQVcjGw72r2sAqK9Cd447B6B2bkVnXYxZzxBubDSlAZRu8OLyrmr+A==
 
 "@grpc/grpc-js@1.12.5":
   version "1.12.5"
@@ -354,7 +354,14 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.15.tgz#596a1747233694d50f6ad8a7869fcb6f56cf5841"
   integrity sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==
 
-"@types/node@22.10.6", "@types/node@>=13.7.0":
+"@types/node@22.10.7":
+  version "22.10.7"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.10.7.tgz#14a1ca33fd0ebdd9d63593ed8d3fbc882a6d28d7"
+  integrity sha512-V09KvXxFiutGp6B7XkpaDXlNadZxrzajcY50EuoLIpQ6WWYCSvf19lVIazzfIzQvhUN2HjX12spLojTnhuKlGg==
+  dependencies:
+    undici-types "~6.20.0"
+
+"@types/node@>=13.7.0":
   version "22.10.6"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-22.10.6.tgz#5c6795e71635876039f853cbccd59f523d9e4239"
   integrity sha512-qNiuwC4ZDAUNcY47xgaSuS92cjf8JbSUoaKS77bmLG1rU7MlATVSiw/IlrjtIyyskXBZ8KkNfjK/P5na7rgXbQ==

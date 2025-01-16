@@ -12,14 +12,14 @@ end
 
 AddEventHandler('esx_license:addLicense', function(sourceXPlayer, targetXPlayer, type)
 	local label = lookupLicenseLabel(type)
-	local data = { licensesChange = { added = true, licenses = [{ type = type, label = label }] }}
+	local data = { licensesChange = { added = true, licenses = {{ type = type, label = label }} }}
 
-	addUserActivity(sourceXPlayer.identifier, targetXPlayer.identifier, 5, '', json.encode(data))
+	addUserActivity(sourceXPlayer.identifier, targetXPlayer.identifier, 5, '', data)
 end)
 
 AddEventHandler('esx_license:removeLicense', function(sourceXPlayer, targetXPlayer, type)
 	local label = lookupLicenseLabel(type)
-	local data = { licensesChange = { added = false, licenses = [{ type = type, label = label }] }}
+	local data = { licensesChange = { added = false, licenses = {{ type = type, label = label }} }}
 
-	addUserActivity(sourceXPlayer.identifier, targetXPlayer.identifier, 5, '', json.encode(data))
+	addUserActivity(sourceXPlayer.identifier, targetXPlayer.identifier, 5, '', data)
 end)

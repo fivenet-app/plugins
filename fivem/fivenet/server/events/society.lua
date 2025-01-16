@@ -23,7 +23,7 @@ AddEventHandler('esx_society:gradeChanged', function(xPlayer, xTarget, promoted)
 	if not job then return end
 
 	local data = { gradeChange = { grade = job.grade, gradeLabel = job.grade_label }}
-	addJobsUserActivity(job.name, sIdentifier, tIdentifier, promoted and 3 or 4, nil, json.encode(data))
+	addJobsUserActivity(job.name, sIdentifier, tIdentifier, promoted and 3 or 4, nil, data)
 end)
 
 AddEventHandler('esx_society:fired', function(xPlayer, xTarget)

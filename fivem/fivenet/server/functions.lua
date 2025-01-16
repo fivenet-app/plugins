@@ -1,95 +1,115 @@
--- FiveNet Account - Social Login connection
-function addOrSetDiscordIdentifier(license --[[string]], externalId --[[string]], username --[[string]])
-	-- Check if user has a FiveNet account
-	MySQL.query('SELECT `id` FROM `fivenet_accounts` WHERE `license` = ? LIMIT 1', { getLicenseFromIdentifier(license) },
-		function(result)
-			result = result and result[1] or nil
-			if not result or not result.id  then return end
+local function getUserIDFromIdentifier(identifier --[[string]])
+	local row = MySQL.single.await('SELECT `id` FROM `users` WHERE `identifier` = ? LIMIT 1', { identifier })
+	if not row then
+		return 0
+	end
 
-			-- If the user has an account add or update a Discord Oauth2 "connection"
-			MySQL.update([[
-				INSERT INTO `fivenet_oauth2_accounts`
-				(`account_id`, `provider`, `external_id`, `username`, `avatar`)
-				VALUES(?, ?, ?, ?, 'https://cdn.discordapp.com/embed/avatars/0.png')
-				ON DUPLICATE KEY UPDATE `external_id` = VALUES(`external_id`), `username` = VALUES(`username`)
-				]],
-				{ result.id, Config.Discord.OAuth2Provider, getLicenseFromIdentifier(externalId), username })
-	end)
+	return row.id
+end
+
+-- FiveNet Account - Social Login connection
+function addOAuth2DiscordIdentifier(license --[[string]], externalId --[[string]], username --[[string]])
+	exports[GetCurrentResourceName()]:AddActivity({
+		oneofKind = 'userOauth2',
+		userOauth2 = {
+			providerName = Config.Discord.OAuth2Provider,
+			identifier = getLicenseFromIdentifier(license),
+			externalId = externalId,
+			username = username,
+		},
+	})
 end
 
 -- User Activity and Props
-function addUserActivity(sIdentifier --[[string/nil]], tIdentifier --[[string]], type --[[number]], reason --[[string]], data --[[string]])
+function addUserActivity(sIdentifier --[[string/nil]], tIdentifier --[[string]], type --[[number]], reason --[[string]], data --[[UserActivityData]])
+	local sourceUserId = nil
 	if not sIdentifier then
-		MySQL.update([[
-			INSERT INTO `fivenet_user_activity`
-			(`source_user_id`, `target_user_id`, `type`, `reason`, `data`)
-			VALUES (NULL, (SELECT `id` FROM `users` WHERE `identifier` = ? LIMIT 1), ?, ?, ?)
-			]],
-			{ tIdentifier, type, key, reason, data })
-	else
-		MySQL.update([[
-			INSERT INTO `fivenet_user_activity`
-			(`source_user_id`, `target_user_id`, `type`, `reason`, `data`)
-			VALUES ((SELECT `id` FROM `users` WHERE `identifier` = ? LIMIT 1), (SELECT `id` FROM `users` WHERE `identifier` = ? LIMIT 1), ?, ?, ?)
-			]],
-			{ sIdentifier, tIdentifier, type, key, reason, data })
+		sourceUserId = getUserIDFromIdentifier(tIdentifier)
 	end
+
+	local targetUserId = getUserIDFromIdentifier(tIdentifier)
+
+	exports[GetCurrentResourceName()]:AddActivity({
+		oneofKind = 'userActivity',
+		userActivity = {
+			sourceUserId = sourceUserId,
+			targetUserId = targetUserId,
+			type = type,
+			reason = reason,
+			data = data,
+		},
+	})
 end
 exports('addUserActivity', addUserActivity)
 
+function setUserProps(identifier --[[string]], reason --[[string]], data --[[UserProps]])
+	local userId = getUserIDFromIdentifier(identifier)
+	data.userId = userId
+
+	exports[GetCurrentResourceName()]:AddActivity({
+		oneofKind = 'userProps',
+		userProps = {
+			reason = reason,
+			props = data,
+		},
+	})
+end
+exports('setUserProps', setUserProps)
+
+-- If the `fine` is positive will be added and if negative substracted to/from the user's total
 function updateOpenFines(tIdentifier --[[string]], fine --[[number]])
-	MySQL.update([[
-		INSERT INTO `fivenet_user_props`
-		(`user_id`, `open_fines`)
-		VALUES ((SELECT `id` FROM `users` WHERE `identifier` = ? LIMIT 1), ?)
-		ON DUPLICATE KEY UPDATE `open_fines` = CASE WHEN `open_fines` + VALUES(`open_fines`) < 0 THEN 0 ELSE `open_fines` + VALUES(`open_fines`) END;
-		]],
-		{ tIdentifier, fine })
+	setUserProps(tIdentifier, nil, { openFines = fine })
 end
 exports('updateOpenFines', updateOpenFines)
 
-function setUserWantedState(tIdentifier --[[string]], wanted --[[bool]])
-	MySQL.update([[
-		INSERT INTO `fivenet_user_props`
-		(`user_id`, `wanted`)
-		VALUES ((SELECT id FROM `users` WHERE `identifier` = ? LIMIT 1), ?)
-		ON DUPLICATE KEY UPDATE `wanted` = VALUES(`wanted`)
-		]],
-		{ tIdentifier, wanted })
+function setUserWantedState(tIdentifier --[[string]], wanted --[[bool]], reason --[[string/nil]])
+	setUserProps(tIdentifier, reason, { wanted = wanted })
 end
 exports('setUserWantedState', setUserWantedState)
 
 function setUserBloodType(tIdentifier --[[string]], bloodType --[[string]])
-	MySQL.update([[
-		INSERT INTO `fivenet_user_props`
-		(`user_id`, `blood_type`)
-		VALUES ((SELECT `id` FROM `users` WHERE `identifier` = ? LIMIT 1), ?)
-		ON DUPLICATE KEY UPDATE `blood_type` = COALESCE(`blood_type`, VALUES(`blood_type`))
-		]],
-		{ tIdentifier, bloodType })
+	setUserProps(tIdentifier, nil, { bloodType = bloodType })
 end
 exports('setUserBloodType', setUserBloodType)
 
 -- Jobs User Activity
 -- activityType: 1 = HIRED, 2 = FIRED, 3 = PROMOTED, 4 = DEMOTED
-function addJobsUserActivity(job --[[string]], sIdentifier --[[string]], tIdentifier --[[string]], activityType --[[number]], reason --[[string]], data --[[string]])
-	MySQL.update([[
-		INSERT INTO `fivenet_jobs_user_activity`
-		(`job`, `source_user_id`, `target_user_id`, `activity_type`, `reason`, `data`)
-		VALUES (?, (SELECT `id` FROM `users` WHERE `identifier` = ? LIMIT 1), (SELECT `id` FROM `users` WHERE `identifier` = ? LIMIT 1), ?, ?, ?)
-		]],
-		{ job, sIdentifier, tIdentifier, activityType, reason, data })
+function addJobsUserActivity(job --[[string]], sIdentifier --[[string]], tIdentifier --[[string]], type --[[number]], reason --[[string]], data --[[JobsUserActivityData]])
+	local sourceUserId = getUserIDFromIdentifier(sIdentifier)
+	local targetUserId = getUserIDFromIdentifier(tIdentifier)
+
+	exports[GetCurrentResourceName()]:AddActivity({
+		oneofKind = 'jobsUserActivity',
+		jobsUserActivity = {
+			sourceUserId = sourceUserId,
+			targetUserId = targetUserId,
+			job = job,
+			type = type,
+			reason = reason,
+			data = data,
+		},
+	})
 end
 exports('addJobsUserActivity', addJobsUserActivity)
 
 -- Dispatches
 function createDispatch(job --[[string]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]], identifier --[[string]])
-	MySQL.update([[
-		INSERT INTO `fivenet_centrum_dispatches`
-		(`job`, `message`, `description`, `x`, `y`, `anon`, `creator_id`)
-		VALUES (?, ?, ?, ?, ?, ?, (SELECT `id` FROM `users` WHERE `identifier` = ? LIMIT 1))
-		]],
-		{ job, message, description, x, y, anon, identifier })
+	local userId = getUserIDFromIdentifier(identifier)
+
+	exports[GetCurrentResourceName()]:AddActivity({
+		oneofKind = 'dispatch',
+		dispatch = {
+			id = 0,
+			job = job,
+			message = message,
+			description = description,
+			x = x,
+			y = y,
+			anon = anon,
+			creatorId = userId,
+			units = {},
+		},
+	})
 end
 exports('createDispatch', createDispatch)
 
@@ -99,6 +119,13 @@ function createCivilProtectionJobDispatch(message --[[string]], description --[[
 	end
 end
 exports('createCivilProtectionJobDispatch', createCivilProtectionJobDispatch)
+
+-- Timeclock
+function setTimeclockEntry(identifier --[[string]], data --[[TimeclockEntry]])
+	local userId = getUserIDFromIdentifier(identifier)
+
+	-- TODO send entry to server via `AddActivity` export
+end
 
 -- Written by mcnuggets
 function IsNearVector(source, targetVector, range)

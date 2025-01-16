@@ -10,7 +10,7 @@ AddEventHandler('esx_billing:sentBill', function(xPlayer, xTarget, type --[['fin
 
 	local data = { fineChange = { removed = false, amount = amount }}
 
-	addUserActivity(xPlayer.identifier, xTarget.identifier, 13, '', json.encode(data))
+	addUserActivity(xPlayer.identifier, xTarget.identifier, 13, '', data)
 	updateOpenFines(xTarget.identifier, amount)
 end)
 
@@ -24,7 +24,7 @@ AddEventHandler('esx_billing:removedBill', function(source, type, result)
 
 	local data = { fineChange = { removed = true, amount = -result.amount }}
 
-	addUserActivity(xPlayer.identifier, result.identifier, 13, result.label, json.encode(data))
+	addUserActivity(xPlayer.identifier, result.identifier, 13, result.label, data)
 	updateOpenFines(result.identifier, -result.amount)
 end)
 
@@ -37,6 +37,6 @@ AddEventHandler('esx_billing:paidBill', function(source, result)
 
 	local data = { fineChange = { removed = false, amount = -result.amount }}
 
-	addUserActivity(xPlayer.identifier, xPlayer.identifier, 13, result.label, json.encode(data))
+	addUserActivity(xPlayer.identifier, xPlayer.identifier, 13, result.label, data)
 	updateOpenFines(xPlayer.identifier, -result.amount)
 end)
