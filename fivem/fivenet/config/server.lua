@@ -47,6 +47,7 @@ Config.Dispatches = {}
 Config.Dispatches.CivilProtectionJobs = {
 	["police"] = true,
 }
+-- Panic button disaptch title
 Config.Dispatches.PanicButtonTitle = "Panikknopf ausgelöst"
 
 Config.UserProps = {}
