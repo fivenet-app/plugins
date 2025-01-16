@@ -3,44 +3,16 @@ local function timeclockTrack(job --[[string]], identifier --[[string]], clockOn
 	if not Config.TimeclockJobs[job] then return end
 
 	if clockOn then
-		-- TODO replace mysql with `setTimeclockEntry` function
-		-- Run select query to see if a timeclock entry needs to be created or updated
-		MySQL.query([[
-			SELECT fjt.`user_id`, fjt.`date`, fjt.`start_time`
-			FROM `fivenet_jobs_timeclock` fjt INNER JOIN `users` u ON (u.`id` = fjt.`user_id`)
-			WHERE u.`identifier` = ? AND fjt.`user_id` = u.`id`
-			ORDER BY fjt.`date`
-			LIMIT 1
-			]],
-			{ identifier },
-			function(result)
-				result = result and result[1] or nil
-				if not result or not result.userId then return end
-
-				-- If start time is not null, the entry is (already) active, keep using it
-				if result and result.startTime then return end
-
-				MySQL.update([[
-					INSERT INTO `fivenet_jobs_timeclock`
-					(`job`, `user_id`, `date`)
-					VALUES(?, (SELECT `id` FROM `users` WHERE `identifier` = ? LIMIT 1), CURRENT_DATE)
-					ON DUPLICATE KEY UPDATE `start_time` = VALUES(`start_time`)
-					]],
-					{ job, identifier })
-		end)
+		setTimeclockEntry(identifier, {
+			job = job,
+			date = getCurrentTimestamp(),
+		})
 	else
-		MySQL.update([[
-			UPDATE `fivenet_jobs_timeclock` fjt
-				INNER JOIN `users` u ON (u.`id` = fjt.`user_id`)
-			SET
-				fjt.`spent_time` = `fjt`.`spent_time` + CAST((TIMESTAMPDIFF(SECOND, `fjt`.`start_time`, CURRENT_TIMESTAMP) / 3600) AS DECIMAL(10, 2)),
-				fjt.`start_time` = NULL
-			WHERE
-				u.`identifier` = ?
-				AND fjt.`user_id` = u.`id`
-				AND fjt.`start_time` IS NOT NULL;
-			]],
-			{ identifier })
+		setTimeclockEntry(identifier, {
+			job = job,
+			date = getCurrentTimestamp(),
+			endTime = getCurrentTimestamp(),
+		})
 	end
 end
 

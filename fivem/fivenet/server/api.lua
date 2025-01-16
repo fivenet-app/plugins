@@ -4,3 +4,7 @@ AddEventHandler('onResourceStart', function(resourceName)
 		exports[GetCurrentResourceName()]:SetupClient(Config.API.Host, Config.API.Token)
 	end
 end)
+
+function getCurrentTimestamp() --[[resources.timestamp.Timestamp]]
+	return { timestamp = { seconds = GetCloudTimeAsInt(), nanos = 0 } }
+end

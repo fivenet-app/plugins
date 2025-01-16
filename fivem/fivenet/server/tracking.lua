@@ -5,10 +5,26 @@ local locationUpdateQuery = [[
 	ON DUPLICATE KEY UPDATE `job` = VALUES(`job`), `x` = VALUES(`x`), `y` = VALUES(`y`), `hidden` = VALUES(`hidden`);
 ]]
 
-local function deletePosition(identifier)
+local function deletePosition(identifier --[[string]], job --[[string]])
 	playerLocations[identifier] = nil
 
-	MySQL.update('DELETE FROM `fivenet_user_locations` WHERE `identifier` = ? LIMIT 1', { identifier })
+	exports[GetCurrentResourceName()]:SendData({
+		oneofKind = 'userLocations',
+		userLocations = {
+			users = {
+				{
+					identifier = identifier,
+					job = job,
+					coords = {
+						x = 0,
+						y = 0,
+					},
+					hidden = false,
+					remove = true,
+				},
+			},
+		},
+	})
 end
 
 local function checkIfPlayerHidden(xPlayer)
@@ -18,7 +34,7 @@ end
 if Config.Tracking.Enable then
 	CreateThread(function()
 		while true do
-			local queries = {}
+			local locations = {}
 
 			for playerId, xPlayer in pairs(ESX.GetExtendedPlayers()) do
 				if Config.Tracking.Jobs[xPlayer.job.name] then
@@ -44,21 +60,25 @@ if Config.Tracking.Enable then
 
 							playerLocations[xPlayer.identifier] = coords
 
-							table.insert(queries, { locationUpdateQuery,
-								{
-									["identifier"] = xPlayer.identifier,
-									["job"] = xPlayer.job.name,
-									["x"] = coords.x,
-									["y"] = coords.y,
-									["hidden"] = hidden,
-								}
+							table.insert(locations, {
+								["identifier"] = xPlayer.identifier,
+								["job"] = xPlayer.job.name,
+								["x"] = coords.x,
+								["y"] = coords.y,
+								["hidden"] = hidden,
+								["remove"] = false,
 							})
 						end
 					end
 				end
 			end
 
-			MySQL.transaction(queries)
+			exports[GetCurrentResourceName()]:SendData({
+				oneofKind = 'userLocations',
+				userLocations = {
+					users = locations,
+				},
+			})
 
 			Wait(Config.Tracking.Interval)
 		end
@@ -75,17 +95,27 @@ if Config.Tracking.Enable then
 
 			local coords = GetEntityCoords(GetPlayerPed(source))
 
-			MySQL.update(locationUpdateQuery, {
-				["identifier"] = xPlayer.identifier,
-				["job"] = xPlayer.job.name,
-				["x"] = coords.x,
-				["y"] = coords.y,
-				["hidden"] = 0,
+			exports[GetCurrentResourceName()]:SendData({
+				oneofKind = 'userLocations',
+				userLocations = {
+					users = {
+						{
+							identifier = xPlayer.identifier,
+							job = xPlayer.job.name,
+							coords = {
+								x = coords.x,
+								y = coords.y,
+							},
+							hidden = false,
+							remove = true,
+						},
+					},
+				},
 			})
 
 			playerLocations[identifier] = coords
 		else
-			deletePosition(identifier)
+			deletePosition(identifier, xPlayer.job.name)
 		end
 	end)
 
@@ -99,8 +129,17 @@ if Config.Tracking.Enable then
 	-- Resource Start
 	AddEventHandler('onResourceStart', function(resourceName)
 		if resourceName == GetCurrentResourceName() and GetConvar('fnet_clear_on_start', 'false') == 'true' then
-			-- Truncate user locations table on resource (re-)start
-			MySQL.update('DELETE FROM `fivenet_user_locations`')
+			CreateThread(function()
+				Wait(1000)
+				-- Clear user locations table on resource (re-)start, which most likely will be server restarts
+				exports[GetCurrentResourceName()]:SendData({
+					oneofKind = 'userLocations',
+					userLocations = {
+						users = {},
+						clearAll = true,
+					},
+				})
+			end)
 		end
 	end)
 end

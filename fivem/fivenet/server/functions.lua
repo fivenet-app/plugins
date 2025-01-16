@@ -124,7 +124,12 @@ exports('createCivilProtectionJobDispatch', createCivilProtectionJobDispatch)
 function setTimeclockEntry(identifier --[[string]], data --[[TimeclockEntry]])
 	local userId = getUserIDFromIdentifier(identifier)
 
-	-- TODO send entry to server via `AddActivity` export
+	data.userId = userId
+
+	exports[GetCurrentResourceName()]:AddActivity({
+		oneofKind = 'jobsTimeclock',
+		jobsTimeclock = data,
+	})
 end
 
 -- Written by mcnuggets

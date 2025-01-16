@@ -10,7 +10,7 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
-        "@fivenet-app/gen": "0.9.3-4",
+        "@fivenet-app/gen": "0.9.3-5",
         "@grpc/grpc-js": "1.12.5",
         "@protobuf-ts/grpc-transport": "2.9.4"
     },
