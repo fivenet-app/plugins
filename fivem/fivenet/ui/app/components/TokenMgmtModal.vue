@@ -83,7 +83,7 @@ async function openRegistration(): Promise<void> {
                             size="xl"
                             label="Kopieren"
                             class="flex-1"
-                            @click="username ? copyToClipboard(username) : copyToClipboard(registrationToken)"
+                            @click="copyToClipboard(username)"
                         />
                     </div>
                 </UFormGroup>
@@ -105,7 +105,7 @@ async function openRegistration(): Promise<void> {
                             size="xl"
                             label="Kopieren"
                             class="flex-1"
-                            @click="username ? copyToClipboard(username) : copyToClipboard(registrationToken)"
+                            @click="copyToClipboard(registrationToken)"
                         />
                     </div>
                 </UFormGroup>
@@ -114,8 +114,8 @@ async function openRegistration(): Promise<void> {
                     icon="i-mdi-information"
                     :description="
                         username
-                            ? 'Dein FiveNet-Konto wurde mit diesem Nutzernamen erstellt.'
-                            : 'Nutze den Token, um dein FiveNet-Konto zu erstellen.'
+                            ? (registrationToken ? 'Nutze diesen Token, um dein Passwort zurückzusetzen.' : 'Dein FiveNet-Konto wurde mit diesem Nutzernamen erstellt.')
+                            : 'Nutze diesen Token, um dein FiveNet-Konto zu erstellen.'
                     "
                 />
 
@@ -128,7 +128,7 @@ async function openRegistration(): Promise<void> {
                     :loading="loading"
                     @click="openResetPassword"
                 >
-                    Öffne Passwort vergessen Formular
+                    Setze nun hier dein Passwort zurück!
                 </UButton>
                 <UButton
                     v-else-if="username"
@@ -143,7 +143,7 @@ async function openRegistration(): Promise<void> {
                     Passwort vergessen? Hier zurücksetzen
                 </UButton>
                 <UButton v-else icon="i-mdi-user-add" color="green" size="md" block @click="openRegistration()">
-                    Öffne die Konto-Erstellung
+                    Konto erstellen
                 </UButton>
 
                 <UButton
