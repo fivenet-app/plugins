@@ -7,8 +7,7 @@
         "build": "npm run clearbuild && node scripts/build.cjs",
         "clearbuild": "rimraf ./dist",
         "typecheck": "tsc --noEmit -p tsconfig.json",
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "webpack": "node --max_old_space_size=4096 node_modules/webpack/bin/webpack.js"
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
         "@fivenet-app/gen": "0.9.3-4",
