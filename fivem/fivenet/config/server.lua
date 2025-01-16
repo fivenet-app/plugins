@@ -43,9 +43,11 @@ Config.Discord.ConnectOnJoin = true
 Config.Discord.OAuth2Provider = "discord"
 
 Config.Dispatches = {}
+-- Which jobs should get dispatches that are created via the `createCivilProtectionJobDispatch` function
 Config.Dispatches.CivilProtectionJobs = {
 	["police"] = true,
 }
+Config.Dispatches.PanicButtonTitle = "Panikknopf ausgelöst"
 
 Config.UserProps = {}
 -- If enabled will set the blood type for an user on "join/loaded" event

@@ -1,17 +1,22 @@
 -- Jail
 AddEventHandler('esx_prison:jailPlayer', function(pPlayer, xPlayer, time --[[number]])
-	addUserActivity(pPlayer.identifier, xPlayer.identifier, 0, 'Plugin.Jail', '', time, '')
+	local data = { jailChange = { seconds = time, admin = false }}
+	addUserActivity(pPlayer.identifier, xPlayer.identifier, 12, reason, json.encode(data))
 end)
 
 AddEventHandler('esx_prison:unjailedByPlayer', function(xPlayer, pPlayer, _, type --[[ 'police'/ 'admin']])
-	addUserActivity(pPlayer.identifier, xPlayer.identifier, 0, 'Plugin.Jail', '', '0', type)
+	local data = { jailChange = { seconds = 0, admin = type == 'admin' and true or false }}
+	addUserActivity(pPlayer.identifier, xPlayer.identifier, 12, '', json.encode(data))
 end)
 
 AddEventHandler('esx_prison:escapePoliceNotify', function(xPlayer)
-	addUserActivity(xPlayer.identifier, xPlayer.identifier, 0, 'Plugin.Jail', '0', '', '')
-	-- Set user wanted and add user activity item
+	local data = { jailChange = { seconds = -1, admin = false }}
+	addUserActivity(xPlayer.identifier, xPlayer.identifier, 12, '', json.encode(data))
+
+	-- Set user wanted + user activity
+	data = { wantedChange = { wanted = true }}
+	addUserActivity(xPlayer.identifier, xPlayer.identifier, 6, Config.Events.JailEscapeReason, json.encode(data))
 	setUserWantedState(xPlayer.identifier, true)
-	addUserActivity(xPlayer.identifier, xPlayer.identifier, 0, 'UserProps.Wanted', 'false', 'true', 'Gefängnisausbruch')
 end)
 
 -- Panicbutton
@@ -20,5 +25,5 @@ AddEventHandler('esx_policeJob:panicButton', function(source, x --[[number]], y 
 	if not xPlayer then return end
 
 	-- Send panic button dispatches to source user's job only for now
-	createDispatch(xPlayer.job.name, 'Panikknopf ausgelöst', name, x, y, false, xPlayer.identifier)
+	createDispatch(xPlayer.job.name, Config.Dispatches.PanicButtonTitle, name, x, y, false, xPlayer.identifier)
 end)

@@ -11,10 +11,15 @@ local function lookupLicenseLabel(type)
 end
 
 AddEventHandler('esx_license:addLicense', function(sourceXPlayer, targetXPlayer, type)
-	addUserActivity(sourceXPlayer.identifier, targetXPlayer.identifier, 0, 'Plugin.Licenses', '', type, lookupLicenseLabel(type))
+	local label = lookupLicenseLabel(type)
+	local data = { licensesChange = { added = true, licenses = [{ type = type, label = label }] }}
+
+	addUserActivity(sourceXPlayer.identifier, targetXPlayer.identifier, 5, '', json.encode(data))
 end)
 
 AddEventHandler('esx_license:removeLicense', function(sourceXPlayer, targetXPlayer, type)
-	-- You should look up and pass the license name as the last argument
-	addUserActivity(sourceXPlayer.identifier, targetXPlayer.identifier, 0, 'Plugin.Licenses', type, '', lookupLicenseLabel(type))
+	local label = lookupLicenseLabel(type)
+	local data = { licensesChange = { added = false, licenses = [{ type = type, label = label }] }}
+
+	addUserActivity(sourceXPlayer.identifier, targetXPlayer.identifier, 5, '', json.encode(data))
 end)

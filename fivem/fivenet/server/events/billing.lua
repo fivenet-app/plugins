@@ -8,8 +8,10 @@ AddEventHandler('esx_billing:sentBill', function(xPlayer, xTarget, type --[['fin
 	if type ~= 'fine' then return end
 	if not checkIfBillingEnabledJob(xPlayer.job.name) then return end
 
+	local data = { fineChange = { removed = false, amount = amount }}
+
+	addUserActivity(xPlayer.identifier, xTarget.identifier, 13, '', json.encode(data))
 	updateOpenFines(xTarget.identifier, amount)
-	addUserActivity(xPlayer.identifier, xTarget.identifier, 0, 'Plugin.Billing.Fines', '', amount, label)
 end)
 
 AddEventHandler('esx_billing:removedBill', function(source, type, result)
@@ -20,8 +22,10 @@ AddEventHandler('esx_billing:removedBill', function(source, type, result)
 	local xPlayer = ESX.GetPlayerFromId(source)
 	if not xPlayer then return end
 
+	local data = { fineChange = { removed = true, amount = -result.amount }}
+
+	addUserActivity(xPlayer.identifier, result.identifier, 13, result.label, json.encode(data))
 	updateOpenFines(result.identifier, -result.amount)
-	addUserActivity(xPlayer.identifier, result.identifier, 0, 'Plugin.Billing.Fines', result.amount, result.amount, result.label)
 end)
 
 AddEventHandler('esx_billing:paidBill', function(source, result)
@@ -31,6 +35,8 @@ AddEventHandler('esx_billing:paidBill', function(source, result)
 	local xPlayer = ESX.GetPlayerFromId(source)
 	if not xPlayer then return end
 
+	local data = { fineChange = { removed = false, amount = -result.amount }}
+
+	addUserActivity(xPlayer.identifier, xPlayer.identifier, 13, result.label, json.encode(data))
 	updateOpenFines(xPlayer.identifier, -result.amount)
-	addUserActivity(xPlayer.identifier, xPlayer.identifier, 0, 'Plugin.Billing.Fines', result.amount, 0, result.label)
 end)

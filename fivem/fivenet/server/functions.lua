@@ -17,14 +17,23 @@ function addOrSetDiscordIdentifier(license --[[string]], externalId --[[string]]
 	end)
 end
 
--- User Props
-function addUserActivity(sIdentifier --[[string]], tIdentifier --[[string]], type --[[number]], key --[[string]], oldVal --[[string]], newVal --[[string]], reason --[[string]])
-	MySQL.update([[
-		INSERT INTO `fivenet_user_activity`
-		(`source_user_id`, `target_user_id`, `type`, `key`, `old_value`, `new_value`, `reason`)
-		VALUES ((SELECT `id` FROM `users` WHERE `identifier` = ? LIMIT 1), (SELECT `id` FROM `users` WHERE `identifier` = ? LIMIT 1), ?, ?, ?, ?, ?)
-		]],
-		{ sIdentifier, tIdentifier, type, key, oldVal, newVal, reason })
+-- User Activity and Props
+function addUserActivity(sIdentifier --[[string/nil]], tIdentifier --[[string]], type --[[number]], reason --[[string]], data --[[string]])
+	if not sIdentifier then
+		MySQL.update([[
+			INSERT INTO `fivenet_user_activity`
+			(`source_user_id`, `target_user_id`, `type`, `reason`, `data`)
+			VALUES (NULL, (SELECT `id` FROM `users` WHERE `identifier` = ? LIMIT 1), ?, ?, ?)
+			]],
+			{ tIdentifier, type, key, reason, data })
+	else
+		MySQL.update([[
+			INSERT INTO `fivenet_user_activity`
+			(`source_user_id`, `target_user_id`, `type`, `reason`, `data`)
+			VALUES ((SELECT `id` FROM `users` WHERE `identifier` = ? LIMIT 1), (SELECT `id` FROM `users` WHERE `identifier` = ? LIMIT 1), ?, ?, ?)
+			]],
+			{ sIdentifier, tIdentifier, type, key, reason, data })
+	end
 end
 exports('addUserActivity', addUserActivity)
 
