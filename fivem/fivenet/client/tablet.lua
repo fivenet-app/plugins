@@ -48,7 +48,7 @@ function OpenTablet()
 		loadAnimDict(dict)
 		TaskPlayAnim(ped, dict, anim, 2.0, 2.0, -1, 51, 0, false, false, false)
 
-		AttachEntityToEntity(object, ped, GetPedBoneIndex(ped, 28422), -0.05, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, false, true, 1, true)
+		AttachEntityToEntity(tablet, ped, GetPedBoneIndex(ped, 28422), -0.05, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, false, true, 1, true)
 	end
 
 	usingTablet = true
