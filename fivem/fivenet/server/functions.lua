@@ -1,3 +1,10 @@
+function getLicenseFromIdentifier(identifier --[[string]])
+	local start = string.find(identifier, ':', 1, true)
+	if not start then return identifier end
+
+	return string.sub(identifier, start + 1, -1)
+end
+
 local function getUserIDFromIdentifier(identifier --[[string]])
 	local row = MySQL.single.await('SELECT `id` FROM `users` WHERE `identifier` = ? LIMIT 1', { identifier })
 	if not row then

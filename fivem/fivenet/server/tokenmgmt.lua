@@ -1,13 +1,6 @@
 RegisterNetEvent('fivenet:resetPassword')
 RegisterNetEvent('fivenet:openTokenMgmt')
 
-function getLicenseFromIdentifier(identifier --[[string]])
-	local start = string.find(identifier, ':', 1, true)
-	if not start then return identifier end
-
-	return string.sub(identifier, start + 1, -1)
-end
-
 AddEventHandler('fivenet:resetPassword', function()
 	local source = source
 	local xPlayer = ESX.GetPlayerFromId(source)
