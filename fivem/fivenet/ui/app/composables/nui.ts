@@ -67,7 +67,7 @@ export type NUIMessage =
           type: 'closeTablet';
       }
     | {
-          type: 'fixTablet';
+          type: 'tabletfix';
           webUrl: string;
       }
     | {
@@ -107,7 +107,7 @@ export async function onNUIMessage(event: MessageEvent<NUIMessage>): Promise<voi
         useTablet().isTabletOpen.value = true;
     } else if (event.data.type === 'closeTablet') {
         useTablet().isTabletOpen.value = false;
-    } else if (event.data.type === 'fixTablet') {
+    } else if (event.data.type === 'tabletfix') {
         tabletStore.setBaseUrl(event.data.webUrl);
         tabletStore.setPath('/api/clear-site-data');
 
