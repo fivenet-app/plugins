@@ -20,8 +20,10 @@ AddEventHandler('esx:setJob', function(playerId)
 	local xPlayer = ESX.GetPlayerFromId(playerId)
 	if not xPlayer then return end
 
-	-- Check if job is enabled for timeclock tracking
-	if not Config.TimeclockJobs[xPlayer.job.name] then return end
+	if Config.TrackCharIDs then
+		-- Update last char ID if user has FiveNet account
+		setLastCharID(identifier)
+	end
 
 	-- If lastJob is nil, user left job's duty
 	timeclockTrack(xPlayer.job.name, xPlayer.identifier, xPlayer.job.onDuty)

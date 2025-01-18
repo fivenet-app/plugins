@@ -7,6 +7,9 @@ Config.API = {}
 Config.API.Host = "localhost:8080"
 Config.API.Token = "YOUR_SYNC_API_TOKEN"
 
+-- Last Char ID recording
+Config.TrackCharIDs = true
+
 Config.Tracking = {}
 -- Enable the tracking of players
 Config.Tracking.Enable = true
