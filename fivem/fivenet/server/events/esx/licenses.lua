@@ -1,3 +1,7 @@
+if Config.Framework ~= 'esx' then
+	return
+end
+
 -- These are non standard events, they need to be added by yourself to take advantage of
 -- the job user activity tracking
 

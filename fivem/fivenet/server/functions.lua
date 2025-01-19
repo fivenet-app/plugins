@@ -6,12 +6,26 @@ function getLicenseFromIdentifier(identifier --[[string]])
 end
 
 local function getUserIDFromIdentifier(identifier --[[string]])
-	local row = MySQL.single.await('SELECT `id` FROM `users` WHERE `identifier` = ? LIMIT 1', { identifier })
+	local query
+	if Config.Framework == 'esx' then
+		query = 'SELECT `id` FROM `users` WHERE `identifier` = ? LIMIT 1'
+	elseif Config.Framework == 'qbcore' then
+		query = 'SELECT `id` FROM `players` WHERE `citizenid` = ? LIMIT 1'
+	else
+		return 0
+	end
+
+	local row = MySQL.single.await(query, { identifier })
 	if not row then
 		return 0
 	end
 
 	return row.id
+end
+
+function checkIfBillingEnabledJob(targetJob --[[string]])
+	local job = string.gsub(targetJob, 'society_', '')
+	return Config.Events.BillingJobs[job]
 end
 
 -- FiveNet Account - Social Login connection

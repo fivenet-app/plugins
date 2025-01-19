@@ -11,7 +11,7 @@ dependencies {
     'yarn'
 }
 
-ui_page "ui/.output/public/index.html"
+ui_page 'ui/.output/public/index.html'
 
 files {
 	'ui/.output/public/**/*.html',
@@ -24,16 +24,10 @@ files {
 }
 
 server_scripts {
-	'@es_extended/imports.lua',
 	'@oxmysql/lib/MySQL.lua',
 	'config/server.lua',
-	'server/*.lua',
-	'server/events/*.lua',
+	'server/**/*.lua',
 	'dist/server.js'
-}
-
-shared_scripts {
-	'@es_extended/imports.lua'
 }
 
 client_scripts {
@@ -42,8 +36,8 @@ client_scripts {
 }
 
 convar_category 'FiveNet' {
-	"Configuration Options",
+	'Configuration Options',
 	{
-		{ "Tracking - Clear Table on resource start", "$fnet_clear_on_start", "CV_BOOL", "false" },
+		{ 'Tracking - Clear Table on resource start', '$fnet_clear_on_start', 'CV_BOOL', 'false' },
 	}
 }

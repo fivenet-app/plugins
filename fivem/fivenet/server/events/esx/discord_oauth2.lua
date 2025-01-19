@@ -1,3 +1,7 @@
+if Config.Framework ~= 'esx' then
+	return
+end
+
 if Config.Discord.ConnectOnJoin and Config.Discord.OAuth2Provider ~= '' then
 	-- Create Discord OAuth2 connection on join
 	AddEventHandler('playerJoining', function(newID)

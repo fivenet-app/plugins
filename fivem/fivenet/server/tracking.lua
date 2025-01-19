@@ -1,10 +1,5 @@
 local playerLocations = {}
 
-local locationUpdateQuery = [[
-	INSERT INTO `fivenet_user_locations` (`identifier`, `job`, `x`, `y`, `hidden`) VALUES (@identifier, @job, @x, @y, @hidden)
-	ON DUPLICATE KEY UPDATE `job` = VALUES(`job`), `x` = VALUES(`x`), `y` = VALUES(`y`), `hidden` = VALUES(`hidden`);
-]]
-
 local function deletePosition(identifier --[[string]], job --[[string]])
 	playerLocations[identifier] = nil
 
@@ -27,71 +22,74 @@ local function deletePosition(identifier --[[string]], job --[[string]])
 	})
 end
 
-local function checkIfPlayerHidden(xPlayer)
-	return not xPlayer.job.onDuty or (Config.Tracking.Item and not xPlayer.getInventoryItem(Config.Tracking.Item))
+if not Config.Tracking.Enable then
+	return
 end
 
-if Config.Tracking.Enable then
-	CreateThread(function()
-		while true do
-			local locations = {}
+CreateThread(function()
+	while true do
+		local locations = {}
 
-			for playerId, xPlayer in pairs(ESX.GetExtendedPlayers()) do
-				if Config.Tracking.Jobs[xPlayer.job.name] then
-					local update = true
+		for playerId, xPlayer in pairs(getPlayers()) do
+			if Config.Tracking.Jobs[xPlayer.job.name] then
+				local update = true
 
-					if playerLocations[xPlayer.identifier] then
-						local curLocation = playerLocations[xPlayer.identifier]
-						if IsNearVector(playerId, curLocation, 5.0) then
-							update = false
-						end
+				if playerLocations[xPlayer.identifier] then
+					local curLocation = playerLocations[xPlayer.identifier]
+					if IsNearVector(playerId, curLocation, 5.0) then
+						update = false
 					end
+				end
 
-					if update then
-						local ped = GetPlayerPed(playerId)
-						if ped ~= 0 then
-							local coords = GetEntityCoords(ped)
-							local hidden = 0
+				if update then
+					local ped = GetPlayerPed(playerId)
+					if ped ~= 0 then
+						local coords = GetEntityCoords(ped)
+						local hidden = 0
 
-							-- Either players is not on duty and/or doesn't have the tracking item
-							if checkIfPlayerHidden(xPlayer) then
-								hidden = 1
-							end
-
-							playerLocations[xPlayer.identifier] = coords
-
-							table.insert(locations, {
-								["identifier"] = xPlayer.identifier,
-								["job"] = xPlayer.job.name,
-								["x"] = coords.x,
-								["y"] = coords.y,
-								["hidden"] = hidden,
-								["remove"] = false,
-							})
+						-- Either players is not on duty and/or doesn't have the tracking item
+						if Functions.CheckIfPlayerHidden(xPlayer) then
+							hidden = 1
 						end
+
+						playerLocations[xPlayer.identifier] = coords
+
+						table.insert(locations, {
+							["identifier"] = xPlayer.identifier,
+							["job"] = xPlayer.job.name,
+							["x"] = coords.x,
+							["y"] = coords.y,
+							["hidden"] = hidden,
+							["remove"] = false,
+						})
 					end
 				end
 			end
-
-			exports[GetCurrentResourceName()]:SendData({
-				oneofKind = 'userLocations',
-				userLocations = {
-					users = locations,
-				},
-			})
-
-			Wait(Config.Tracking.Interval)
 		end
-	end)
 
-	-- If player comes on duty, add them to the locations table ASAP
+		exports[GetCurrentResourceName()]:SendData({
+			oneofKind = 'userLocations',
+			userLocations = {
+				users = locations,
+			},
+		})
+
+		Wait(Config.Tracking.Interval)
+	end
+end)
+
+-- Player On Duty - If player comes on duty, add them to the locations table ASAP
+if Config.Framework == 'esx' then
 	AddEventHandler('esx:onSetDuty', function(source, jobName, onDuty)
-		local xPlayer = ESX.GetPlayerFromId(source)
-		if not xPlayer then return end
+		local identifier = getPlayerUniqueIdentifier(source)
+		if not identifier then return end
+
+		local job = getPlayerJob(source)
+		if not job then return end
 
 		if onDuty then
 			-- If player is hidden, we don't bother adding them to the locations table now
-			if checkIfPlayerHidden(xPlayer) then return end
+			if Functions.CheckIfPlayerHidden(xPlayer) then return end
 
 			local coords = GetEntityCoords(GetPlayerPed(source))
 
@@ -100,8 +98,8 @@ if Config.Tracking.Enable then
 				userLocations = {
 					users = {
 						{
-							identifier = xPlayer.identifier,
-							job = xPlayer.job.name,
+							identifier = identifier,
+							job = job.name,
 							coords = {
 								x = coords.x,
 								y = coords.y,
@@ -115,31 +113,80 @@ if Config.Tracking.Enable then
 
 			playerLocations[identifier] = coords
 		else
-			deletePosition(identifier, xPlayer.job.name)
+			deletePosition(identifier, job.name)
 		end
 	end)
+elseif Config.Framework == 'qbcore' then
+	AddEventHandler('QBCore:Server:OnJobUpdate', function(source, job)
+		if job.onduty then
+			local player = getPlayerById(source)
 
-	AddEventHandler('esx:playerDropped', function(source)
-		local xPlayer = ESX.GetPlayerFromId(source)
-		if not xPlayer then return end
+			-- If player is hidden, we don't bother adding them to the locations table now
+			if Functions.CheckIfPlayerHidden(player) then return end
 
-		deletePosition(xPlayer.identifier)
-	end)
+			local coords = GetEntityCoords(GetPlayerPed(source))
 
-	-- Resource Start
-	AddEventHandler('onResourceStart', function(resourceName)
-		if resourceName == GetCurrentResourceName() and GetConvar('fnet_clear_on_start', 'false') == 'true' then
-			CreateThread(function()
-				Wait(1000)
-				-- Clear user locations table on resource (re-)start, which most likely will be server restarts
-				exports[GetCurrentResourceName()]:SendData({
-					oneofKind = 'userLocations',
-					userLocations = {
-						users = {},
-						clearAll = true,
+			exports[GetCurrentResourceName()]:SendData({
+				oneofKind = 'userLocations',
+				userLocations = {
+					users = {
+						{
+							identifier = player.PlayerData.citizenid,
+							job = job.name,
+							coords = {
+								x = coords.x,
+								y = coords.y,
+							},
+							hidden = false,
+							remove = true,
+						},
 					},
-				})
-			end)
+				},
+			})
+
+			playerLocations[identifier] = coords
+		else
+			deletePosition(identifier, job.name)
 		end
 	end)
 end
+
+-- Player left/disconnected
+if Config.Framework == 'esx' then
+	AddEventHandler('esx:playerDropped', function(source)
+		local identifier = Functions.getPlayerUniqueIdentifier(source)
+		if not identifier then
+			print('no identifier returned for player', source)
+			return
+		end
+
+		deletePosition(identifier)
+	end)
+elseif Config.Framework == 'qbcore' then
+	AddEventHandler('QBCore:Server:PlayerDropped', function(source)
+		local identifier = Functions.getPlayerUniqueIdentifier(source)
+		if not identifier then
+			print('no identifier returned for player', source)
+			return
+		end
+
+		deletePosition(identifier)
+	end)
+end
+
+-- Resource Start
+AddEventHandler('onResourceStart', function(resourceName)
+	if resourceName == GetCurrentResourceName() and GetConvar('fnet_clear_on_start', 'false') == 'true' then
+		CreateThread(function()
+			Wait(1000)
+			-- Clear user locations table on resource (re-)start, which most likely will be server restarts
+			exports[GetCurrentResourceName()]:SendData({
+				oneofKind = 'userLocations',
+				userLocations = {
+					users = {},
+					clearAll = true,
+				},
+			})
+		end)
+	end
+end)

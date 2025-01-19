@@ -2,11 +2,13 @@ RegisterNetEvent('fivenet:resetPassword')
 RegisterNetEvent('fivenet:openTokenMgmt')
 
 AddEventHandler('fivenet:resetPassword', function()
-	local source = source
-	local xPlayer = ESX.GetPlayerFromId(source)
-	if not xPlayer then return end
+	local identifier = getPlayerUniqueIdentifier(source)
+	if not identifier then
+		print('no identifier returned for player', source)
+		return
+	end
 
-	local license = getLicenseFromIdentifier(xPlayer.identifier)
+	local license = getLicenseFromIdentifier(identifier)
 
 	local data = exports[GetCurrentResourceName()]:RegisterAccount(license, true)
 
@@ -14,10 +16,13 @@ AddEventHandler('fivenet:resetPassword', function()
 end)
 
 function openTokenMgmt(source)
-	local xPlayer = ESX.GetPlayerFromId(source)
-	if not xPlayer then return end
+	local identifier = getPlayerUniqueIdentifier(source)
+	if not identifier then
+		print('no identifier returned for player', source)
+		return
+	end
 
-	local license = getLicenseFromIdentifier(xPlayer.identifier)
+	local license = getLicenseFromIdentifier(identifier)
 
 	local data = exports[GetCurrentResourceName()]:RegisterAccount(license, false)
 

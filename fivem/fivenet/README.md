@@ -11,9 +11,8 @@ Please note that a bunch of custom events are necessary to be added to ESX plugi
 
 * FiveM Server version `10488` and higher.
     * With the Yarn Builder installed or you must manually build the code.
-* ESX Framework (most ESX usages in the code can easily be replaced with your framework of choice or your own implementation)
-* Running FiveNet instance (server, worker)
-    * Depending on if FiveNet uses the gameserver's database, might need FiveNet's DBSync credentials.
+* Frameworks ESX and QB-Core Frameworks are supported via the `Config.Framework` option in the `config/server.lua` file
+* A running FiveNet server or at least FiveNet's DBSync ready
 
 ## Building
 
@@ -29,9 +28,10 @@ The config is split into `client.lua` and `server.lua` in the [`config/` directo
 
 Config hints:
 
-* `client.lua`:
+* `config/client.lua`:
     * `Config.WebURL` - Needs to be your FiveNet's instance URL, the default one `"https://fivenet.app"` is pointing to FiveNet's documentation page.
-* `server.lua`:
+* `config/server.lua`:
+    * `Config.Framework` - **Must be set to the framework you are using!** Can be `esx` or `qbcore`.
     * `Config.API` section - Make sure to set the host (`Config.API.Host`) and token (`Config.API.Token`) that your FiveNet instance uses for the sync API.
 
 ## Event List

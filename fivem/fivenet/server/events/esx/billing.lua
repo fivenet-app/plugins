@@ -1,9 +1,8 @@
--- Fines
-local function checkIfBillingEnabledJob(target --[[string]])
-	local job = string.gsub(target, 'society_', '')
-	return Config.Events.BillingJobs[job]
+if Config.Framework ~= 'esx' then
+	return
 end
 
+-- Fines
 AddEventHandler('esx_billing:sentBill', function(xPlayer, xTarget, type --[['fine'/ 'bill']], label, amount)
 	if type ~= 'fine' then return end
 	if not checkIfBillingEnabledJob(xPlayer.job.name) then return end

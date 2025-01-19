@@ -191,17 +191,11 @@ RegisterNUICallback('setWaypoint', function(data, cb)
 end)
 
 RegisterNUICallback('phoneCallNumber', function(data, cb)
-	-- Check if the user has a phone item (if ESX is available)
-	if ESX ~= nil and not ESX.getInventoryItem('phone') and not ESX.getInventoryItem('phone_jailbreak') then
-		cb(true)
-		return
-	end
-
 	if IsInTablet() then
 		CloseTablet()
 	end
 
-	-- Your phone plugin call a number code here: data.phoneNumber
+	Functions.CallNumber(data.phoneNumber)
 
 	cb(true)
 end)
@@ -215,19 +209,14 @@ end)
 RegisterNUICallback('setRadioFrequency', function(data, cb)
 	local frequency = tonumber(data.frequency)
 	if frequency then
-		-- This is for pma-voice
-		local currentChannel = exports['pma-voice']:getRadioChannel()
-
-		if currentChannel ~= frequency then
-			TriggerEvent('tgiann-radio:t', frequency)
-		end
+		Functions.SetRadioFrequency(frequency)
 	end
 
 	cb(true)
 end)
 
 RegisterNUICallback('setWaypointPLZ', function(data, cb)
-	ExecuteCommand('plz ' .. data.plz)
+	ExecuteCommand(Config.PostalCommand + ' ' .. data.plz)
 
 	cb(true)
 end)

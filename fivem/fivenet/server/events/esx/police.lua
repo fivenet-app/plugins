@@ -1,3 +1,7 @@
+if Config.Framework ~= 'esx' then
+	return
+end
+
 -- Jail
 AddEventHandler('esx_prison:jailPlayer', function(pPlayer, xPlayer, time --[[number]])
 	local data = { jailChange = { seconds = time, admin = false }}
