@@ -9,6 +9,7 @@ Config.API = {}
 -- requires the FiveNet instance to be using HTTPS.
 Config.API.Host = 'demo.fivenet.app:443'
 Config.API.Token = 'YOUR_SYNC_API_TOKEN'
+Config.API.Insecure = false
 
 -- Last Char ID recording
 Config.TrackCharIDs = true

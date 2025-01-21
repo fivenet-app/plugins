@@ -6,12 +6,12 @@ let transport: GrpcTransport;
 export let syncClient: SyncServiceClient;
 let abort: AbortController | undefined;
 
-async function SetupClient(host: string, token: string): Promise<void> {
+async function SetupClient(host: string, token: string, insecure: boolean): Promise<void> {
     abort = new AbortController();
 
     transport = new GrpcTransport({
         host: host,
-        channelCredentials: ChannelCredentials.createInsecure(),
+        channelCredentials: insecure ? ChannelCredentials.createInsecure() : ChannelCredentials.createSsl(),
         meta: {
             authorization: `Bearer ${token}`,
         },
