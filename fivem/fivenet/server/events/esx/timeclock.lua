@@ -6,18 +6,10 @@ end
 local function timeclockTrack(job --[[string]], identifier --[[string]], clockOn --[[bool]])
 	if not Config.TimeclockJobs[job] then return end
 
-	if clockOn then
-		setTimeclockEntry(identifier, {
-			job = job,
-			date = getCurrentTimestamp(),
-		})
-	else
-		setTimeclockEntry(identifier, {
-			job = job,
-			date = getCurrentTimestamp(),
-			endTime = getCurrentTimestamp(),
-		})
-	end
+	setTimeclockEntry(identifier, {
+		job = job,
+		start = clockOn,
+	})
 end
 
 AddEventHandler('esx:setJob', function(playerId)
