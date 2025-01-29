@@ -10,12 +10,12 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
-        "@fivenet-app/gen": "0.9.3-5",
+        "@fivenet-app/gen": "0.9.4-0",
         "@grpc/grpc-js": "1.12.5",
         "@protobuf-ts/grpc-transport": "2.9.4"
     },
     "devDependencies": {
-        "@citizenfx/server": "2.0.12255-1",
+        "@citizenfx/server": "2.0.12651-1",
         "@total-typescript/ts-reset": "0.6.1",
         "@types/node": "22.10.10",
         "esbuild": "0.24.2",

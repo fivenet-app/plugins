@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@citizenfx/server@2.0.12255-1":
-  version "2.0.12255-1"
-  resolved "https://registry.yarnpkg.com/@citizenfx/server/-/server-2.0.12255-1.tgz#f7c401ac8119a28820a3a89c3b065296d5c98152"
-  integrity sha512-OYXd+7XjRZMOMWhLnE6O4ASK2558vsA7xOf9SymrouCKmTzcJeOHiX/jSqlsG7APitnADQLMRNWqguJN7ocIOA==
+"@citizenfx/server@2.0.12651-1":
+  version "2.0.12651-1"
+  resolved "https://registry.yarnpkg.com/@citizenfx/server/-/server-2.0.12651-1.tgz#16cb0e0f71a46ba841c95a9f555b298883f1343c"
+  integrity sha512-DIOeUjmVL81wc5g+F8/z2BcEnJY2mAez3KrhlXQk3fs7l4wg+CD1S+vCQkM01INO3od8M2mOuZsMdTzz+dOjtA==
 
 "@esbuild/aix-ppc64@0.24.2":
   version "0.24.2"
@@ -193,10 +193,10 @@
     "@eslint/core" "^0.10.0"
     levn "^0.4.1"
 
-"@fivenet-app/gen@0.9.3-5":
-  version "0.9.3-5"
-  resolved "https://registry.yarnpkg.com/@fivenet-app/gen/-/gen-0.9.3-5.tgz#b453ea553497c476a7dda76a5a0c8baaf634afdb"
-  integrity sha512-2INg52eQhx648lQ9nRQrNzLPI0Z/L0g5kOGmn/HfZlXune7cK2w/uz+9uv6UWisJmFoRRNHaUqiAfHJehRR5eQ==
+"@fivenet-app/gen@0.9.4-0":
+  version "0.9.4-0"
+  resolved "https://registry.yarnpkg.com/@fivenet-app/gen/-/gen-0.9.4-0.tgz#16e5c544b25888b5e8d978043534cf228e933cac"
+  integrity sha512-bicQK5FuiQuH6ivj5ZpClD13Vntwkd7309A54OqOO8DiYbH4P9UYQ2QX6r0oAWkBPzlCs8wBQn4Y+/qjbgSX/w==
 
 "@grpc/grpc-js@1.12.5":
   version "1.12.5"
