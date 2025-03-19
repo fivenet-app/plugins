@@ -154,7 +154,7 @@ end
 -- Player left/disconnected
 if Config.Framework == 'esx' then
 	AddEventHandler('esx:playerDropped', function(source)
-		local identifier = Functions.getPlayerUniqueIdentifier(source)
+		local identifier = getPlayerUniqueIdentifier(source)
 		if not identifier then
 			print('no identifier returned for player', source)
 			return
@@ -164,7 +164,7 @@ if Config.Framework == 'esx' then
 	end)
 elseif Config.Framework == 'qbcore' then
 	AddEventHandler('QBCore:Server:PlayerDropped', function(source)
-		local identifier = Functions.getPlayerUniqueIdentifier(source)
+		local identifier = getPlayerUniqueIdentifier(source)
 		if not identifier then
 			print('no identifier returned for player', source)
 			return
