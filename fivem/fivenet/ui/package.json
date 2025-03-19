@@ -18,7 +18,7 @@
         "@pinia/nuxt": "0.10.1",
         "@protobuf-ts/grpc-transport": "2.9.4",
         "@vueuse/nuxt": "12.7.0",
-        "nuxt": "3.15.4",
+        "nuxt": "3.16.1",
         "pinia": "3.0.1",
         "pinia-plugin-persistedstate": "4.2.0",
         "vue": "3.5.13",
