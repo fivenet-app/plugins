@@ -11,23 +11,22 @@
     },
     "dependencies": {
         "@fivenet-app/gen": "0.9.4-0",
-        "@grpc/grpc-js": "1.12.6",
-        "@protobuf-ts/grpc-transport": "2.9.4"
+        "@grpc/grpc-js": "1.13.1",
+        "@protobuf-ts/grpc-transport": "2.9.6"
     },
     "devDependencies": {
-        "@citizenfx/server": "2.0.12949-1",
+        "@citizenfx/server": "2.0.13686-1",
         "@total-typescript/ts-reset": "0.6.1",
-        "@types/node": "22.13.4",
-        "esbuild": "0.25.0",
-        "eslint": "9.20.1",
-        "eslint-config-prettier": "10.0.1",
+        "@types/node": "22.13.11",
+        "esbuild": "0.25.1",
+        "eslint": "9.23.0",
+        "eslint-config-prettier": "10.1.1",
         "eslint-plugin-prettier": "5.2.3",
-        "eslint-plugin-vue": "9.32.0",
-        "prettier": "3.5.1",
+        "prettier": "3.5.3",
         "prettier-plugin-organize-imports": "4.1.0",
         "prettier-plugin-tailwindcss": "0.6.11",
         "rimraf": "6.0.1",
-        "typescript": "5.7.3"
+        "typescript": "5.8.2"
     },
     "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
