@@ -114,9 +114,16 @@ end
 exports('addJobsUserActivity', addJobsUserActivity)
 
 -- Dispatches
-function createDispatch(job --[[string]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]], identifier --[[string]])
+RegisterNetEvent('fivenet:createDispatch')
+
+function createDispatchFromIdentifier(job --[[string]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]], identifier --[[string]])
 	local userId = getUserIDFromIdentifier(identifier)
 
+	createDispatch(job, message, description, x, y, anon, userId)
+end
+export('createDispatchFromIdentifier', createDispatchFromIdentifier)
+
+function createDispatch(job --[[string]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]], userId --[[number]])
 	exports[GetCurrentResourceName()]:AddActivity({
 		oneofKind = 'dispatch',
 		dispatch = {
@@ -134,12 +141,13 @@ function createDispatch(job --[[string]], message --[[string]], description --[[
 end
 exports('createDispatch', createDispatch)
 
-function createCivilProtectionJobDispatch(message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]], identifier --[[string]])
-	for job, _ in pairs(Config.Dispatches.CivilProtectionJobs) do
-		createDispatch(job, message, description, x, y, anon, identifier)
-	end
-end
-exports('createCivilProtectionJobDispatch', createCivilProtectionJobDispatch)
+AddEventHandler('fivenet:createDispatch', function(job --[[string]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]])
+	local source = source
+
+	local userId = getUserIDFromIdentifier(getPlayerUniqueIdentifier(source))
+
+	createDispatch(job, message, description, x, y, anon, userId)
+end)
 
 -- Timeclock
 function setTimeclockEntry(identifier --[[string]], data --[[TimeclockEntry]])
