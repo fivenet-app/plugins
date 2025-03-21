@@ -2,6 +2,8 @@ RegisterNetEvent('fivenet:resetPassword')
 RegisterNetEvent('fivenet:openTokenMgmt')
 
 AddEventHandler('fivenet:resetPassword', function()
+	local source = source
+
 	local identifier = getPlayerUniqueIdentifier(source)
 	if not identifier then
 		print('no identifier returned for player', source)

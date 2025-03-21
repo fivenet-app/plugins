@@ -28,7 +28,11 @@ function getPlayerUniqueIdentifier(source)
 	elseif Config.Framework == 'qbcore' then
 		-- QBCore
 		local player = QBCore.Functions.GetPlayer(source)
-		return player.PlayerData.citizenid
+		if not player then
+			return nil
+		end
+
+		return player.PlayerData.cid .. ':' .. player.PlayerData.citizenid
 	else
 		-- Fallback
 		local license
@@ -83,7 +87,7 @@ function getPlayerById(source)
 	if Config.Framework == 'esx' then
         return ESX.GetPlayerFromId(source)
     elseif Config.Framework == 'qbcore' then
-        QBCore.Functions.GetPlayer(source)
+        return QBCore.Functions.GetPlayer(source)
     end
 
     return nil

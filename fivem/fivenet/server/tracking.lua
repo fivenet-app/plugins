@@ -30,12 +30,25 @@ CreateThread(function()
 	while true do
 		local locations = {}
 
-		for playerId, xPlayer in pairs(getPlayers()) do
-			if Config.Tracking.Jobs[xPlayer.job.name] then
+		local players = getPlayers()
+		for playerId, xPlayer in pairs(players) do
+			if xPlayer == nil then goto continue end
+
+			local job, identifier
+			if Config.Framework == 'qbcore' then
+				playerId = xPlayer.PlayerData.source
+				job = xPlayer.PlayerData.job.name
+				identifier = xPlayer.PlayerData.cid .. ':' .. xPlayer.PlayerData.citizenid
+			elseif Config.Framework == 'esx' then
+				job = xPlayer.job
+				identifier = xPlayer.identifier
+			end
+
+			if Config.Tracking.Jobs[job] then
 				local update = true
 
-				if playerLocations[xPlayer.identifier] then
-					local curLocation = playerLocations[xPlayer.identifier]
+				if playerLocations[identifier] then
+					local curLocation = playerLocations[identifier]
 					if IsNearVector(playerId, curLocation, 5.0) then
 						update = false
 					end
@@ -52,19 +65,23 @@ CreateThread(function()
 							hidden = 1
 						end
 
-						playerLocations[xPlayer.identifier] = coords
+						playerLocations[identifier] = coords
 
 						table.insert(locations, {
-							["identifier"] = xPlayer.identifier,
-							["job"] = xPlayer.job.name,
-							["x"] = coords.x,
-							["y"] = coords.y,
+							["identifier"] = identifier,
+							["job"] = job,
+							["coords"] = {
+								["x"] = coords.x,
+								["y"] = coords.y,
+							},
 							["hidden"] = hidden,
 							["remove"] = false,
 						})
 					end
 				end
 			end
+
+			::continue::
 		end
 
 		exports[GetCurrentResourceName()]:SendData({
@@ -89,6 +106,7 @@ if Config.Framework == 'esx' then
 
 		if onDuty then
 			-- If player is hidden, we don't bother adding them to the locations table now
+			local xPlayer = getPlayerById(source)
 			if Functions.CheckIfPlayerHidden(xPlayer) then return end
 
 			local coords = GetEntityCoords(GetPlayerPed(source))
@@ -118,11 +136,13 @@ if Config.Framework == 'esx' then
 	end)
 elseif Config.Framework == 'qbcore' then
 	AddEventHandler('QBCore:Server:OnJobUpdate', function(source, job)
+		local identifier = getPlayerUniqueIdentifier(source)
+
 		if job.onduty then
-			local player = getPlayerById(source)
+			local xPlayer = getPlayerById(source)
 
 			-- If player is hidden, we don't bother adding them to the locations table now
-			if Functions.CheckIfPlayerHidden(player) then return end
+			if Functions.CheckIfPlayerHidden(xPlayer) then return end
 
 			local coords = GetEntityCoords(GetPlayerPed(source))
 
@@ -131,7 +151,7 @@ elseif Config.Framework == 'qbcore' then
 				userLocations = {
 					users = {
 						{
-							identifier = player.PlayerData.citizenid,
+							identifier = identifier,
 							job = job.name,
 							coords = {
 								x = coords.x,

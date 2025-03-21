@@ -16,6 +16,7 @@ async function SetupClient(host: string, token: string, insecure: boolean): Prom
             authorization: `Bearer ${token}`,
         },
         abort: abort.signal,
+        timeout: 10000,
     });
 
     syncClient = new SyncServiceClient(transport);
