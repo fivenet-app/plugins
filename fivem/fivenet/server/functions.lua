@@ -121,7 +121,7 @@ function createDispatchFromIdentifier(job --[[string]], message --[[string]], de
 
 	createDispatch(job, message, description, x, y, anon, userId)
 end
-export('createDispatchFromIdentifier', createDispatchFromIdentifier)
+exports('createDispatchFromIdentifier', createDispatchFromIdentifier)
 
 function createDispatch(job --[[string]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]], userId --[[number]])
 	exports[GetCurrentResourceName()]:AddActivity({
