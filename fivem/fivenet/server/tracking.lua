@@ -104,6 +104,8 @@ if Config.Framework == 'esx' then
 		local job = getPlayerJob(source)
 		if not job then return end
 
+		if not Config.Tracking.Jobs[job] then return end
+
 		if onDuty then
 			-- If player is hidden, we don't bother adding them to the locations table now
 			local xPlayer = getPlayerById(source)
@@ -137,6 +139,8 @@ if Config.Framework == 'esx' then
 elseif Config.Framework == 'qbcore' then
 	AddEventHandler('QBCore:Server:OnJobUpdate', function(source, job)
 		local identifier = getPlayerUniqueIdentifier(source)
+
+		if not Config.Tracking.Jobs[job] then return end
 
 		if job.onduty then
 			local xPlayer = getPlayerById(source)
