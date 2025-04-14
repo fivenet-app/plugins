@@ -1,0 +1,39 @@
+name: Build and Release Plugins
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+permissions:
+  contents: write
+
+jobs:
+  node-tests:
+    name: Node Lint Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: pnpm
+
+      - name: Run pnpm build
+        env:
+          NUXT_UI_PRO_LICENSE: "${{ secrets.NUXT_UI_PRO_LICENSE }}"
+        run: make build-all
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Plugins
+          path: '*.zip'
