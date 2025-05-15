@@ -95,7 +95,7 @@ exports('setUserBloodType', setUserBloodType)
 
 -- Jobs User Activity
 -- activityType: 1 = HIRED, 2 = FIRED, 3 = PROMOTED, 4 = DEMOTED
-function addJobsUserActivity(job --[[string]], sIdentifier --[[string]], tIdentifier --[[string]], type --[[number]], reason --[[string]], data --[[JobsUserActivityData]])
+function addJobsUserActivity(job --[[string]], sIdentifier --[[string]], tIdentifier --[[string]], activityType --[[number]], reason --[[string]], data --[[JobsUserActivityData]])
 	local sourceUserId = getUserIDFromIdentifier(sIdentifier)
 	local targetUserId = getUserIDFromIdentifier(tIdentifier)
 
@@ -105,7 +105,7 @@ function addJobsUserActivity(job --[[string]], sIdentifier --[[string]], tIdenti
 			sourceUserId = sourceUserId,
 			targetUserId = targetUserId,
 			job = job,
-			type = type,
+			activityType = activityType,
 			reason = reason,
 			data = { data = data },
 		},
