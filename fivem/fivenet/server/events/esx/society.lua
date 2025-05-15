@@ -14,7 +14,7 @@ AddEventHandler('esx_society:hired', function(xPlayer, xTarget)
 	local job = ESX.GetPlayerInfo(xTarget, "job")
 	if not job then return end
 
-	addJobsUserActivity(job.name, sIdentifier, tIdentifier, 1, nil, "{}")
+	addJobsUserActivity(job.name, sIdentifier, tIdentifier, 1, nil, {})
 end)
 
 AddEventHandler('esx_society:gradeChanged', function(xPlayer, xTarget, promoted)
@@ -39,5 +39,5 @@ AddEventHandler('esx_society:fired', function(xPlayer, xTarget)
 	local job = ESX.GetPlayerInfo(xPlayer, "job")
 	if not job then return end
 
-	addJobsUserActivity(job.name, sIdentifier, tIdentifier, 2, nil, "{}")
+	addJobsUserActivity(job.name, sIdentifier, tIdentifier, 2, nil, {})
 end)

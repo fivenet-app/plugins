@@ -5,7 +5,7 @@ end
 -- Jail
 AddEventHandler('esx_prison:jailPlayer', function(pPlayer, xPlayer, time --[[number]])
 	local data = { jailChange = { seconds = time, admin = false }}
-	addUserActivity(pPlayer.identifier, xPlayer.identifier, 12, reason, data)
+	addUserActivity(pPlayer.identifier, xPlayer.identifier, 12, '', data)
 end)
 
 AddEventHandler('esx_prison:unjailedByPlayer', function(xPlayer, pPlayer, _, type --[[ 'police'/ 'admin']])
