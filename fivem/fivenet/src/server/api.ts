@@ -61,9 +61,11 @@ exports('TransferAccount', TransferAccount);
 type Data = SendDataRequest['data'];
 async function SendData(data: Data): Promise<SendDataResponse | undefined> {
     try {
-        const call = syncClient.sendData({
-            data: data,
-        });
+        const call = syncClient.sendData(
+            SendDataRequest.create({
+                data: data,
+            }),
+        );
 
         const { response } = await call;
         return response;
@@ -77,9 +79,11 @@ exports('SendData', SendData);
 type Activity = AddActivityRequest['activity'];
 async function AddActivity(activity: Activity): Promise<AddActivityResponse | undefined> {
     try {
-        const call = syncClient.addActivity({
-            activity: activity,
-        });
+        const call = syncClient.addActivity(
+            AddActivityRequest.create({
+                activity: activity,
+            }),
+        );
 
         const { response } = await call;
         return response;
