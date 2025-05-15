@@ -26,7 +26,7 @@ AddEventHandler('esx_society:gradeChanged', function(xPlayer, xTarget, promoted)
 	local job = ESX.GetPlayerInfo(xTarget, "job")
 	if not job then return end
 
-	local data = { gradeChange = { grade = job.grade, gradeLabel = job.grade_label }}
+	local data = { gradeChange = { grade = job.grade, gradeLabel = job.grade_label } }
 	addJobsUserActivity(job.name, sIdentifier, tIdentifier, promoted and 3 or 4, nil, data)
 end)
 

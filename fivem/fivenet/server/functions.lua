@@ -57,7 +57,7 @@ function addUserActivity(sIdentifier --[[string/nil]], tIdentifier --[[string]],
 			targetUserId = targetUserId,
 			type = type,
 			reason = reason,
-			data = data,
+			data = { data = data },
 		},
 	})
 end
@@ -107,11 +107,27 @@ function addJobsUserActivity(job --[[string]], sIdentifier --[[string]], tIdenti
 			job = job,
 			type = type,
 			reason = reason,
-			data = data,
+			data = { data = data },
 		},
 	})
 end
 exports('addJobsUserActivity', addJobsUserActivity)
+
+-- Jobs User Props
+function addJobsUserProps(identifier --[[string]], reason --[[string]], props --[[JobsUserProps]])
+	local userId = getUserIDFromIdentifier(identifier)
+	props.userId = userId
+
+
+	exports[GetCurrentResourceName()]:AddActivity({
+		oneofKind = 'jobsUserProps',
+		jobsUserProps = {
+			reason = reason,
+			props = props,
+		},
+	})
+end
+exports('addJobsUserProps', addJobsUserProps)
 
 -- Dispatches
 RegisterNetEvent('fivenet:createDispatch')
@@ -150,7 +166,7 @@ AddEventHandler('fivenet:createDispatch', function(job --[[string]], message --[
 end)
 
 -- Timeclock
-function setTimeclockEntry(identifier --[[string]], data --[[TimeclockEntry]])
+function setTimeclockEntry(identifier --[[string]], data --[[TimeclockUpdate]])
 	local userId = getUserIDFromIdentifier(identifier)
 
 	data.userId = userId
