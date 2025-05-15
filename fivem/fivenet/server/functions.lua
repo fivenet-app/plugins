@@ -57,7 +57,7 @@ function addUserActivity(sIdentifier --[[string/nil]], tIdentifier --[[string]],
 			targetUserId = targetUserId,
 			type = type,
 			reason = reason,
-			data = { data = data },
+			data = (data and { data = data } or nil),
 		},
 	})
 end
@@ -107,7 +107,7 @@ function addJobsUserActivity(job --[[string]], sIdentifier --[[string]], tIdenti
 			job = job,
 			activityType = activityType,
 			reason = reason,
-			data = { data = data },
+			data = (data and { data = data } or nil),
 		},
 	})
 end
