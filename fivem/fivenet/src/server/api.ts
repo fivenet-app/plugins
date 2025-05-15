@@ -36,6 +36,7 @@ async function RegisterAccount(
         const { response } = await call;
         return response;
     } catch (e) {
+        console.error('Error registering account:', e);
         return undefined;
     }
 }
@@ -51,6 +52,7 @@ async function TransferAccount(oldLicense: string, newLicense: string): Promise<
         const { response } = await call;
         return response;
     } catch (e) {
+        console.error(`Error transfering account (old: ${oldLicense}, new: ${newLicense}):`, e);
         return undefined;
     }
 }
@@ -66,6 +68,7 @@ async function SendData(data: Data): Promise<SendDataResponse | undefined> {
         const { response } = await call;
         return response;
     } catch (e) {
+        console.error('Error sending data:', e);
         return undefined;
     }
 }
@@ -81,6 +84,7 @@ async function AddActivity(activity: Activity): Promise<AddActivityResponse | un
         const { response } = await call;
         return response;
     } catch (e) {
+        console.error('Error adding activity:', e);
         return undefined;
     }
 }

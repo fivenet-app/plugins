@@ -36,7 +36,7 @@ function getPlayerUniqueIdentifier(source)
 	else
 		-- Fallback
 		local license
-		for k, v in ipairs(GetPlayerIdentifiers(source)) do
+		for _, v in ipairs(GetPlayerIdentifiers(source)) do
 			if string.match(v, 'license:') then
 				license = v
 				break
@@ -70,17 +70,15 @@ function getPlayerJob(source)
 			grade = player.PlayerData.job.grade.level,
 			gradeLabel = player.PlayerData.job.grade.name
 		}
-	else
-		-- Fallback
-		return {
-			name = 'unemployed',
-			label = 'Unemployed',
-			grade = 0,
-			gradeLabel = 'Unemployed'
-		}
 	end
 
-	return nil
+	-- Fallback
+	return {
+		name = 'unemployed',
+		label = 'Unemployed',
+		grade = 0,
+		gradeLabel = 'Unemployed'
+	}
 end
 
 function getPlayerById(source)
