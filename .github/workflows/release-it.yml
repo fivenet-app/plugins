@@ -10,8 +10,6 @@ jobs:
   run-tests:
     uses: ./.github/workflows/push.yml
     secrets: inherit
-    with:
-      skipImageBuild: true
 
   run_release_it:
     runs-on: ubuntu-latest
