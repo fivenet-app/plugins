@@ -1,4 +1,4 @@
-name: Build and Release Plugins
+name: Test Build Plugins
 on:
   push:
     branches:
