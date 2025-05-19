@@ -18,7 +18,7 @@ jobs:
         with:
           node-version-file: '.nvmrc'
 
-      - name: Run pnpm build
+      - name: Run build
         env:
           NUXT_UI_PRO_LICENSE: "${{ secrets.NUXT_UI_PRO_LICENSE }}"
         run: make build-all
