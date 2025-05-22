@@ -203,10 +203,10 @@
   resolved "https://registry.yarnpkg.com/@fivenet-app/gen/-/gen-2025.4.8.tgz#c8d99500abfab352618dc38f68d921ec6d9f87e1"
   integrity sha512-+i7th4l+bhDoDj/D/yFROwcbovB2Cd5Bp6Kkb4nNfmRxWhSUdLmJQ2oNvv5qVSrvL+UTk7oJ3kWmM0c6/440ng==
 
-"@grpc/grpc-js@1.13.3":
-  version "1.13.3"
-  resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.13.3.tgz#6ad08d186c2a8651697085f790c5c68eaca45904"
-  integrity sha512-FTXHdOoPbZrBjlVLHuKbDZnsTxXv2BlHF57xw6LuThXacXvtkahEPED0CKMk6obZDf65Hv4k3z62eyPNpvinIg==
+"@grpc/grpc-js@1.13.4":
+  version "1.13.4"
+  resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.13.4.tgz#922fbc496e229c5fa66802d2369bf181c1df1c5a"
+  integrity sha512-GsFaMXCkMqkKIvwCQjCrwH+GHbPKBjhwo/8ZuUkWHqbI73Kky9I+pQltrlT0+MWpedCoosda53lgjYfyEPgxBg==
   dependencies:
     "@grpc/proto-loader" "^0.7.13"
     "@js-sdsl/ordered-map" "^4.4.2"
