@@ -1,5 +1,8 @@
 Config = {}
 
+-- Enable debug mode for additional logging
+Config.Debug = false
+
 -- Your FiveNet URL without a trailing slash
 Config.WebURL = 'https://demo.fivenet.app'
 

@@ -1,5 +1,8 @@
 Config = {}
 
+-- Enable debug mode for additional logging
+Config.Debug = false
+
 -- !!! Must be set to the framework you are using! Can be `esx` or `qbcore`
 Config.Framework = 'esx'
 

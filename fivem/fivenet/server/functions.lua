@@ -95,13 +95,13 @@ exports('setUserBloodType', setUserBloodType)
 
 -- Jobs User Activity
 -- activityType: 1 = HIRED, 2 = FIRED, 3 = PROMOTED, 4 = DEMOTED
-function addJobsUserActivity(job --[[string]], sIdentifier --[[string]], tIdentifier --[[string]], activityType --[[number]], reason --[[string]], data --[[JobsUserActivityData]])
+function addJobColleagueActivity(job --[[string]], sIdentifier --[[string]], tIdentifier --[[string]], activityType --[[number]], reason --[[string]], data --[[JobColleagueActivityData]])
 	local sourceUserId = getUserIDFromIdentifier(sIdentifier)
 	local targetUserId = getUserIDFromIdentifier(tIdentifier)
 
 	exports[GetCurrentResourceName()]:AddActivity({
-		oneofKind = 'jobsUserActivity',
-		jobsUserActivity = {
+		oneofKind = 'jobColleagueActivity',
+		jobColleagueActivity = {
 			sourceUserId = sourceUserId,
 			targetUserId = targetUserId,
 			job = job,
@@ -111,23 +111,23 @@ function addJobsUserActivity(job --[[string]], sIdentifier --[[string]], tIdenti
 		},
 	})
 end
-exports('addJobsUserActivity', addJobsUserActivity)
+exports('addJobColleagueActivity', addJobColleagueActivity)
 
 -- Jobs User Props
-function addJobsUserProps(identifier --[[string]], reason --[[string]], props --[[JobsUserProps]])
+function addColleagueProps(identifier --[[string]], reason --[[string]], props --[[ColleagueProps]])
 	local userId = getUserIDFromIdentifier(identifier)
 	props.userId = userId
 
 
 	exports[GetCurrentResourceName()]:AddActivity({
-		oneofKind = 'jobsUserProps',
-		jobsUserProps = {
+		oneofKind = 'colleagueProps',
+		colleagueProps = {
 			reason = reason,
 			props = props,
 		},
 	})
 end
-exports('addJobsUserProps', addJobsUserProps)
+exports('addColleagueProps', addColleagueProps)
 
 -- Dispatches
 RegisterNetEvent('fivenet:createDispatch')
@@ -172,8 +172,20 @@ function setTimeclockEntry(identifier --[[string]], data --[[TimeclockUpdate]])
 	data.userId = userId
 
 	exports[GetCurrentResourceName()]:AddActivity({
-		oneofKind = 'jobsTimeclock',
-		jobsTimeclock = data,
+		oneofKind = 'jobTimeclock',
+		jobTimeclock = data,
+	})
+end
+
+-- User Updates (use carefully! Only available when the ESX compatibility mode is disabled on the FiveNet server)
+function sendUserUpdate(identifier --[[string]], data --[[UserUpdate]])
+	local userId = getUserIDFromIdentifier(identifier)
+
+	data.userId = userId
+
+	exports[GetCurrentResourceName()]:AddActivity({
+		oneofKind = 'userUpdate',
+		userUpdate = data,
 	})
 end
 

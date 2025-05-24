@@ -6,9 +6,14 @@ let transport: GrpcTransport;
 export let syncClient: SyncServiceClient;
 let abort: AbortController | undefined;
 
-async function SetupClient(host: string, token: string, insecure: boolean): Promise<void> {
+export let DEBUG = false;
+
+async function SetupClient(host: string, token: string, insecure: boolean, debug: boolean): Promise<void> {
     abort = new AbortController();
 
+    DEBUG = debug;
+
+    DEBUG && console.debug('Setting up GRPC client for FiveNet Sync API', host)
     transport = new GrpcTransport({
         host: host,
         channelCredentials: insecure ? ChannelCredentials.createInsecure() : ChannelCredentials.createSsl(),
@@ -27,7 +32,7 @@ on('onResourceStop', async (resourceName: string) => {
     if (resourceName !== GetCurrentResourceName()) return;
 
     if (abort) {
-        abort.abort('Resources stop');
+        abort.abort('Resource stopped');
     }
     if (transport) {
         transport.close();

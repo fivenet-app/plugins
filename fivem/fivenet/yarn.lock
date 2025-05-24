@@ -198,15 +198,15 @@
     "@eslint/core" "^0.14.0"
     levn "^0.4.1"
 
-"@fivenet-app/gen@2025.4.8":
-  version "2025.4.8"
-  resolved "https://registry.yarnpkg.com/@fivenet-app/gen/-/gen-2025.4.8.tgz#c8d99500abfab352618dc38f68d921ec6d9f87e1"
-  integrity sha512-+i7th4l+bhDoDj/D/yFROwcbovB2Cd5Bp6Kkb4nNfmRxWhSUdLmJQ2oNvv5qVSrvL+UTk7oJ3kWmM0c6/440ng==
+"@fivenet-app/gen@2025.5.2":
+  version "2025.5.2"
+  resolved "https://registry.yarnpkg.com/@fivenet-app/gen/-/gen-2025.5.2.tgz#e337308948af1cb4c16f6e5a09157454738bac27"
+  integrity sha512-YlWuUy0GZlnP6EO5ugH93UHl2f6t7pYzknrqg9YDhLTyjrIr8rwPUJ6OvlwD54gkLgpPh4SHDhOg4QI4BQWOcQ==
 
-"@grpc/grpc-js@1.13.3":
-  version "1.13.3"
-  resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.13.3.tgz#6ad08d186c2a8651697085f790c5c68eaca45904"
-  integrity sha512-FTXHdOoPbZrBjlVLHuKbDZnsTxXv2BlHF57xw6LuThXacXvtkahEPED0CKMk6obZDf65Hv4k3z62eyPNpvinIg==
+"@grpc/grpc-js@1.13.4":
+  version "1.13.4"
+  resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.13.4.tgz#922fbc496e229c5fa66802d2369bf181c1df1c5a"
+  integrity sha512-GsFaMXCkMqkKIvwCQjCrwH+GHbPKBjhwo/8ZuUkWHqbI73Kky9I+pQltrlT0+MWpedCoosda53lgjYfyEPgxBg==
   dependencies:
     "@grpc/proto-loader" "^0.7.13"
     "@js-sdsl/ordered-map" "^4.4.2"
@@ -359,10 +359,10 @@
   resolved "https://registry.npmjs.org/@types/json-schema/-/json-schema-7.0.15.tgz"
   integrity sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==
 
-"@types/node@22.15.19":
-  version "22.15.19"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.15.19.tgz#ba9f321675243af0456d607fa82a4865931e0cef"
-  integrity sha512-3vMNr4TzNQyjHcRZadojpRaD9Ofr6LsonZAoQ+HMUa/9ORTPoxVIw0e0mpqWpdjj8xybyCM+oKOUH2vwFu/oEw==
+"@types/node@22.15.21":
+  version "22.15.21"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.15.21.tgz#196ef14fe20d87f7caf1e7b39832767f9a995b77"
+  integrity sha512-EV/37Td6c+MgKAbkcLG6vqZ2zEYHD7bvSrzqqs2RIhbA6w3x+Dqz8MZM3sP6kGTeLrdoOgKZe+Xja7tUB2DNkQ==
   dependencies:
     undici-types "~6.21.0"
 

@@ -14,7 +14,7 @@ AddEventHandler('esx_society:hired', function(xPlayer, xTarget)
 	local job = ESX.GetPlayerInfo(xTarget, "job")
 	if not job then return end
 
-	addJobsUserActivity(job.name, sIdentifier, tIdentifier, 1, nil, {})
+	addJobColleagueActivity(job.name, sIdentifier, tIdentifier, 1, nil, {})
 end)
 
 AddEventHandler('esx_society:gradeChanged', function(xPlayer, xTarget, promoted)
@@ -27,7 +27,7 @@ AddEventHandler('esx_society:gradeChanged', function(xPlayer, xTarget, promoted)
 	if not job then return end
 
 	local data = { oneofKind = 'gradeChange', gradeChange = { grade = job.grade, gradeLabel = job.grade_label } }
-	addJobsUserActivity(job.name, sIdentifier, tIdentifier, promoted and 3 or 4, nil, data)
+	addJobColleagueActivity(job.name, sIdentifier, tIdentifier, promoted and 3 or 4, nil, data)
 end)
 
 AddEventHandler('esx_society:fired', function(xPlayer, xTarget)
@@ -39,5 +39,5 @@ AddEventHandler('esx_society:fired', function(xPlayer, xTarget)
 	local job = ESX.GetPlayerInfo(xPlayer, "job")
 	if not job then return end
 
-	addJobsUserActivity(job.name, sIdentifier, tIdentifier, 2, nil, {})
+	addJobColleagueActivity(job.name, sIdentifier, tIdentifier, 2, nil, {})
 end)

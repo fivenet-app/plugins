@@ -11,14 +11,14 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
-        "@fivenet-app/gen": "2025.4.8",
-        "@grpc/grpc-js": "1.13.3",
+        "@fivenet-app/gen": "2025.5.2",
+        "@grpc/grpc-js": "1.13.4",
         "@protobuf-ts/grpc-transport": "2.10.0"
     },
     "devDependencies": {
         "@citizenfx/server": "2.0.14862-1",
         "@total-typescript/ts-reset": "0.6.1",
-        "@types/node": "22.15.19",
+        "@types/node": "22.15.21",
         "esbuild": "0.25.4",
         "eslint": "9.27.0",
         "eslint-config-prettier": "10.1.5",

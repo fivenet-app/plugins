@@ -9,6 +9,8 @@ function IsInTablet()
 end
 
 AddEventHandler('fivenet:viewTablet', function(state)
+	if Config.Debug then print('fivenet:viewTablet called with state:', state) end
+
 	if not state then
 		blockInputs = false
 		CloseTablet()
@@ -177,11 +179,19 @@ AddEventHandler('onResourceStop', function(resourceName)
 	end
 end)
 
-RegisterNetEvent('esx:onPlayerLogout', function()
-	if IsInTablet() then
-		CloseTablet()
-	end
-end)
+if Config.Framework == 'esx' then
+	RegisterNetEvent('esx:onPlayerLogout', function()
+		if IsInTablet() then
+			CloseTablet()
+		end
+	end)
+elseif Config.Framework == 'qbcore' then
+	RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
+		if IsInTablet() then
+			CloseTablet()
+		end
+	end)
+end
 
 -- NUI Callback Handlers for FiveNet actions
 RegisterNUICallback('setWaypoint', function(data, cb)

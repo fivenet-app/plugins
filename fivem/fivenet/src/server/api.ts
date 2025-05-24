@@ -7,13 +7,14 @@ import {
     SendDataResponse,
     TransferAccountResponse,
 } from '@fivenet-app/gen/services/sync/sync';
-import { syncClient } from './client';
+import { DEBUG, syncClient } from './client';
 
 async function GetStatus(): Promise<GetStatusResponse | undefined> {
     try {
         const call = syncClient.getStatus({});
 
         const { response } = await call;
+        DEBUG && console.debug('GetStatus response:', response);
         return response;
     } catch (e) {
         return undefined;
@@ -26,6 +27,7 @@ async function RegisterAccount(
     resetToken: boolean,
     lastCharId?: number,
 ): Promise<RegisterAccountResponse | undefined> {
+    DEBUG && console.debug('RegisterAccount request:', license, resetToken, lastCharId);
     try {
         const call = syncClient.registerAccount({
             identifier: license,
@@ -34,6 +36,7 @@ async function RegisterAccount(
         });
 
         const { response } = await call;
+        DEBUG && console.debug('RegisterAccount response:', response);
         return response;
     } catch (e) {
         console.error('Error registering account:', e);
@@ -43,6 +46,7 @@ async function RegisterAccount(
 exports('RegisterAccount', RegisterAccount);
 
 async function TransferAccount(oldLicense: string, newLicense: string): Promise<TransferAccountResponse | undefined> {
+    DEBUG && console.debug('TransferAccount response:', oldLicense, newLicense);
     try {
         const call = syncClient.transferAccount({
             oldLicense: oldLicense,
@@ -50,6 +54,7 @@ async function TransferAccount(oldLicense: string, newLicense: string): Promise<
         });
 
         const { response } = await call;
+        DEBUG && console.debug('TransferAccount response:', response);
         return response;
     } catch (e) {
         console.error(`Error transfering account (old: ${oldLicense}, new: ${newLicense}):`, e);
@@ -60,6 +65,7 @@ exports('TransferAccount', TransferAccount);
 
 type Data = SendDataRequest['data'];
 async function SendData(data: Data): Promise<SendDataResponse | undefined> {
+    DEBUG && console.debug('SendData response:', data);
     try {
         const call = syncClient.sendData(
             SendDataRequest.create({
@@ -68,6 +74,7 @@ async function SendData(data: Data): Promise<SendDataResponse | undefined> {
         );
 
         const { response } = await call;
+        DEBUG && console.debug('SendData response:', response);
         return response;
     } catch (e) {
         console.error('Error sending data:', e);
@@ -78,6 +85,7 @@ exports('SendData', SendData);
 
 type Activity = AddActivityRequest['activity'];
 async function AddActivity(activity: Activity): Promise<AddActivityResponse | undefined> {
+    DEBUG && console.debug('AddActivity request:', activity);
     try {
         const call = syncClient.addActivity(
             AddActivityRequest.create({
@@ -86,6 +94,7 @@ async function AddActivity(activity: Activity): Promise<AddActivityResponse | un
         );
 
         const { response } = await call;
+        DEBUG && console.debug('AddActivity response:', response);
         return response;
     } catch (e) {
         console.error('Error adding activity:', e);
