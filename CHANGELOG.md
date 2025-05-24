@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.2] - 2025-05-24
+
+### 🐛 Fixes
+
+- Update to use fivenet v2025.5.3
+
+### ⚙️ Miscellaneous Tasks
+
+- Fix release-it clearing the changelog due to no git history being
+
 ## [1.0.1] - 2025-05-24
 
 ### 🚀 Features
