@@ -9,10 +9,11 @@ Please note that a bunch of custom events are necessary to be added to ESX plugi
 
 ## Requirements
 
-* FiveM Server version `10488` and higher.
-    * With the Yarn Builder installed or you must manually build the code.
-* Frameworks ESX and QB-Core Frameworks are supported via the `Config.Framework` option in the `config/server.lua` file
-* A running FiveNet server or at least FiveNet's DBSync ready
+- FiveM Server version `10488` and higher.
+    - With the Yarn Builder installed or you must manually build the code.
+- Frameworks ESX and QB-Core Frameworks are supported via the `Config.Framework` option in the `config/server.lua` file
+- A running FiveNet server or at least FiveNet's DBSync configured.
+    - Must be running at least FiveNet version `v2025.5.3` or higher.
 
 ## Building
 

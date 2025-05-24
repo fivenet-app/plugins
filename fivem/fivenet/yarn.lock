@@ -198,10 +198,10 @@
     "@eslint/core" "^0.14.0"
     levn "^0.4.1"
 
-"@fivenet-app/gen@2025.5.2":
-  version "2025.5.2"
-  resolved "https://registry.yarnpkg.com/@fivenet-app/gen/-/gen-2025.5.2.tgz#e337308948af1cb4c16f6e5a09157454738bac27"
-  integrity sha512-YlWuUy0GZlnP6EO5ugH93UHl2f6t7pYzknrqg9YDhLTyjrIr8rwPUJ6OvlwD54gkLgpPh4SHDhOg4QI4BQWOcQ==
+"@fivenet-app/gen@2025.5.3":
+  version "2025.5.3"
+  resolved "https://registry.yarnpkg.com/@fivenet-app/gen/-/gen-2025.5.3.tgz#4affcc5166e175188dc1bcd8b5b14f8f1a4f4ec5"
+  integrity sha512-71qmf4I3IdcU7dA1glAtKxeCIWGMxzgsFHLSHedz2lXaMz6N//UX0AcMrQiWwMtMuGjMe2OcqkV1hfVYBUDhNA==
 
 "@grpc/grpc-js@1.13.4":
   version "1.13.4"

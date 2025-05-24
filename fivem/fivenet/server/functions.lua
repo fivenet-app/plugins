@@ -100,8 +100,8 @@ function addJobColleagueActivity(job --[[string]], sIdentifier --[[string]], tId
 	local targetUserId = getUserIDFromIdentifier(tIdentifier)
 
 	exports[GetCurrentResourceName()]:AddActivity({
-		oneofKind = 'jobColleagueActivity',
-		jobColleagueActivity = {
+		oneofKind = 'colleagueActivity',
+		colleagueActivity = {
 			sourceUserId = sourceUserId,
 			targetUserId = targetUserId,
 			job = job,

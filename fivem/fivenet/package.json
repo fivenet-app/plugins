@@ -11,7 +11,7 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
-        "@fivenet-app/gen": "2025.5.2",
+        "@fivenet-app/gen": "2025.5.3",
         "@grpc/grpc-js": "1.13.4",
         "@protobuf-ts/grpc-transport": "2.10.0"
     },
