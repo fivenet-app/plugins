@@ -10,7 +10,7 @@ Please note that a bunch of custom events are necessary to be added to ESX plugi
 ## Requirements
 
 - FiveM Server version `10488` and higher.
-    - With the Yarn Builder installed or you must manually build the code.
+    - If you don't use a compiled release, you need to modify the Yarn Builder by adding `--ignore-engines` flag to the `yarn_cli.js` call, see [the diff below](#yarn-builder-patch).
 - Frameworks ESX and QB-Core Frameworks are supported via the `Config.Framework` option in the `config/server.lua` file
 - A running FiveNet server or at least FiveNet's DBSync configured.
     - Must be running at least FiveNet version `v2025.5.3` or higher.
@@ -57,3 +57,23 @@ FiveM base events such as `onResourceStart`, etc. are not listed.
 | `esx_society:fired`             | Custom   |                                                                                           | [`server/events/society.lua`](server/events/society.lua)                                                   |
 | `esx_society:gradeChanged`      | Custom   |                                                                                           | [`server/events/society.lua`](server/events/society.lua)                                                   |
 | `esx_society:hired`             | Custom   |                                                                                           | [`server/events/society.lua`](server/events/society.lua)                                                   |
+
+## Yarn Builder Patch
+
+This is the diff/patch to apply to the yarn_builder resource to allow it to compile the FiveNet plugin correctly, if you are not using the available pre-built release build.
+
+```diff
+diff --git a/resources/[BASE]/[system]/[builders]/yarn/yarn_builder.js b/resources/[BASE]/[system]/[builders]/yarn/yarn_builder.js
+index 5e85d839ae..47ce760626 100644
+--- a/resources/[BASE]/[system]/[builders]/yarn/yarn_builder.js
++++ b/resources/[BASE]/[system]/[builders]/yarn/yarn_builder.js
+@@ -43,7 +43,7 @@ const yarnBuildTask = {
+ 			currentBuildingModule = resourceName;
+ 			const proc = child_process.fork(
+ 				require.resolve('./yarn_cli.js'),
+-				['install', '--ignore-scripts', '--cache-folder', path.join(initCwd, 'cache', 'yarn-cache'), '--mutex', 'file:' + path.join(initCwd, 'cache', 'yarn-mutex')],
++				['install', '--ignore-scripts', '--ignore-engines', '--cache-folder', path.join(initCwd, 'cache', 'yarn-cache'), '--mutex', 'file:' + path.join(initCwd, 'cache', 'yarn-mutex')],
+ 				{
+ 					cwd: path.resolve(GetResourcePath(resourceName)),
+ 					stdio: 'pipe',
+```
