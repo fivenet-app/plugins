@@ -13,7 +13,7 @@
     "dependencies": {
         "@fivenet-app/gen": "2025.5.3",
         "@grpc/grpc-js": "1.13.4",
-        "@protobuf-ts/grpc-transport": "2.10.0"
+        "@protobuf-ts/grpc-transport": "2.11.1"
     },
     "devDependencies": {
         "@citizenfx/server": "2.0.14862-1",
