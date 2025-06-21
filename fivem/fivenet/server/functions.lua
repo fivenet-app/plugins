@@ -7,15 +7,20 @@ end
 
 local function getUserIDFromIdentifier(identifier --[[string]])
 	local query
+	local params = { identifier }
+
 	if Config.Framework == 'esx' then
 		query = 'SELECT `id` FROM `users` WHERE `identifier` = ? LIMIT 1'
 	elseif Config.Framework == 'qbcore' then
-		query = 'SELECT `id` FROM `players` WHERE `citizenid` = ? LIMIT 1'
+		params[1] = getLicenseFromIdentifier(identifier)
+		params[2] = string.sub(identifier, 1, (string.find(identifier, ':', 1, true) or 0) - 1)
+
+		query = 'SELECT `id` FROM `players` WHERE `citizenid` = ? AND `cid` = ? LIMIT 1'
 	else
 		return 0
 	end
 
-	local row = MySQL.single.await(query, { identifier })
+	local row = MySQL.single.await(query, params)
 	if not row then
 		return 0
 	end
@@ -157,10 +162,19 @@ function createDispatch(job --[[string]], message --[[string]], description --[[
 end
 exports('createDispatch', createDispatch)
 
-AddEventHandler('fivenet:createDispatch', function(job --[[string]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]])
+AddEventHandler('fivenet:createDispatchFromClient', function(job --[[string]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]])
 	local source = source
 
-	local userId = getUserIDFromIdentifier(getPlayerUniqueIdentifier(source))
+	TriggerEvent('fivenet:createDispatch', source, job, message, description, x, y, anon)
+end)
+
+AddEventHandler('fivenet:createDispatch', function(source, job --[[string]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]])
+	local userId = nil
+	if Config.Framework == 'qbcore' then
+		userId = getUserIDFromIdentifier(getPlayerUniqueIdentifier(source))
+	else
+		userId = getLicenseFromIdentifier(getPlayerUniqueIdentifier(source))
+	end
 
 	createDispatch(job, message, description, x, y, anon, userId)
 end)
