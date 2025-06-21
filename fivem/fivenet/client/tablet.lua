@@ -55,7 +55,7 @@ function OpenTablet()
 
 	usingTablet = true
 
-	CreateThread(function()
+	Citizen.CreateThread(function()
 		while usingTablet do
 			BlockWeaponWheelThisFrame()
 
@@ -73,6 +73,28 @@ function OpenTablet()
 			DisableControlAction(0, 75, true) -- Exit Vehicle
 			DisableControlAction(0, 81, true) -- Next Radio (Vehicle)
 			DisableControlAction(0, 82, true) -- Previous Radio (Vehicle)
+			DisableControlAction(0, 14, true)  -- Scrollwheel up
+			DisableControlAction(0, 15, true)  -- Scrollwheel down
+			DisableControlAction(0, 16, true)  -- Select next weapon (scrollwheel down)
+			DisableControlAction(0, 17, true)  -- Select previous weapon (scrollwheel up)
+			DisableControlAction(0, 99, true)  -- Vehicle select next weapon (scrollwheel up)
+			DisableControlAction(0, 100, true) -- Vehicle select previous weapon (scrollwheel down)
+			DisableControlAction(0, 115, true) -- Vehicle flying select next weapon (scrollwheel up)
+			DisableControlAction(0, 116, true) -- Vehicle flying select previous weapon (scrollwheel down)
+			DisableControlAction(0, 180, true) -- Cellphone scroll forward (scrollwheel down)
+			DisableControlAction(0, 181, true) -- Cellphone scroll backward (scrollwheel up)
+			DisableControlAction(0, 198, true) -- Frontend right axis y (scrollwheel down)
+			DisableControlAction(0, 241, true) -- Increase replay FOV (scrollwheel up)
+			DisableControlAction(0, 242, true) -- Decrease replay FOV (scrollwheel down)
+			DisableControlAction(0, 261, true) -- Scroll up previous weapon (scrollwheel up)
+			DisableControlAction(0, 262, true) -- Scroll down next weapon (scrollwheel down)
+			DisableControlAction(0, 96, true)  -- Cinematic camera scroll up (scrollwheel up)
+			DisableControlAction(0, 97, true)  -- Cinematic camera scroll down (scrollwheel down)
+			DisableControlAction(0, 241, true) -- Replay FOV increase (scrollwheel up)
+			DisableControlAction(0, 242, true) -- Replay FOV decrease (scrollwheel down)
+			DisableControlAction(0, 180, true) -- Cellphone scroll forward (scrollwheel down)
+			DisableControlAction(0, 181, true) -- Cellphone scroll backward (scrollwheel up)
+			DisableControlAction(0, 24, true) -- Attack
 
 			if blockInputs then
 				DisableAllControlActions(0)
@@ -85,11 +107,11 @@ function OpenTablet()
 	end)
 
 	-- Handles pause menu state for tablet
-	CreateThread(function()
+	Citizen.CreateThread(function()
 		while usingTablet do
 			Wait(500)
 			local isPauseOpen = IsPauseMenuActive() ~= false
-			-- Handle if the phone is already visible and escape menu is opened
+			-- Handle if the tablet is already visible and escape menu is opened
 			if isPauseOpen and IsInTablet() then
 				CloseTablet()
 				break
@@ -124,7 +146,7 @@ function CloseTablet()
 	RemoveAnimDict(dict)
 
 	-- Unblock with delay so escape key isn't handled by the game
-	CreateThread(function()
+	Citizen.CreateThread(function()
 		Wait(100)
 		usingTablet = false
 	end)
@@ -161,7 +183,7 @@ RegisterCommand('tabletfix', function()
 	SendNUIMessage({type = 'tabletfix', webUrl = Config.WebURL})
 end)
 
-CreateThread(function()
+Citizen.CreateThread(function()
 	TriggerEvent('chat:addSuggestion', '/tablet', 'FiveNet Tablet öffnen')
 	TriggerEvent('chat:addSuggestion', '/tabletfix', 'Probleme mit FiveNet Tablet lösen')
 end)

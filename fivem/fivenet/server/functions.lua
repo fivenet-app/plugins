@@ -135,7 +135,7 @@ end
 exports('addColleagueProps', addColleagueProps)
 
 -- Dispatches
-RegisterNetEvent('fivenet:createDispatch')
+RegisterNetEvent('fivenet:createDispatchFromClient')
 
 function createDispatchFromIdentifier(job --[[string]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]], identifier --[[string]])
 	local userId = getUserIDFromIdentifier(identifier)
@@ -165,15 +165,27 @@ exports('createDispatch', createDispatch)
 AddEventHandler('fivenet:createDispatchFromClient', function(job --[[string]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]])
 	local source = source
 
+	-- If x or y is nil, get the player's current entity coordinates
+	if x == nil or y == nil then
+		local ped = GetPlayerPed(source)
+		if ped and ped ~= 0 then
+			local coords = GetEntityCoords(ped)
+			x = coords.x
+			y = coords.y
+		end
+	end
+
 	TriggerEvent('fivenet:createDispatch', source, job, message, description, x, y, anon)
 end)
 
 AddEventHandler('fivenet:createDispatch', function(source, job --[[string]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]])
 	local userId = nil
-	if Config.Framework == 'qbcore' then
-		userId = getUserIDFromIdentifier(getPlayerUniqueIdentifier(source))
-	else
-		userId = getLicenseFromIdentifier(getPlayerUniqueIdentifier(source))
+	if not anon then
+		if Config.Framework == 'qbcore' then
+			userId = getUserIDFromIdentifier(getPlayerUniqueIdentifier(source))
+		else
+			userId = getLicenseFromIdentifier(getPlayerUniqueIdentifier(source))
+		end
 	end
 
 	createDispatch(job, message, description, x, y, anon, userId)

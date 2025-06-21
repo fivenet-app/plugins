@@ -26,7 +26,7 @@ if not Config.Tracking.Enable then
 	return
 end
 
-CreateThread(function()
+Citizen.CreateThread(function()
 	while true do
 		local locations = {}
 
@@ -201,7 +201,7 @@ end
 -- Resource Start
 AddEventHandler('onResourceStart', function(resourceName)
 	if resourceName == GetCurrentResourceName() and GetConvar('fnet_clear_on_start', 'false') == 'true' then
-		CreateThread(function()
+		Citizen.CreateThread(function()
 			Wait(1000)
 			-- Clear user locations table on resource (re-)start, which most likely will be server restarts
 			exports[GetCurrentResourceName()]:SendData({
