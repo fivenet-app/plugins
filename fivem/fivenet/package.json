@@ -22,7 +22,7 @@
         "esbuild": "0.25.4",
         "eslint": "9.27.0",
         "eslint-config-prettier": "10.1.5",
-        "eslint-plugin-prettier": "5.4.0",
+        "eslint-plugin-prettier": "5.5.3",
         "prettier": "3.5.3",
         "prettier-plugin-organize-imports": "4.1.0",
         "prettier-plugin-tailwindcss": "0.6.11",
