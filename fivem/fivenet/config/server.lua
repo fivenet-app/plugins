@@ -10,6 +10,10 @@ Config.Framework = 'esx'
 Config.API = {}
 -- Your FiveNet Hostname, must be with port if your port is not 443,
 -- requires the FiveNet instance to be using HTTPS.
+-- ! Make sure to not include the protocol (http:// or https://) here!
+-- ! Don't include a trailing slash!
+--
+-- Example: 'https://demo.fivenet.app' -> 'demo.fivenet.app:443'
 Config.API.Host = 'demo.fivenet.app:443'
 Config.API.Token = 'YOUR_SYNC_API_TOKEN'
 Config.API.Insecure = false
@@ -48,7 +52,7 @@ Config.Events.BillingJobs = {
 
 Config.Discord = {}
 -- Automatically create discord OAuth2 connections when a player joining has a discord id
-Config.Discord.ConnectOnJoin = true
+Config.Discord.ConnectOnJoin = false
 -- Name of the Discord OAuth2 provider from the FiveNet server config
 Config.Discord.OAuth2Provider = 'discord'
 

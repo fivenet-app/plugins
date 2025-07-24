@@ -215,6 +215,18 @@ function sendUserUpdate(identifier --[[string]], data --[[UserUpdate]])
 	})
 end
 
+function setLastCharID(identifier --[[string]])
+	local userId = getUserIDFromIdentifier(identifier)
+
+	exports[GetCurrentResourceName()]:AddActivity({
+		oneofKind = 'lastCharId',
+		lastCharId = {
+			identifier = identifier,
+			lastCharId = userId,
+		},
+	})
+end
+
 -- Written by mcnuggets
 function IsNearVector(source, targetVector, range)
 	range = range or 3.0
