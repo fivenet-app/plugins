@@ -18,6 +18,9 @@ Config.API.Host = 'demo.fivenet.app:443'
 Config.API.Token = 'YOUR_SYNC_API_TOKEN'
 Config.API.Insecure = false
 
+-- Update check configuration - Enable or disable the update check
+Config.UpdateCheck = true
+
 -- Last Char ID recording
 Config.TrackCharIDs = true
 

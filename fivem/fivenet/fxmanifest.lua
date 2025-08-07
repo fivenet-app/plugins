@@ -3,7 +3,7 @@ game 'gta5'
 
 author 'Galexrt and FiveNet contributors'
 description 'FiveNet Plugin for FiveM servers.'
-version '1.0.0'
+version '1.0.2'
 
 lua54 'yes'
 
