@@ -37,7 +37,7 @@
         "prettier-plugin-organize-imports": "4.2.0",
         "prettier-plugin-tailwindcss": "0.6.14",
         "sass-embedded": "1.89.2",
-        "typescript": "5.8.3"
+        "typescript": "5.9.2"
     },
     "resolutions": {
         "nuxt": "3.16.2"
