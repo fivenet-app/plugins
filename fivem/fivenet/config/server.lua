@@ -60,11 +60,7 @@ Config.Discord.ConnectOnJoin = false
 Config.Discord.OAuth2Provider = 'discord'
 
 Config.Dispatches = {}
--- Which jobs should get dispatches that are created via the `createCivilProtectionJobDispatch` function
-Config.Dispatches.CivilProtectionJobs = {
-	['police'] = true,
-}
--- Panic button disaptch title
+-- Panic button dispatch title
 Config.Dispatches.PanicButtonTitle = 'Panikknopf ausgelöst'
 
 Config.UserProps = {}

@@ -144,12 +144,19 @@ function createDispatchFromIdentifier(job --[[string]], message --[[string]], de
 end
 exports('createDispatchFromIdentifier', createDispatchFromIdentifier)
 
-function createDispatch(job --[[string]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]], userId --[[number]])
+function createDispatch(job --[[string/table]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]], userId --[[number]])
+	local jobs
+	if type(job) ~= "string" then
+		jobs = job
+	else
+		jobs = { job }
+	end
+
 	exports[GetCurrentResourceName()]:AddActivity({
 		oneofKind = 'dispatch',
 		dispatch = {
 			id = 0,
-			job = job,
+			jobs = jobs,
 			message = message,
 			description = description,
 			x = x,
