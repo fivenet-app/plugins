@@ -18,7 +18,7 @@
         "@nuxt/ui": "2.22.1",
         "@pinia/nuxt": "0.11.2",
         "@vueuse/nuxt": "13.6.0",
-        "nuxt": "3.18.1",
+        "nuxt": "4.0.3",
         "pinia": "3.0.3",
         "pinia-plugin-persistedstate": "4.5.0",
         "vue": "3.5.18",
@@ -40,7 +40,7 @@
         "typescript": "5.9.2"
     },
     "resolutions": {
-        "nuxt": "3.18.1"
+        "nuxt": "4.0.3"
     },
     "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
