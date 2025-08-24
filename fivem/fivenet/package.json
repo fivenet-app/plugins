@@ -16,11 +16,11 @@
         "@protobuf-ts/grpc-transport": "2.11.1"
     },
     "devDependencies": {
-        "@citizenfx/server": "2.0.18443-1",
+        "@citizenfx/server": "2.0.18683-1",
         "@total-typescript/ts-reset": "0.6.1",
         "@types/node": "22.15.21",
         "esbuild": "0.25.9",
-        "eslint": "9.33.0",
+        "eslint": "9.34.0",
         "eslint-config-prettier": "10.1.8",
         "eslint-plugin-prettier": "5.5.4",
         "prettier": "3.6.2",

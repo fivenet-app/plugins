@@ -26,6 +26,8 @@ Functions.CallNumber = function(number --[[string]])
 	end
 
 	-- Your phone plugin call number code here
+	-- Example for GKSPhone
+	exports["gksphone"]:StartingCall(number)
 end
 
 -- Set radio frequency
@@ -34,6 +36,7 @@ Functions.SetRadioFrequency = function(frequency --[[number]])
 	local currentChannel = exports['pma-voice']:getRadioChannel()
 
 	if currentChannel ~= frequency then
+		-- Example for tgiann's radio plugin
 		TriggerEvent('tgiann-radio:t', frequency)
 	end
 end
