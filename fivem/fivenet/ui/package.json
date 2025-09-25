@@ -17,7 +17,7 @@
         "@nuxt/fonts": "0.11.4",
         "@nuxt/ui": "2.22.1",
         "@pinia/nuxt": "0.11.2",
-        "@vueuse/nuxt": "13.7.0",
+        "@vueuse/nuxt": "13.9.0",
         "nuxt": "3.18.1",
         "pinia": "3.0.3",
         "pinia-plugin-persistedstate": "4.5.0",
