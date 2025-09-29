@@ -18,7 +18,7 @@
     "devDependencies": {
         "@citizenfx/server": "2.0.18683-1",
         "@total-typescript/ts-reset": "0.6.1",
-        "@types/node": "22.15.21",
+        "@types/node": "22.18.7",
         "esbuild": "0.25.9",
         "eslint": "9.34.0",
         "eslint-config-prettier": "10.1.8",
