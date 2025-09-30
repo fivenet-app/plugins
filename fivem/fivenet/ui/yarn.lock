@@ -1655,7 +1655,7 @@
     unplugin "^2.3.3"
     unstorage "^1.16.0"
 
-"@nuxt/icon@1.15.0", "@nuxt/icon@^2.0.0":
+"@nuxt/icon@1.15.0", "@nuxt/icon@^1.15.0":
   version "1.15.0"
   resolved "https://registry.yarnpkg.com/@nuxt/icon/-/icon-1.15.0.tgz#25f3512092ec7bd108cf98a81df39c0fa2f89312"
   integrity sha512-kA0rxqr1B601zNJNcOXera8CyYcxUCEcT7dXEC7rwAz71PRCN5emf7G656eKEQgtqrD4JSj6NQqWDgrmFcf/GQ==
@@ -1946,15 +1946,15 @@
     rc9 "^2.1.2"
     std-env "^3.8.1"
 
-"@nuxt/ui@2.22.2":
-  version "2.22.2"
-  resolved "https://registry.yarnpkg.com/@nuxt/ui/-/ui-2.22.2.tgz#770a5367ff6f2a77f12f148d4871af7a57f84cd7"
-  integrity sha512-AlTDfPdalQ/xNhufcqLalv9Nw0pEbcuwDri8rJelHKogwqpHm7CcSL+XiRQIhemouWhmK/kiJ3vhco1qK4+fhw==
+"@nuxt/ui@2.22.3":
+  version "2.22.3"
+  resolved "https://registry.yarnpkg.com/@nuxt/ui/-/ui-2.22.3.tgz#4eac7d011a03b44d5f02f30255cb4064c6a66803"
+  integrity sha512-895SAzqCCT5JAc1JQ8nAmmpwdKCJqArY8ifL/PNtD681FKSdXiSPxODGnpqpovM/ws6bvoRwglA7BtwAJ5ySBg==
   dependencies:
     "@headlessui/tailwindcss" "^0.2.2"
     "@headlessui/vue" "^1.7.23"
     "@iconify-json/heroicons" "^1.2.2"
-    "@nuxt/icon" "^2.0.0"
+    "@nuxt/icon" "^1.15.0"
     "@nuxt/kit" "^4.0.3"
     "@nuxtjs/color-mode" "^3.5.2"
     "@nuxtjs/tailwindcss" "^6.14.0"
