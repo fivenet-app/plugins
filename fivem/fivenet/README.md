@@ -21,17 +21,6 @@ Please note that a bunch of custom events are necessary to be added to ESX plugi
 - A running FiveNet server or at least FiveNet's DBSync configured.
     - Must be running at least FiveNet version `v2025.5.3` or higher.
 
-## Building
-
-> [!WARNING]
-> It is not recommended to build the plugin and/or UI manually, as pre-built releases are provided via each [Releases' Assets](https://github.com/fivenet-app/plugins/releases).
-
-FiveM servers with the yarn builder will auto build the FiveNet script parts needed for the plugin, but not the UI.
-
-```console
-yarn run build
-```
-
 ## Configuration
 
 The config is split into `client.lua` and `server.lua` in the [`config/` directory](config/).
@@ -93,4 +82,15 @@ index 5e85d839ae..47ce760626 100644
  				{
  					cwd: path.resolve(GetResourcePath(resourceName)),
  					stdio: 'pipe',
+```
+
+## Building
+
+> [!WARNING]
+> It is not recommended to build the plugin and/or UI manually, as pre-built releases are provided via each [Releases' Assets](https://github.com/fivenet-app/plugins/releases).
+
+FiveM servers with the yarn builder will auto build the FiveNet script parts needed for the plugin, but not the UI.
+
+```console
+yarn run build
 ```
