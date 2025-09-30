@@ -1,6 +1,6 @@
 # plugins
 
-FiveNet Gameserver Plugin code (currently available only for FiveM).
+FiveNet Gameserver Plugin (currently available for FiveM).
 
 > [!TIP]
 > To install the plugin in your server, it is recommended to use the pre-built release ZIP files provided via the [Releases Page](https://github.com/fivenet-app/plugins/releases).

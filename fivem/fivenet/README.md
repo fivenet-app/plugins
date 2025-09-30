@@ -3,9 +3,9 @@
 This is a very basic FiveM plugin for FiveNet.
 It enables the use of the tablet in-game, tracks user locations, and certain events if setup correctly.
 
-Please note that a bunch of custom events are necessary to be added to ESX plugin code for FiveNet to reach its full potential.
+Please note that a bunch of custom events are necessary to be added to ESX, QB-Core, and plugin code for FiveNet to reach its full potential, see [the Event List below](#event-list).
 
-> For screenshots, please go to [README.md](../../README.md#fivem-plugin).
+For screenshots, checkout the [README FiveM Plugin section](../../README.md#fivem-plugin).
 
 > [!TIP]
 > To install the plugin, it is recommended to use the pre-built releases provided via the [Releases' Assets](https://github.com/fivenet-app/plugins/releases).
@@ -40,6 +40,7 @@ Config hints:
 * `Config.Tracking.Jobs` - A list of jobs that will be tracked.
 * `Config.Tracking.Item` - If set, this item is required to be in the user's inventory for the user to appear on the map (if on duty).
     * This requires you to configure the `Functions.CheckIfPlayerHidden` function to check your servers' inventory system for the item.
+* `Config.Tracking.Interval` - The interval in milliseconds to send the user's location to FiveNet, default is `3000` (3 seconds). It is not recommended to set it lower than `3000` to avoid excessive load on the server and FiveNet.
 
 ## Event List
 
