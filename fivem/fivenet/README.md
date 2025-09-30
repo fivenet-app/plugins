@@ -7,15 +7,24 @@ Please note that a bunch of custom events are necessary to be added to ESX plugi
 
 > For screenshots, please go to [README.md](../../README.md#fivem-plugin).
 
+> [!TIP]
+> To install the plugin, it is recommended to use the pre-built releases provided via the [Releases' Assets](https://github.com/fivenet-app/plugins/releases).
+>
+> If you want to build the plugin yourself, which is not recommended unless you have advanced knowledge in NodeJS/Javascript, please see the [Building](#building) section below.
+
 ## Requirements
 
 - FiveM Server version `10488` and higher.
-    - If you don't use a compiled release, you need to modify the Yarn Builder by adding `--ignore-engines` flag to the `yarn_cli.js` call, see [the diff below](#yarn-builder-patch).
+- FiveM Yarn Builder Plugin (part of [the cfx-server-data repository](https://github.com/citizenfx/cfx-server-data/tree/master/resources/[system]/[builders]/yarn)).
+    - IMPORTANT: You must modify the Yarn Builder file `yarn_cli.js` to add the `--ignore-engines` flag to the `yarn` call/execution, see [the difference below](#yarn-builder-patch).
 - Frameworks ESX and QB-Core Frameworks are supported via the `Config.Framework` option in the `config/server.lua` file
 - A running FiveNet server or at least FiveNet's DBSync configured.
     - Must be running at least FiveNet version `v2025.5.3` or higher.
 
 ## Building
+
+> [!WARNING]
+> It is not recommended to build the plugin and/or UI manually, as pre-built releases are provided via each [Releases' Assets](https://github.com/fivenet-app/plugins/releases).
 
 FiveM servers with the yarn builder will auto build the FiveNet script parts needed for the plugin, but not the UI.
 
@@ -33,7 +42,15 @@ Config hints:
     * `Config.WebURL` - Needs to be your FiveNet's instance URL, the default one `"https://fivenet.app"` is pointing to FiveNet's documentation page.
 * `config/server.lua`:
     * `Config.Framework` - **Must be set to the framework you are using!** Can be `esx` or `qbcore`.
-    * `Config.API` section - Make sure to set the host (`Config.API.Host`) and token (`Config.API.Token`) that your FiveNet instance uses for the sync API.
+    * `Config.API` section
+        * Make sure to set the host and token (`Config.API.Host` and `Config.API.Token`) are set to your FiveNet Instances' DBSync API details, e.g., in FiveNet Cloud you can get the Sync API credentials from the instance settings page.
+
+### User Tracking (Livemap Locations)
+
+* `Config.Tracking.Enabled` - Enables user tracking, which sends the user's location to FiveNet every `Config.Tracking.Interval` milliseconds.
+* `Config.Tracking.Jobs` - A list of jobs that will be tracked.
+* `Config.Tracking.Item` - If set, this item is required to be in the user's inventory for the user to appear on the map (if on duty).
+    * This requires you to configure the `Functions.CheckIfPlayerHidden` function to check your servers' inventory system for the item.
 
 ## Event List
 
@@ -46,17 +63,17 @@ FiveM base events such as `onResourceStart`, etc. are not listed.
 | `esx_multichar:onCharTransfer`  | Custom   | Custom event added after a char has been transfered.                                      | [`server/events/char_transfer.lua`](server/events/char_transfer.lua)                                       |
 | `esx:setJob`                    | Base ESX | Event should be already triggered by ESX accordingly when a char is selected/logged into. | [`server/events/timeclock.lua`](server/events/timeclock.lua)                                               |
 | `esx_billing:sentBill`          | Custom   | Custom event sent after a bill has been sent to an user.                                  | [`server/events/billing.lua`](server/events/billing.lua)                                                   |
-| `esx_billing:removedBill`       | Custom   |                                                                                           | [`server/events/billing.lua`](server/events/billing.lua)                                                   |
-| `esx_billing:paidBill`          | Custom   |                                                                                           | [`server/events/billing.lua`](server/events/billing.lua)                                                   |
-| `esx_license:addLicense`        | Custom   |                                                                                           | [`server/events/licenses.lua`](server/events/licenses.lua)                                                 |
-| `esx_license:removeLicense`     | Custom   |                                                                                           | [`server/events/licenses.lua`](server/events/licenses.lua)                                                 |
-| `esx_prison:jailPlayer`         | Custom   |                                                                                           | [`server/events/police.lua`](server/events/police.lua)                                                     |
-| `esx_prison:unjailedByPlayer`   | Custom   |                                                                                           | [`server/events/police.lua`](server/events/police.lua)                                                     |
-| `esx_prison:escapePoliceNotify` | Custom   |                                                                                           | [`server/events/police.lua`](server/events/police.lua)                                                     |
-| `esx_policeJob:panicButton`     | Custom   |                                                                                           | [`server/events/police.lua`](server/events/police.lua)                                                     |
-| `esx_society:fired`             | Custom   |                                                                                           | [`server/events/society.lua`](server/events/society.lua)                                                   |
-| `esx_society:gradeChanged`      | Custom   |                                                                                           | [`server/events/society.lua`](server/events/society.lua)                                                   |
-| `esx_society:hired`             | Custom   |                                                                                           | [`server/events/society.lua`](server/events/society.lua)                                                   |
+| `esx_billing:removedBill`       | Custom   | Removal of a bill from a player.                                                          | [`server/events/billing.lua`](server/events/billing.lua)                                                   |
+| `esx_billing:paidBill`          | Custom   | Payment of a bill by a player.                                                            | [`server/events/billing.lua`](server/events/billing.lua)                                                   |
+| `esx_license:addLicense`        | Custom   | Addition of a license to a player.                                                        | [`server/events/licenses.lua`](server/events/licenses.lua)                                                 |
+| `esx_license:removeLicense`     | Custom   | Removal of a license from a player.                                                       | [`server/events/licenses.lua`](server/events/licenses.lua)                                                 |
+| `esx_prison:jailPlayer`         | Custom   | Sending a player to jail.                                                                 | [`server/events/police.lua`](server/events/police.lua)                                                     |
+| `esx_prison:unjailedByPlayer`   | Custom   | Releasing a player from jail by another player.                                           | [`server/events/police.lua`](server/events/police.lua)                                                     |
+| `esx_prison:escapePoliceNotify` | Custom   | Notification to police of a player's escape from jail.                                    | [`server/events/police.lua`](server/events/police.lua)                                                     |
+| `esx_policeJob:panicButton`     | Custom   | Police panic button activation.                                                           | [`server/events/police.lua`](server/events/police.lua)                                                     |
+| `esx_society:fired`             | Custom   | Firing a player from a society/job.                                                       | [`server/events/society.lua`](server/events/society.lua)                                                   |
+| `esx_society:gradeChanged`      | Custom   | Change of a player's job grade in a society.                                              | [`server/events/society.lua`](server/events/society.lua)                                                   |
+| `esx_society:hired`             | Custom   | Hiring a player into a society/job.                                                       | [`server/events/society.lua`](server/events/society.lua)                                                   |
 
 ## Yarn Builder Patch
 

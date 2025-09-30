@@ -8,12 +8,14 @@ Config.Framework = 'esx'
 
 -- !!! Make sure to configure your FiveNet API credentials correctly here!
 Config.API = {}
--- Your FiveNet Hostname, must be with port if your port is not 443,
--- requires the FiveNet instance to be using HTTPS.
+-- Your FiveNet Hostname, with port if your port is not 443 (HTTPS),
+-- requires the FiveNet instance to **use HTTPS**.
 -- ! Make sure to not include the protocol (http:// or https://) here!
 -- ! Don't include a trailing slash!
 --
--- Example: 'https://demo.fivenet.app' -> 'demo.fivenet.app:443'
+-- Example:
+-- 'https://demo.fivenet.app'   -> 'demo.fivenet.app:443'
+-- 'https://fivenet.example.com' -> 'fivenet.example.com:443'
 Config.API.Host = 'demo.fivenet.app:443'
 Config.API.Token = 'YOUR_SYNC_API_TOKEN'
 Config.API.Insecure = false
@@ -21,13 +23,13 @@ Config.API.Insecure = false
 -- Update check configuration - Enable or disable the update check
 Config.UpdateCheck = true
 
--- Last Char ID recording
+-- Last Char ID recording - Necessary to use the char lock feature
 Config.TrackCharIDs = true
 
 Config.Tracking = {}
--- Enable the tracking of players
+-- Enable the tracking of players (location updates)
 Config.Tracking.Enable = true
--- Theses jobs will be tracked
+-- Theses jobs will be tracked fully (location updates)
 Config.Tracking.Jobs = {
 	['ambulance'] = true,
 	['doj'] = true,
@@ -60,7 +62,7 @@ Config.Discord.ConnectOnJoin = false
 Config.Discord.OAuth2Provider = 'discord'
 
 Config.Dispatches = {}
--- Panic button dispatch title
+-- Panic button dispatch title, sent when the `esx_policeJob:panicButton` event is triggered
 Config.Dispatches.PanicButtonTitle = 'Panikknopf ausgelöst'
 
 Config.UserProps = {}
