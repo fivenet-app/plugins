@@ -41,6 +41,30 @@ index 5e85d839ae..47ce760626 100644
  					stdio: 'pipe',
 ```
 
+## Installation
+
+1. Download the latest release from the [Releases' Assets](https://github.com/fivenet-app/plugins/releases). The file is named `fivenet-fivem-plugin.zip`.
+2. Extract the contents of the zip file into your FiveM server's `resources` directory.
+3. Add `ensure fivenet` to your server's `server.cfg` file.
+4. Configure the plugin by editing the files in the `config/` directory, see [the Configuration section below](#configuration).
+5. Make sure to look into how to integrate FiveNet into your server's plugins.
+6. Restart your FiveM server and enjoy!
+
+## Updating the Plugin
+
+To update the plugin, follow these steps:
+
+1. In the existing `fivenet` plugin directory, delete the following directories and files:
+    - `client/`
+    - `scripts/`
+    - `server/`
+    - `ui/`
+    - `config/` (optional, if you want to reset the config to default)
+        - Take a backup of your existing config files if you have made changes to them in case you accidentally overwrite them when updating.
+        - Make sure to compare your current configs with the new default configs in the new release, as new config options may have been added.
+2. Download the latest release from the [Releases' Assets](https://github.com/fivenet-app/plugins/releases). The file is named `fivenet-fivem-plugin.zip`.
+3. Extract the contents of the zip file and copy over the contents into the existing `fivenet` plugin directory and overwrite all files, except your `config/*.lua` files if prompted.
+
 ## Configuration
 
 The config is split into `client.lua` and `server.lua` in the [`config/` directory](config/).
@@ -53,6 +77,7 @@ Config hints:
     - `Config.Framework` - **Must be set to the framework you are using!** Can be `esx` or `qbcore`.
     - `Config.API` section
         - Make sure to set the host and token (`Config.API.Host` and `Config.API.Token`) are set to your FiveNet Instances' DBSync API details, e.g., in FiveNet Cloud you can get the Sync API credentials from the instance settings page.
+    - `Config.Dispatches.DisableClientDispatches` - If set to `true`, it will disable dispatches created from the client side, and only allow dispatches created from the server side. This is recommended for better security (default `false`).
 
 ### User Tracking (Livemap Locations)
 
@@ -62,7 +87,7 @@ Config hints:
     - This requires you to configure the `Functions.CheckIfPlayerHidden` function to check your servers' inventory system for the item.
 - `Config.Tracking.Interval` - The interval in milliseconds to send the user's location to FiveNet, default is `3000` (3 seconds). It is not recommended to set it lower than `3000` to avoid excessive load on the server and FiveNet.
 
-### Convars
+## Convars
 
 | Name                  | Description                                                                                                                                               | Default |
 | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
