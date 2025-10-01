@@ -55,7 +55,7 @@ function OpenTablet()
 
 	usingTablet = true
 
-	Citizen.CreateThread(function()
+	CreateThread(function()
 		while usingTablet do
 			BlockWeaponWheelThisFrame()
 
@@ -107,7 +107,7 @@ function OpenTablet()
 	end)
 
 	-- Handles pause menu state for tablet
-	Citizen.CreateThread(function()
+	CreateThread(function()
 		while usingTablet do
 			Wait(500)
 			local isPauseOpen = IsPauseMenuActive() ~= false
@@ -146,7 +146,7 @@ function CloseTablet()
 	RemoveAnimDict(dict)
 
 	-- Unblock with delay so escape key isn't handled by the game
-	Citizen.CreateThread(function()
+	CreateThread(function()
 		Wait(100)
 		usingTablet = false
 	end)
@@ -183,7 +183,7 @@ RegisterCommand('tabletfix', function()
 	SendNUIMessage({type = 'tabletfix', webUrl = Config.WebURL})
 end)
 
-Citizen.CreateThread(function()
+CreateThread(function()
 	TriggerEvent('chat:addSuggestion', '/tablet', 'FiveNet Tablet öffnen')
 	TriggerEvent('chat:addSuggestion', '/tabletfix', 'Probleme mit FiveNet Tablet lösen')
 end)

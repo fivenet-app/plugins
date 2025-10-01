@@ -1,31 +1,29 @@
-function getLicenseFromIdentifier(identifier --[[string]])
-	local start = string.find(identifier, ':', 1, true)
-	if not start then return identifier end
+-- Setup API client on resource start
+AddEventHandler('onResourceStart', function(resourceName)
+	if resourceName == GetCurrentResourceName() then
+		exports[GetCurrentResourceName()]:SetupClient(Config.API.Host, Config.API.Token, Config.API.Insecure, Config.Debug)
+	end
+end)
 
-	return string.sub(identifier, start + 1, -1)
+function getCurrentTimestamp() --[[resources.timestamp.Timestamp]]
+	return { timestamp = { seconds = GetCloudTimeAsInt(), nanos = 0 } }
 end
 
-local function getUserIDFromIdentifier(identifier --[[string]])
-	local query
-	local params = { identifier }
+-- Helper functions
 
-	if Config.Framework == 'esx' then
-		query = 'SELECT `id` FROM `users` WHERE `identifier` = ? LIMIT 1'
-	elseif Config.Framework == 'qbcore' then
-		params[1] = getLicenseFromIdentifier(identifier)
-		params[2] = string.sub(identifier, 1, (string.find(identifier, ':', 1, true) or 0) - 1)
+-- Check if player is near a vector (with optional range, default 3.0) - Written by mcNuggets of the ModernV server
+function IsNearVector(source, targetVector, range)
+	range = range or 3.0
 
-		query = 'SELECT `id` FROM `players` WHERE `citizenid` = ? AND `cid` = ? LIMIT 1'
-	else
-		return 0
+	local sourcePed = GetPlayerPed(source)
+	if sourcePed == 0 then return false end
+	local sourceCoords = GetEntityCoords(sourcePed)
+
+	if #(sourceCoords - targetVector) > range then
+		return false
 	end
 
-	local row = MySQL.single.await(query, params)
-	if not row then
-		return 0
-	end
-
-	return row.id
+	return true
 end
 
 function checkIfBillingEnabledJob(targetJob --[[string]])
@@ -119,7 +117,7 @@ end
 exports('addJobColleagueActivity', addJobColleagueActivity)
 
 -- Jobs User Props
-function addColleagueProps(identifier --[[string]], reason --[[string]], props --[[ColleagueProps]])
+function setColleagueProps(identifier --[[string]], reason --[[string]], props --[[ColleagueProps]])
 	local userId = getUserIDFromIdentifier(identifier)
 	props.userId = userId
 
@@ -132,18 +130,9 @@ function addColleagueProps(identifier --[[string]], reason --[[string]], props -
 		},
 	})
 end
-exports('addColleagueProps', addColleagueProps)
+exports('setColleagueProps', setColleagueProps)
 
 -- Dispatches
-RegisterNetEvent('fivenet:createDispatchFromClient')
-
-function createDispatchFromIdentifier(job --[[string]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]], identifier --[[string]])
-	local userId = getUserIDFromIdentifier(identifier)
-
-	createDispatch(job, message, description, x, y, anon, userId)
-end
-exports('createDispatchFromIdentifier', createDispatchFromIdentifier)
-
 function createDispatch(job --[[string/table]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]], userId --[[number]])
 	local jobs
 	if type(job) ~= "string" then
@@ -169,34 +158,40 @@ function createDispatch(job --[[string/table]], message --[[string]], descriptio
 end
 exports('createDispatch', createDispatch)
 
-AddEventHandler('fivenet:createDispatchFromClient', function(job --[[string]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]])
-	local source = source
-
-	-- If x or y is nil, get the player's current entity coordinates
-	if x == nil or y == nil then
-		local ped = GetPlayerPed(source)
-		if ped and ped ~= 0 then
-			local coords = GetEntityCoords(ped)
-			x = coords.x
-			y = coords.y
-		end
-	end
-
-	TriggerEvent('fivenet:createDispatch', source, job, message, description, x, y, anon)
-end)
-
-AddEventHandler('fivenet:createDispatch', function(source, job --[[string]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]])
-	local userId = nil
-	if not anon then
-		if Config.Framework == 'qbcore' then
-			userId = getUserIDFromIdentifier(getPlayerUniqueIdentifier(source))
-		else
-			userId = getLicenseFromIdentifier(getPlayerUniqueIdentifier(source))
-		end
-	end
+function createDispatchFromIdentifier(job --[[string]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]], identifier --[[string]])
+	local userId = getUserIDFromIdentifier(identifier)
 
 	createDispatch(job, message, description, x, y, anon, userId)
-end)
+end
+exports('createDispatchFromIdentifier', createDispatchFromIdentifier)
+
+if not Config.Dispatches.DisableClientDispatches then
+		AddEventHandler('fivenet:createDispatch', function(source, job --[[string]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]])
+		local userId = nil
+		if not anon then
+			userId = getUserDBID(source)
+		end
+
+		createDispatch(job, message, description, x, y, anon, userId)
+	end)
+
+	RegisterNetEvent('fivenet:createDispatchFromClient')
+	AddEventHandler('fivenet:createDispatchFromClient', function(job --[[string]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]])
+		local source = source
+
+		-- If x or y is nil, get the player's current entity coordinates
+		if x == nil or y == nil then
+			local ped = GetPlayerPed(source)
+			if ped and ped ~= 0 then
+				local coords = GetEntityCoords(ped)
+				x = coords.x
+				y = coords.y
+			end
+		end
+
+		TriggerEvent('fivenet:createDispatch', source, job, message, description, x, y, anon)
+	end)
+end
 
 -- Timeclock
 function setTimeclockEntry(identifier --[[string]], data --[[TimeclockUpdate]])
@@ -232,19 +227,4 @@ function setLastCharID(identifier --[[string]])
 			lastCharId = userId,
 		},
 	})
-end
-
--- Written by mcnuggets
-function IsNearVector(source, targetVector, range)
-	range = range or 3.0
-
-	local sourcePed = GetPlayerPed(source)
-	if sourcePed == 0 then return false end
-	local sourceCoords = GetEntityCoords(sourcePed)
-
-	if #(sourceCoords - targetVector) > range then
-		return false
-	end
-
-	return true
 end

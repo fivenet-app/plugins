@@ -1,7 +1,3 @@
-if Config.Framework ~= 'esx' then
-	return
-end
-
 -- These are non standard events, they need to be added by yourself to take advantage of
 -- the job user activity tracking
 
@@ -14,16 +10,18 @@ local function lookupLicenseLabel(type)
 	return ''
 end
 
-AddEventHandler('esx_license:addLicense', function(sourceXPlayer, targetXPlayer, type)
-	local label = lookupLicenseLabel(type)
-	local data = { oneofKind = 'licensesChange', licensesChange = { added = true, licenses = {{ type = type, label = label }} }}
+if Config.Framework == 'esx' then
+	AddEventHandler('esx_license:addLicense', function(sourceXPlayer, targetXPlayer, type)
+		local label = lookupLicenseLabel(type)
+		local data = { oneofKind = 'licensesChange', licensesChange = { added = true, licenses = {{ type = type, label = label }} }}
 
-	addUserActivity(sourceXPlayer.identifier, targetXPlayer.identifier, 5, '', data)
-end)
+		addUserActivity(sourceXPlayer.identifier, targetXPlayer.identifier, 5, '', data)
+	end)
 
-AddEventHandler('esx_license:removeLicense', function(sourceXPlayer, targetXPlayer, type)
-	local label = lookupLicenseLabel(type)
-	local data = { oneofKind = 'licensesChange', licensesChange = { added = false, licenses = {{ type = type, label = label }} }}
+	AddEventHandler('esx_license:removeLicense', function(sourceXPlayer, targetXPlayer, type)
+		local label = lookupLicenseLabel(type)
+		local data = { oneofKind = 'licensesChange', licensesChange = { added = false, licenses = {{ type = type, label = label }} }}
 
-	addUserActivity(sourceXPlayer.identifier, targetXPlayer.identifier, 5, '', data)
-end)
+		addUserActivity(sourceXPlayer.identifier, targetXPlayer.identifier, 5, '', data)
+	end)
+end

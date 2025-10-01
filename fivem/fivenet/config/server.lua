@@ -64,6 +64,9 @@ Config.Discord.OAuth2Provider = 'discord'
 Config.Dispatches = {}
 -- Panic button dispatch title, sent when the `esx_policeJob:panicButton` event is triggered
 Config.Dispatches.PanicButtonTitle = 'Panikknopf ausgelöst'
+-- Disable client side dispatch creation (recommended to avoid abuse, only use server side dispatches)
+-- Please note that this will not disable the client-side function, but the server will ignore any client-side createDispatch event calls.
+Config.Dispatches.DisableClientDispatches = false
 
 Config.UserProps = {}
 -- If enabled will set the blood type for an user on "join/loaded" event

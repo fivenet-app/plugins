@@ -50,6 +50,6 @@ RegisterNetEvent('fivenet:registration', function(registered, token)
 	})
 end)
 
-Citizen.CreateThread(function()
+CreateThread(function()
 	TriggerEvent('chat:addSuggestion', '/fivenet', 'FiveNet Konto-Verwaltung öffnen')
 end)
