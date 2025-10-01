@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0] - 2025-10-01
+
+### 🐛 Fixes
+
+- Add fivenet:createDispatchFromClient to handle source on
+- Qbcore issues with dispatch creation and add more disable control
+
+### 🚀 Features
+
+- Introduce multi job dispatches
+
 ## [1.0.2] - 2025-05-24
 
 ### 🐛 Fixes
