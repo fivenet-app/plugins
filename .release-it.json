@@ -33,6 +33,10 @@
         {
           "file": "fivem/fivenet/ui/package.json",
           "path": "version"
+        },
+        {
+          "file": "fivem/fivenet/fxmanifest.lua",
+          "type": "text/plain"
         }
       ]
     }
