@@ -19,7 +19,7 @@
         "@citizenfx/server": "2.0.20304-1",
         "@total-typescript/ts-reset": "0.6.1",
         "@types/node": "24.6.0",
-        "esbuild": "0.25.10",
+        "esbuild": "0.25.11",
         "eslint": "9.36.0",
         "eslint-config-prettier": "10.1.8",
         "eslint-plugin-prettier": "5.5.4",
