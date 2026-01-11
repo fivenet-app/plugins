@@ -28,7 +28,7 @@
         "@citizenfx/client": "2.0.23683-1",
         "@citizenfx/server": "2.0.23683-1",
         "@total-typescript/ts-reset": "0.6.1",
-        "@types/node": "24.6.0",
+        "@types/node": "24.10.7",
         "eslint": "9.39.2",
         "eslint-config-prettier": "10.1.8",
         "eslint-plugin-prettier": "5.5.4",
