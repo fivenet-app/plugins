@@ -23,7 +23,7 @@ For screenshots, checkout the [README FiveM Plugin section](../../README.md#five
 
 ### Yarn Builder Patch
 
-This is the diff/patch to apply to the yarn_builder resource to allow it to compile the FiveNet plugin correctly, if you are not using the available pre-built release build.
+This is the diff/patch to apply to the `yarn_builder` resource to allow it to compile the FiveNet plugin correctly, if you are not using the available pre-built release build.
 
 ```diff
 diff --git a/resources/[BASE]/[system]/[builders]/yarn/yarn_builder.js b/resources/[BASE]/[system]/[builders]/yarn/yarn_builder.js
@@ -40,15 +40,21 @@ index 5e85d839ae..47ce760626 100644
  					cwd: path.resolve(GetResourcePath(resourceName)),
  					stdio: 'pipe',
 ```
+(Green line with the `+` at the start is the line how it should look after making the change.)
+
+You might need to delete the `.yarn.installed` from the FiveNet plugin directory to ensure Yarn builder to install the dependencies correctly this time.
+Make sure to restart your FiveM server after applying the patch to the `yarn_builder` resource.
 
 ## Installation
 
-1. Download the latest release from the [Releases' Assets](https://github.com/fivenet-app/plugins/releases). The file is named `fivenet-fivem-plugin.zip`.
-2. Extract the contents of the zip file into your FiveM server's `resources` directory.
-3. Add `ensure fivenet` to your server's `server.cfg` file.
-4. Configure the plugin by editing the files in the `config/` directory, see [the Configuration section below](#configuration).
-5. Make sure to look into how to integrate FiveNet into your server's plugins.
-6. Restart your FiveM server and enjoy!
+1.
+2. Download the latest release from the [Releases' Assets](https://github.com/fivenet-app/plugins/releases). The file is named `fivenet-fivem-plugin.zip`.
+    - **Don't clone the repo** unless you know what manual steps are needed to build the plugin!
+3. Extract the contents of the zip file into your FiveM server's `resources` directory.
+4. Add `ensure fivenet` to your server's `server.cfg` file. Otherwise the FiveM server might not load the plugin.
+5. Configure the plugin by editing the files in the `config/` directory, see [the Configuration section below](#configuration).
+6. Make sure to look into how to integrate FiveNet into your server's plugins.
+7. Restart your FiveM server and enjoy!
 
 ## Updating the Plugin
 
@@ -68,6 +74,8 @@ To update the plugin, follow these steps:
 ## Configuration
 
 The config is split into `client.lua` and `server.lua` in the [`config/` directory](config/).
+
+
 
 Config hints:
 

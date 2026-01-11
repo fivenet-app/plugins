@@ -79,7 +79,12 @@ Config.UserProps.BloodTypes = {
 	'O+', 'O-',
 }
 
--- Functions to implement functionality matching your server's framework
+--
+-- FUNCTIONS
+-- These functions are called by FiveNet to interact with your server's framework or other plugins.
+--
+-- You must implement these functions according to your server's setup, plugins, etc.
+--
 Functions = {}
 -- Player tracker - Check if hidden function
 Functions.CheckIfPlayerHidden = function(xPlayer)

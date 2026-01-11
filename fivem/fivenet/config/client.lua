@@ -16,7 +16,12 @@ Config.Hotkey.Key = 'F5'
 -- Postal Code Command (should mark the postal code on the player's map)
 Config.PostalCommand = 'plz'
 
--- Functions to implement functionality matching your server's framework
+--
+-- FUNCTIONS
+-- These functions are called by FiveNet to interact with your server's framework or other plugins.
+--
+-- You must implement these functions according to your server's setup, plugins, etc.
+--
 Functions = {}
 -- Call phone number
 Functions.CallNumber = function(number --[[string]])

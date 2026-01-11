@@ -10,6 +10,11 @@ import {
 import { DEBUG, syncClient } from './client';
 
 async function GetStatus(): Promise<GetStatusResponse | undefined> {
+    if (!syncClient) {
+        console.error('Sync client is not initialized');
+        return;
+    }
+
     try {
         const call = syncClient.getStatus({});
 
@@ -28,6 +33,12 @@ async function RegisterAccount(
     lastCharId?: number,
 ): Promise<RegisterAccountResponse | undefined> {
     DEBUG && console.debug('RegisterAccount request:', license, resetToken, lastCharId);
+
+    if (!syncClient) {
+        console.error('Sync client is not initialized');
+        return;
+    }
+
     try {
         const call = syncClient.registerAccount({
             identifier: license,
@@ -47,6 +58,12 @@ exports('RegisterAccount', RegisterAccount);
 
 async function TransferAccount(oldLicense: string, newLicense: string): Promise<TransferAccountResponse | undefined> {
     DEBUG && console.debug('TransferAccount response:', oldLicense, newLicense);
+
+    if (!syncClient) {
+        console.error('Sync client is not initialized');
+        return;
+    }
+
     try {
         const call = syncClient.transferAccount({
             oldLicense: oldLicense,
@@ -66,6 +83,12 @@ exports('TransferAccount', TransferAccount);
 type Data = SendDataRequest['data'];
 async function SendData(data: Data): Promise<SendDataResponse | undefined> {
     DEBUG && console.debug('SendData response:', data);
+
+    if (!syncClient) {
+        console.error('Sync client is not initialized');
+        return;
+    }
+
     try {
         const call = syncClient.sendData(
             SendDataRequest.create({
@@ -86,6 +109,12 @@ exports('SendData', SendData);
 type Activity = AddActivityRequest['activity'];
 async function AddActivity(activity: Activity): Promise<AddActivityResponse | undefined> {
     DEBUG && console.debug('AddActivity request:', activity);
+
+    if (!syncClient) {
+        console.error('Sync client is not initialized');
+        return;
+    }
+
     try {
         const call = syncClient.addActivity(
             AddActivityRequest.create({
