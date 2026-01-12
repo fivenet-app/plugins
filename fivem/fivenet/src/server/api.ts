@@ -32,7 +32,7 @@ async function RegisterAccount(
     resetToken: boolean,
     lastCharId?: number,
 ): Promise<RegisterAccountResponse | undefined> {
-    DEBUG && console.debug('RegisterAccount request:', license, resetToken, lastCharId);
+    DEBUG && console.debug('RegisterAccount request, license:', license, 'resetToken:', resetToken, 'lastCharId:', lastCharId);
 
     if (!syncClient) {
         console.error('Sync client is not initialized');
@@ -50,14 +50,14 @@ async function RegisterAccount(
         DEBUG && console.debug('RegisterAccount response:', response);
         return response;
     } catch (e) {
-        console.error('Error registering account:', e);
+        console.error(`Error registering account (license: ${license}):`, e);
         return undefined;
     }
 }
 exports('RegisterAccount', RegisterAccount);
 
 async function TransferAccount(oldLicense: string, newLicense: string): Promise<TransferAccountResponse | undefined> {
-    DEBUG && console.debug('TransferAccount response:', oldLicense, newLicense);
+    DEBUG && console.debug(`TransferAccount request, oldLicense: ${oldLicense}, newLicense: ${newLicense}`);
 
     if (!syncClient) {
         console.error('Sync client is not initialized');
@@ -71,7 +71,7 @@ async function TransferAccount(oldLicense: string, newLicense: string): Promise<
         });
 
         const { response } = await call;
-        DEBUG && console.debug('TransferAccount response:', response);
+        DEBUG && console.debug(`TransferAccount response (old: ${oldLicense}, new: ${newLicense}):`, response);
         return response;
     } catch (e) {
         console.error(`Error transfering account (old: ${oldLicense}, new: ${newLicense}):`, e);
@@ -82,7 +82,7 @@ exports('TransferAccount', TransferAccount);
 
 type Data = SendDataRequest['data'];
 async function SendData(data: Data): Promise<SendDataResponse | undefined> {
-    DEBUG && console.debug('SendData response:', data);
+    DEBUG && console.debug(`SendData request (Kind: ${data.oneofKind}):`, data);
 
     if (!syncClient) {
         console.error('Sync client is not initialized');
@@ -97,10 +97,10 @@ async function SendData(data: Data): Promise<SendDataResponse | undefined> {
         );
 
         const { response } = await call;
-        DEBUG && console.debug('SendData response:', response);
+        DEBUG && console.debug(`SendData response ${data.oneofKind}:`, response);
         return response;
     } catch (e) {
-        console.error('Error sending data:', e);
+        console.error(`Error sending data (Kind: ${data.oneofKind}):`, e);
         return undefined;
     }
 }
@@ -108,7 +108,7 @@ exports('SendData', SendData);
 
 type Activity = AddActivityRequest['activity'];
 async function AddActivity(activity: Activity): Promise<AddActivityResponse | undefined> {
-    DEBUG && console.debug('AddActivity request:', activity);
+    DEBUG && console.debug(`AddActivity request (Kind: ${activity.oneofKind}):`, activity);
 
     if (!syncClient) {
         console.error('Sync client is not initialized');
@@ -123,10 +123,10 @@ async function AddActivity(activity: Activity): Promise<AddActivityResponse | un
         );
 
         const { response } = await call;
-        DEBUG && console.debug('AddActivity response:', response);
+        DEBUG && console.debug(`AddActivity response (Kind: ${activity.oneofKind}):`, response);
         return response;
     } catch (e) {
-        console.error('Error adding activity:', e);
+        console.error(`Error adding activity (Kind: ${activity.oneofKind}):`, e);
         return undefined;
     }
 }
