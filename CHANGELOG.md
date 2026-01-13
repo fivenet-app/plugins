@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.4] - 2026-01-13
+
+### 🐛 Bug Fixes
+
+- Improve error logging to include more info
+- Git-cliff config being outdated
+- Add missing step 1 from plugin readme
+- Ensure .yarn.installed is newer than package.json
+
 ## [1.1.3] - 2026-01-11
 
 ### 🐛 Bug Fixes
