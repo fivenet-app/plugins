@@ -47,7 +47,7 @@ Make sure to restart your FiveM server after applying the patch to the `yarn_bui
 
 ## Installation
 
-1.
+1. Make sure you fulfill all the [requirements above](#requirements) before continuing with the installation.
 2. Download the latest release from the [Releases' Assets](https://github.com/fivenet-app/plugins/releases). The file is named `fivenet-fivem-plugin.zip`.
     - **Don't clone the repo** unless you know what manual steps are needed to build the plugin!
 3. Extract the contents of the zip file into your FiveM server's `resources` directory.
