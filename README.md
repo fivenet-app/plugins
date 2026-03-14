@@ -17,6 +17,12 @@ See [`fivem/fivenet/` directory](fivem/fivenet/) for the code and details. Make 
 <a href=".images/fivem/account-management.png"><img alt="FiveNet FiveM Account Management UI" src=".images/fivem/account-management.png" width="250" /></a>
 <a href=".images/fivem/account-management-password-reset.png"><img alt="FiveNet FiveM Account Password Reset UI" src=".images/fivem/account-management-password-reset.png" width="250" /></a>
 
+## Development
+
+### Releasing New Version
+
+1. Run `pnpm run release-it` and follow the prompts.
+
 ## License
 
 Code licensed under Apache 2.0 license, see [LICENSE](LICENSE).

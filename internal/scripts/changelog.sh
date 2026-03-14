@@ -3,7 +3,8 @@
 NODE_VERSION=$(node -p -e "require('./package.json').version")
 
 if [ "$1" = "stdout" ]; then
-    pnpx git-cliff -o - --unreleased --tag "$NODE_VERSION"
+    # Second argument can be used to specify the "new" version
+    pnpx git-cliff --output - --unreleased --tag "${2:-$NODE_VERSION}"
 else
-    pnpx git-cliff -o './CHANGELOG.md' --tag "$NODE_VERSION"
+    pnpx git-cliff --unreleased --tag "${NODE_VERSION}" --prepend ./CHANGELOG.md
 fi
