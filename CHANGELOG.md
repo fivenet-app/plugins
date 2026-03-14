@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2026-03-14
+
+### 🐛 Bug Fixes
+
+- Release-it + changelog.sh script issues
+
 ## [1.1.4] - 2026-01-13
 
 ### 🐛 Bug Fixes
