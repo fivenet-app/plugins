@@ -545,15 +545,15 @@
   dependencies:
     fontkit "^2.0.2"
 
-"@citizenfx/client@2.0.23683-1":
-  version "2.0.23683-1"
-  resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-2.0.23683-1.tgz#f7759c9db1ea526f76592a0318527d56bdae36ea"
-  integrity sha512-TB0CPg0VR3nud2ZcMVu/qEQHk4FArHf/tlS+FCwVKHzDuGBU34omi2kKro6hAQYa5zmd+tPm1J+VthweKedemg==
+"@citizenfx/client@2.0.26803-1":
+  version "2.0.26803-1"
+  resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-2.0.26803-1.tgz#9d703e2c4ef1ed143721fc427073d0f133f3178f"
+  integrity sha512-E+CEgBuQf3s3NuDV52ueIZe6HNZ/4ztUyFSdSy2q3JVKl00qh18mmbuELaPPUbKu6MoZH+aYgf5Ahe+LrHWKlA==
 
-"@citizenfx/server@2.0.23683-1":
-  version "2.0.23683-1"
-  resolved "https://registry.yarnpkg.com/@citizenfx/server/-/server-2.0.23683-1.tgz#cb3ec0764a8a7b00eed591865df78d6c74e8aa19"
-  integrity sha512-HPGCC6Vgq6vMvqS5+cexqgfln9FCbE2CySk4hDSLCnYjQgHQ4q+cWoJBPT7yl5fy3Fv0tlA2zFshHG6BaV129g==
+"@citizenfx/server@2.0.26803-1":
+  version "2.0.26803-1"
+  resolved "https://registry.yarnpkg.com/@citizenfx/server/-/server-2.0.26803-1.tgz#fba984c2b8f023ca2259dbab103823dbba9504be"
+  integrity sha512-iG44gdiKsGEwH7/tx4i1eaBgrg02+ybh5Z6z3Exs/YFt+tW6EyJ2VbHGo19egZJX1JTI6R3LevYeDcuEvQtJ+Q==
 
 "@clack/core@0.5.0":
   version "0.5.0"

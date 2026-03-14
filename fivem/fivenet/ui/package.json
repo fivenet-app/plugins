@@ -25,8 +25,8 @@
         "vue-router": "4.6.4"
     },
     "devDependencies": {
-        "@citizenfx/client": "2.0.23683-1",
-        "@citizenfx/server": "2.0.23683-1",
+        "@citizenfx/client": "2.0.26803-1",
+        "@citizenfx/server": "2.0.26803-1",
         "@total-typescript/ts-reset": "0.6.1",
         "@types/node": "24.10.7",
         "eslint": "9.39.2",
