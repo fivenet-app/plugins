@@ -78,7 +78,7 @@ if Config.Tracking.Enable then
 
 							playerLocations[identifier] = coords
 
-							table.insert(locations, {
+							locations[#locations + 1] = {
 								["userId"] = userId,
 								["job"] = job,
 								["coords"] = {
@@ -87,7 +87,7 @@ if Config.Tracking.Enable then
 								},
 								["hidden"] = hidden,
 								["remove"] = false,
-							})
+							}
 						end
 					end
 				end
@@ -95,9 +95,11 @@ if Config.Tracking.Enable then
 				::continue::
 			end
 
-			exports[GetCurrentResourceName()]:SendUserLocations({
-				users = locations,
-			})
+			if #locations > 0 then
+				exports[GetCurrentResourceName()]:SendUserLocations({
+					users = locations,
+				})
+			end
 
 			Wait(Config.Tracking.Interval)
 		end
