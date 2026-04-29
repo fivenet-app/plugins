@@ -69,15 +69,6 @@ Config.Dispatches.PanicButtonTitle = 'Panikknopf ausgelöst'
 Config.Dispatches.DisableClientDispatches = false
 
 Config.UserProps = {}
--- If enabled will set the blood type for an user on "join/loaded" event
-Config.UserProps.SetBloodType = true
--- Which blood types to set for users if it isn't set yet (on join)
-Config.UserProps.BloodTypes = {
-	'A+', 'A-',
-	'B+', 'B-',
-	'AB+', 'AB-',
-	'O+', 'O-',
-}
 
 --
 -- FUNCTIONS

@@ -40,19 +40,19 @@ function getPlayerUniqueIdentifier(source)
 			return nil
 		end
 
-		return player.PlayerData.cid .. ':' .. player.PlayerData.citizenid
-	else
-		-- Fallback
-		local license
-		for _, v in ipairs(GetPlayerIdentifiers(source)) do
-			if string.match(v, 'license:') then
-				license = v
-				break
-			end
-		end
-
-		return license
+		return player.PlayerData.cid .. ':' .. getLicenseFromIdentifier(player.PlayerData.license)
 	end
+
+	-- Fallback
+	local license
+	for _, v in ipairs(GetPlayerIdentifiers(source)) do
+		if string.match(v, 'license:') then
+			license = v
+			break
+		end
+	end
+
+	return license
 end
 exports('getPlayerUniqueIdentifier', getPlayerUniqueIdentifier)
 
@@ -101,10 +101,10 @@ function getUserDBID(source)
 		end
 
 		return getUserIDFromIdentifier(getPlayerUniqueIdentifier(source))
-	else
-		-- Fallback
-		return 0
 	end
+
+	-- Fallback
+	return 0
 end
 exports('getUserDBID', getUserDBID)
 
