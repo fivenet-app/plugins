@@ -33,8 +33,7 @@ end
 
 -- FiveNet Account - Social Login connection
 function addOAuth2DiscordIdentifier(license --[[string]], externalId --[[string]], username --[[string]])
-	exports[GetCurrentResourceName()]:AddActivity({
-		oneofKind = 'userOauth2',
+	exports[GetCurrentResourceName()]:AddUserOAuth2Conn({
 		userOauth2 = {
 			providerName = Config.Discord.OAuth2Provider,
 			identifier = getLicenseFromIdentifier(license),
@@ -53,8 +52,7 @@ function addUserActivity(sIdentifier --[[string/nil]], tIdentifier --[[string]],
 
 	local targetUserId = getUserIDFromIdentifier(tIdentifier)
 
-	exports[GetCurrentResourceName()]:AddActivity({
-		oneofKind = 'userActivity',
+	exports[GetCurrentResourceName()]:AddUserActivity({
 		userActivity = {
 			sourceUserId = sourceUserId,
 			targetUserId = targetUserId,
@@ -70,8 +68,7 @@ function setUserProps(identifier --[[string]], reason --[[string]], data --[[Use
 	local userId = getUserIDFromIdentifier(identifier)
 	data.userId = userId
 
-	exports[GetCurrentResourceName()]:AddActivity({
-		oneofKind = 'userProps',
+	exports[GetCurrentResourceName()]:AddUserProps({
 		userProps = {
 			reason = reason,
 			props = data,
@@ -102,8 +99,7 @@ function addJobColleagueActivity(job --[[string]], sIdentifier --[[string]], tId
 	local sourceUserId = getUserIDFromIdentifier(sIdentifier)
 	local targetUserId = getUserIDFromIdentifier(tIdentifier)
 
-	exports[GetCurrentResourceName()]:AddActivity({
-		oneofKind = 'colleagueActivity',
+	exports[GetCurrentResourceName()]:AddColleagueActivity({
 		colleagueActivity = {
 			sourceUserId = sourceUserId,
 			targetUserId = targetUserId,
@@ -122,8 +118,7 @@ function setColleagueProps(identifier --[[string]], reason --[[string]], props -
 	props.userId = userId
 
 
-	exports[GetCurrentResourceName()]:AddActivity({
-		oneofKind = 'colleagueProps',
+	exports[GetCurrentResourceName()]:AddColleagueProps({
 		colleagueProps = {
 			reason = reason,
 			props = props,
@@ -141,8 +136,7 @@ function createDispatch(job --[[string/table]], message --[[string]], descriptio
 		jobs = { job }
 	end
 
-	exports[GetCurrentResourceName()]:AddActivity({
-		oneofKind = 'dispatch',
+	exports[GetCurrentResourceName()]:AddDispatch({
 		dispatch = {
 			id = 0,
 			jobs = jobs,
@@ -199,8 +193,7 @@ function setTimeclockEntry(identifier --[[string]], data --[[TimeclockUpdate]])
 
 	data.userId = userId
 
-	exports[GetCurrentResourceName()]:AddActivity({
-		oneofKind = 'jobTimeclock',
+	exports[GetCurrentResourceName()]:AddJobTimeclock({
 		jobTimeclock = data,
 	})
 end
@@ -211,8 +204,7 @@ function sendUserUpdate(identifier --[[string]], data --[[UserUpdate]])
 
 	data.userId = userId
 
-	exports[GetCurrentResourceName()]:AddActivity({
-		oneofKind = 'userUpdate',
+	exports[GetCurrentResourceName()]:AddUserUpdate({
 		userUpdate = data,
 	})
 end
@@ -220,8 +212,7 @@ end
 function setLastCharID(identifier --[[string]])
 	local userId = getUserIDFromIdentifier(identifier)
 
-	exports[GetCurrentResourceName()]:AddActivity({
-		oneofKind = 'lastCharId',
+	exports[GetCurrentResourceName()]:SetLastCharID({
 		lastCharId = {
 			identifier = identifier,
 			lastCharId = userId,

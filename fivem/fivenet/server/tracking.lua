@@ -1,22 +1,35 @@
 local playerLocations = {}
+local playerUserIds = {}
+
+local function getCachedUserId(identifier --[[string]])
+	if not identifier then return nil end
+
+	if not playerUserIds[identifier] then
+		local userId = getUserIDFromIdentifier(identifier)
+		if not userId or userId == 0 then return nil end
+
+		playerUserIds[identifier] = userId
+	end
+
+	return playerUserIds[identifier]
+end
 
 local function deletePosition(identifier --[[string]], job --[[string]])
 	playerLocations[identifier] = nil
+	local userId = getCachedUserId(identifier)
+	if not userId then return end
 
-	exports[GetCurrentResourceName()]:SendData({
-		oneofKind = 'userLocations',
-		userLocations = {
-			users = {
-				{
-					identifier = identifier,
-					job = job,
-					coords = {
-						x = 0,
-						y = 0,
-					},
-					hidden = false,
-					remove = true,
+	exports[GetCurrentResourceName()]:SendUserLocations({
+		users = {
+			{
+				userId = userId,
+				job = job,
+				coords = {
+					x = 0,
+					y = 0,
 				},
+				hidden = false,
+				remove = true,
 			},
 		},
 	})
@@ -31,17 +44,18 @@ if Config.Tracking.Enable then
 			for playerId, xPlayer in pairs(players) do
 				if xPlayer == nil then goto continue end
 
-				local job, identifier
+				local job, identifier, userId
 				if Config.Framework == 'qbcore' then
 					playerId = xPlayer.PlayerData.source
 					job = xPlayer.PlayerData.job.name
 					identifier = xPlayer.PlayerData.cid .. ':' .. xPlayer.PlayerData.citizenid
 				elseif Config.Framework == 'esx' then
-					job = xPlayer.job
+					job = xPlayer.job.name
 					identifier = xPlayer.identifier
 				end
+				userId = getCachedUserId(identifier)
 
-				if Config.Tracking.Jobs[job] then
+				if Config.Tracking.Jobs[job] and userId then
 					local update = true
 
 					if playerLocations[identifier] then
@@ -55,17 +69,17 @@ if Config.Tracking.Enable then
 						local ped = GetPlayerPed(playerId)
 						if ped ~= 0 then
 							local coords = GetEntityCoords(ped)
-							local hidden = 0
+							local hidden = false
 
 							-- Either players is not on duty and/or doesn't have the tracking item
 							if Functions.CheckIfPlayerHidden(xPlayer) then
-								hidden = 1
+								hidden = true
 							end
 
 							playerLocations[identifier] = coords
 
 							table.insert(locations, {
-								["identifier"] = identifier,
+								["userId"] = userId,
 								["job"] = job,
 								["coords"] = {
 									["x"] = coords.x,
@@ -81,11 +95,8 @@ if Config.Tracking.Enable then
 				::continue::
 			end
 
-			exports[GetCurrentResourceName()]:SendData({
-				oneofKind = 'userLocations',
-				userLocations = {
-					users = locations,
-				},
+			exports[GetCurrentResourceName()]:SendUserLocations({
+				users = locations,
 			})
 
 			Wait(Config.Tracking.Interval)
@@ -101,7 +112,7 @@ if Config.Tracking.Enable then
 			local job = getPlayerJob(source)
 			if not job then return end
 
-			if not Config.Tracking.Jobs[job] then return end
+			if not Config.Tracking.Jobs[job.name] then return end
 
 			if onDuty then
 				-- If player is hidden, we don't bother adding them to the locations table now
@@ -109,21 +120,20 @@ if Config.Tracking.Enable then
 				if Functions.CheckIfPlayerHidden(xPlayer) then return end
 
 				local coords = GetEntityCoords(GetPlayerPed(source))
+				local userId = getCachedUserId(identifier)
+				if not userId then return end
 
-				exports[GetCurrentResourceName()]:SendData({
-					oneofKind = 'userLocations',
-					userLocations = {
-						users = {
-							{
-								identifier = identifier,
-								job = job.name,
-								coords = {
-									x = coords.x,
-									y = coords.y,
-								},
-								hidden = false,
-								remove = true,
+				exports[GetCurrentResourceName()]:SendUserLocations({
+					users = {
+						{
+							userId = userId,
+							job = job.name,
+							coords = {
+								x = coords.x,
+								y = coords.y,
 							},
+							hidden = false,
+							remove = true,
 						},
 					},
 				})
@@ -137,7 +147,7 @@ if Config.Tracking.Enable then
 		AddEventHandler('QBCore:Server:OnJobUpdate', function(source, job)
 			local identifier = getPlayerUniqueIdentifier(source)
 
-			if not Config.Tracking.Jobs[job] then return end
+			if not Config.Tracking.Jobs[job.name] then return end
 
 			if job.onduty then
 				local xPlayer = getPlayerById(source)
@@ -146,21 +156,20 @@ if Config.Tracking.Enable then
 				if Functions.CheckIfPlayerHidden(xPlayer) then return end
 
 				local coords = GetEntityCoords(GetPlayerPed(source))
+				local userId = getCachedUserId(identifier)
+				if not userId then return end
 
-				exports[GetCurrentResourceName()]:SendData({
-					oneofKind = 'userLocations',
-					userLocations = {
-						users = {
-							{
-								identifier = identifier,
-								job = job.name,
-								coords = {
-									x = coords.x,
-									y = coords.y,
-								},
-								hidden = false,
-								remove = true,
+				exports[GetCurrentResourceName()]:SendUserLocations({
+					users = {
+						{
+							userId = userId,
+							job = job.name,
+							coords = {
+								x = coords.x,
+								y = coords.y,
 							},
+							hidden = false,
+							remove = true,
 						},
 					},
 				})
@@ -201,12 +210,9 @@ if Config.Tracking.Enable then
 			CreateThread(function()
 				Wait(1000)
 				-- Clear user locations table on resource (re-)start, which most likely will be server restarts
-				exports[GetCurrentResourceName()]:SendData({
-					oneofKind = 'userLocations',
-					userLocations = {
-						users = {},
-						clearAll = true,
-					},
+				exports[GetCurrentResourceName()]:SendUserLocations({
+					users = {},
+					clearAll = true,
 				})
 			end)
 		end
