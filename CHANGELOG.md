@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0] - 2026-05-03
+
+### 🚀 Features
+
+- Add new api methods of fivenet v2026.4.0
+
+### 🐛 Bug Fixes
+
+- Only send user locations when not empty
+- Use cid + license instead of cid + citizenid for qbcore unique identifier
+
 ## [1.2.0] - 2026-03-14
 
 ### 🐛 Bug Fixes
