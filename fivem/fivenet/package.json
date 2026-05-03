@@ -11,16 +11,16 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
-        "@fivenet-app/gen": "2026.4.0",
+        "@fivenet-app/gen": "2026.5.0",
         "@grpc/grpc-js": "1.14.3",
         "@protobuf-ts/grpc-transport": "2.11.1"
     },
     "devDependencies": {
-        "@citizenfx/server": "2.0.28814-1",
+        "@citizenfx/server": "2.0.28954-1",
         "@total-typescript/ts-reset": "0.6.1",
         "@types/node": "25.6.0",
         "esbuild": "0.28.0",
-        "eslint": "10.2.1",
+        "eslint": "10.3.0",
         "eslint-config-prettier": "10.1.8",
         "eslint-plugin-prettier": "5.5.5",
         "prettier": "3.8.3",

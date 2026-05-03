@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@citizenfx/server@2.0.28814-1":
-  version "2.0.28814-1"
-  resolved "https://registry.yarnpkg.com/@citizenfx/server/-/server-2.0.28814-1.tgz#ace6b2f826578c9883c6855f7a3a5c47768fcee0"
-  integrity sha512-MMgW/6m9yVWUZbR9n8DgqUIEvlod1Jb3N+KpUfjMhwHrQb7O4AtZiyVtzRKFGEDFJfZcHk3bljA6a/uTq4ZTWw==
+"@citizenfx/server@2.0.28954-1":
+  version "2.0.28954-1"
+  resolved "https://registry.yarnpkg.com/@citizenfx/server/-/server-2.0.28954-1.tgz#b2d8b5e3be36a18cff0764e7b776cbb9fced7328"
+  integrity sha512-L9tcf2GftzukZWbTGWNVlV7++ZdpKQjDbtWbZ2s27XvtkU4xCcolXgaFCp0IFv3bzQHUr2edR0Ekb3VmV0DZ8g==
 
 "@esbuild/aix-ppc64@0.28.0":
   version "0.28.0"
@@ -185,10 +185,10 @@
     "@eslint/core" "^1.2.1"
     levn "^0.4.1"
 
-"@fivenet-app/gen@2026.4.0":
-  version "2026.4.0"
-  resolved "https://registry.yarnpkg.com/@fivenet-app/gen/-/gen-2026.4.0.tgz#e2667c766d390e2b1a8b0cd3bd35f89256330dbb"
-  integrity sha512-b2pHjK5HYPXQLw9LA3xNJsCi2qdR/2DRNDmZV4TphA0mS5Fx0651j/e9d0g0iSD+znQNxiubG9EucoQXlT5tSw==
+"@fivenet-app/gen@2026.5.0":
+  version "2026.5.0"
+  resolved "https://registry.yarnpkg.com/@fivenet-app/gen/-/gen-2026.5.0.tgz#97501d74c1b970c438b5b3f3ec09eeb58c1e9cc0"
+  integrity sha512-Yto8wWDdpK2qRANOQHPOjv0KQcqRbVtKPRib47US3aLUdiWE1M0juh6gR5wpfSGJozcDZbWdTCJdFHrksbJZ7A==
 
 "@grpc/grpc-js@1.14.3":
   version "1.14.3"
@@ -524,10 +524,10 @@ eslint-visitor-keys@^5.0.1:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-5.0.1.tgz#9e3c9489697824d2d4ce3a8ad12628f91e9f59be"
   integrity sha512-tD40eHxA35h0PEIZNeIjkHoDR4YjjJp34biM0mDvplBe//mB+IHCqHDGV7pxF+7MklTvighcCPPZC7ynWyjdTA==
 
-eslint@10.2.1:
-  version "10.2.1"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-10.2.1.tgz#224b2a6caeb34473eddcf918762363e2e063222a"
-  integrity sha512-wiyGaKsDgqXvF40P8mDwiUp/KQjE1FdrIEJsM8PZ3XCiniTMXS3OHWWUe5FI5agoCnr8x4xPrTDZuxsBlNHl+Q==
+eslint@10.3.0:
+  version "10.3.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-10.3.0.tgz#ed5b810eb8e0191bf24bddcf9cdb45b974e0a16d"
+  integrity sha512-XbEXaRva5cF0ZQB8w6MluHA0kZZfV2DuCMJ3ozyEOHLwDpZX2Lmm/7Pp0xdJmI0GL1W05VH5VwIFHEm1Vcw2gw==
   dependencies:
     "@eslint-community/eslint-utils" "^4.8.0"
     "@eslint-community/regexpp" "^4.12.2"
