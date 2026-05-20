@@ -77,14 +77,16 @@ Config.UserProps = {}
 -- You must implement these functions according to your server's setup, plugins, etc.
 --
 Functions = {}
--- Player tracker - Check if hidden function
+-- Player tracker - Check if player is currently hidden function
 Functions.CheckIfPlayerHidden = function(xPlayer)
+	if not Config.Tracking.Item then return end
+
 	if Config.Framework == 'esx' then
 		-- ESX
-		return not xPlayer.job.onDuty or (Config.Tracking.Item and not xPlayer.getInventoryItem(Config.Tracking.Item))
+		return not xPlayer.job.onDuty or (not xPlayer.getInventoryItem(Config.Tracking.Item))
 	elseif Config.Framework == 'qbcore' then
 		-- QBCore
-		return not xPlayer.PlayerData.job.onduty or (Config.Tracking.Item and not exports['qb-inventory']:HasItem(xPlayer.PlayerData.source, Config.Tracking.Item))
+		return not xPlayer.PlayerData.job.onduty or (not exports['qb-inventory']:HasItem(xPlayer.PlayerData.source, Config.Tracking.Item))
 	else
 		-- Fallback
 		return false
