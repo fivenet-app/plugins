@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.0] - 2026-07-09
+
+### 🚀 Features
+
+- Add nix flake
+
+### 🐛 Bug Fixes
+
+- Adjust hero background color and add recommended extension
+- Update CheckIfPlayerHidden comment
+- Update .gitignore
+- Add dispatch not transforming jobs argument as needed by the api
+
 ## [1.3.0] - 2026-05-03
 
 ### 🚀 Features
