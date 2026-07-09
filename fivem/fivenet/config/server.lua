@@ -72,12 +72,16 @@ Config.UserProps = {}
 
 --
 -- FUNCTIONS
--- These functions are called by FiveNet to interact with your server's framework or other plugins.
---
--- You must implement these functions according to your server's setup, plugins, etc.
+-- These are server integration hooks called by FiveNet.
+-- Replace the default implementations so they match your framework, inventory, and other plugins.
+-- Some hooks are optional, but `Functions.CheckIfPlayerHidden` is required if you use tracking with an item gate.
 --
 Functions = {}
--- Player tracker - Check if player is currently hidden function
+-- Player tracker hook:
+-- Return a truthy value when the player should be hidden from the live map.
+-- Return false or nil to keep the player visible.
+-- If `Config.Tracking.Item` is set, replace the inventory lookup with your own inventory plugin logic if needed.
+-- See the README for ESX + `ox_inventory` and QB-Core + `qb-inventory` examples.
 Functions.CheckIfPlayerHidden = function(xPlayer)
 	if not Config.Tracking.Item then return end
 

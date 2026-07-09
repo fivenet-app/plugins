@@ -40,6 +40,7 @@ index 5e85d839ae..47ce760626 100644
  					cwd: path.resolve(GetResourcePath(resourceName)),
  					stdio: 'pipe',
 ```
+
 (Green line with the `+` at the start is the line how it should look after making the change.)
 
 You might need to delete the `.yarn.installed` from the FiveNet plugin directory to ensure Yarn builder to install the dependencies correctly this time.
@@ -75,12 +76,12 @@ To update the plugin, follow these steps:
 
 The config is split into `client.lua` and `server.lua` in the [`config/` directory](config/).
 
-
-
-Config hints:
+**Config hints:**
 
 - `config/client.lua`:
     - `Config.WebURL` - Needs to be your FiveNet's instance URL, the default one `"https://fivenet.app"` is pointing to FiveNet's documentation page.
+    - `Functions.CallNumber(number)` - Client hook used by the tablet when a phone number is dialed. Replace the example with your phone resource integration.
+    - `Functions.SetRadioFrequency(frequency)` - Client hook used by the tablet when a radio frequency is changed. Replace the example with your radio resource integration.
 - `config/server.lua`:
     - `Config.Framework` - **Must be set to the framework you are using!** Can be `esx` or `qbcore`.
     - `Config.API` section
@@ -92,8 +93,77 @@ Config hints:
 - `Config.Tracking.Enabled` - Enables user tracking, which sends the user's location to FiveNet every `Config.Tracking.Interval` milliseconds.
 - `Config.Tracking.Jobs` - A list of jobs that will be tracked.
 - `Config.Tracking.Item` - If set, this item is required to be in the user's inventory for the user to appear on the map (if on duty).
-    - This requires you to configure the `Functions.CheckIfPlayerHidden` function to check your servers' inventory system for the item.
+    - This requires you to configure `Functions.CheckIfPlayerHidden` in `config/server.lua` so it checks your server's inventory system.
+    - The default implementation is only an example. Replace it if you use a different inventory resource or different duty logic.
 - `Config.Tracking.Interval` - The interval in milliseconds to send the user's location to FiveNet, default is `3000` (3 seconds). It is not recommended to set it lower than `3000` to avoid excessive load on the server and FiveNet.
+
+### Server Hooks
+
+`config/server.lua` contains integration hooks under `Functions = {}`. These are the parts you are expected to adapt to your server setup.
+
+- `Functions.CheckIfPlayerHidden(xPlayer)` - Called by the tracking loop to decide whether a player should be hidden on the live map.
+    - Return `true` to hide the player.
+    - If `Config.Tracking.Item` is set, make sure the inventory check matches your inventory resource.
+    - The default implementation shows how to handle ESX and QB-Core, but it is not universal.
+
+#### Common Inventory Examples
+
+##### ESX with `ox_inventory`
+
+```lua
+Functions.CheckIfPlayerHidden = function(xPlayer)
+    if not Config.Tracking.Item then return false end
+
+    local hasItem = exports.ox_inventory:Search(xPlayer.source, 'count', Config.Tracking.Item)
+    return not xPlayer.job.onDuty or (hasItem or 0) < 1
+end
+```
+
+##### QB-Core with `qb-inventory`
+
+```lua
+Functions.CheckIfPlayerHidden = function(xPlayer)
+    if not Config.Tracking.Item then return false end
+
+    local hasItem = exports['qb-inventory']:HasItem(xPlayer.PlayerData.source, Config.Tracking.Item)
+    return not xPlayer.PlayerData.job.onduty or not hasItem
+end
+```
+
+### Client Hooks
+
+`config/client.lua` contains integration hooks under `Functions = {}` for client-side resources.
+
+- `Functions.CallNumber(number)` - Called when the tablet UI wants to dial a number.
+    - Replace the example phone integration with your own phone resource.
+    - Return `false` if you want to block the action.
+- `Functions.SetRadioFrequency(frequency)` - Called when the tablet UI wants to change the player's radio frequency.
+    - Replace the example radio integration with your own radio resource.
+    - Return `false` if you want to block the action.
+
+#### Example: Start a call
+
+```lua
+Functions.CallNumber = function(number)
+    if number == nil or number == '' then
+        return false
+    end
+
+    exports["gksphone"]:StartingCall(number)
+end
+```
+
+#### Example: Set radio frequency
+
+```lua
+Functions.SetRadioFrequency = function(frequency)
+    local currentChannel = exports['pma-voice']:getRadioChannel()
+
+    if currentChannel ~= frequency then
+        TriggerEvent('tgiann-radio:t', frequency)
+    end
+end
+```
 
 ## Convars
 
@@ -105,24 +175,23 @@ Config hints:
 
 FiveM base events such as `onResourceStart`, etc. are not listed.
 
-| Name                            | Type     | Description                                                                               | File                                                                                                       |
-| ------------------------------- | -------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `esx:playerLoaded`              | Base ESX | Player/Character loaded                                                                   | [`server/events/player_props.lua`](server/events/player_props.lua)                                         |
-| `esx:playerDropped`             | Base ESX | Player/Character dropped/quit server                                                      | [`server/tracking.lua`](server/tracking.lua), [`server/events/timeclock.lua`](server/events/timeclock.lua) |
-| `esx_multichar:onCharTransfer`  | Custom   | Custom event added after a char has been transfered.                                      | [`server/events/char_transfer.lua`](server/events/char_transfer.lua)                                       |
-| `esx:setJob`                    | Base ESX | Event should be already triggered by ESX accordingly when a char is selected/logged into. | [`server/events/timeclock.lua`](server/events/timeclock.lua)                                               |
-| `esx_billing:sentBill`          | Custom   | Custom event sent after a bill has been sent to an user.                                  | [`server/events/billing.lua`](server/events/billing.lua)                                                   |
-| `esx_billing:removedBill`       | Custom   | Removal of a bill from a player.                                                          | [`server/events/billing.lua`](server/events/billing.lua)                                                   |
-| `esx_billing:paidBill`          | Custom   | Payment of a bill by a player.                                                            | [`server/events/billing.lua`](server/events/billing.lua)                                                   |
-| `esx_license:addLicense`        | Custom   | Addition of a license to a player.                                                        | [`server/events/licenses.lua`](server/events/licenses.lua)                                                 |
-| `esx_license:removeLicense`     | Custom   | Removal of a license from a player.                                                       | [`server/events/licenses.lua`](server/events/licenses.lua)                                                 |
-| `esx_prison:jailPlayer`         | Custom   | Sending a player to jail.                                                                 | [`server/events/jail.lua`](server/events/jail.lua)                                                         |
-| `esx_prison:unjailedByPlayer`   | Custom   | Releasing a player from jail by another player.                                           | [`server/events/jail.lua`](server/events/jail.lua)                                                         |
-| `esx_prison:escapePoliceNotify` | Custom   | Notification to police of a player's escape from jail.                                    | [`server/events/jail.lua`](server/events/jail.lua)                                                         |
-| `esx_policeJob:panicButton`     | Custom   | Police panic button activation.                                                           | [`server/events/panic.lua`](server/events/panic.lua)                                                       |
-| `esx_society:fired`             | Custom   | Firing a player from a society/job.                                                       | [`server/events/society.lua`](server/events/society.lua)                                                   |
-| `esx_society:gradeChanged`      | Custom   | Change of a player's job grade in a society.                                              | [`server/events/society.lua`](server/events/society.lua)                                                   |
-| `esx_society:hired`             | Custom   | Hiring a player into a society/job.                                                       | [`server/events/society.lua`](server/events/society.lua)                                                   |
+| Name                            | Type     | Description                                                                               | File                                                                                                               |
+| ------------------------------- | -------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `esx:playerDropped`             | Base ESX | Player/Character dropped/quit server                                                      | [`server/tracking.lua`](server/tracking.lua), [`server/events/esx/timeclock.lua`](server/events/esx/timeclock.lua) |
+| `esx_multichar:onCharTransfer`  | Custom   | Custom event added after a char has been transfered.                                      | [`server/events/esx/char_transfer.lua`](server/events/esx/char_transfer.lua)                                       |
+| `esx:setJob`                    | Base ESX | Event should be already triggered by ESX accordingly when a char is selected/logged into. | [`server/events/esx/timeclock.lua`](server/events/esx/timeclock.lua)                                               |
+| `esx_billing:sentBill`          | Custom   | Custom event sent after a bill has been sent to an user.                                  | [`server/events/esx/billing.lua`](server/events/esx/billing.lua)                                                   |
+| `esx_billing:removedBill`       | Custom   | Removal of a bill from a player.                                                          | [`server/events/esx/billing.lua`](server/events/esx/billing.lua)                                                   |
+| `esx_billing:paidBill`          | Custom   | Payment of a bill by a player.                                                            | [`server/events/esx/billing.lua`](server/events/esx/billing.lua)                                                   |
+| `esx_license:addLicense`        | Custom   | Addition of a license to a player.                                                        | [`server/events/esx/licenses.lua`](server/events/esx/licenses.lua)                                                 |
+| `esx_license:removeLicense`     | Custom   | Removal of a license from a player.                                                       | [`server/events/esx/licenses.lua`](server/events/esx/licenses.lua)                                                 |
+| `esx_prison:jailPlayer`         | Custom   | Sending a player to jail.                                                                 | [`server/events/esx/jail.lua`](server/events/esx/jail.lua)                                                         |
+| `esx_prison:unjailedByPlayer`   | Custom   | Releasing a player from jail by another player.                                           | [`server/events/esx/jail.lua`](server/events/esx/jail.lua)                                                         |
+| `esx_prison:escapePoliceNotify` | Custom   | Notification to police of a player's escape from jail.                                    | [`server/events/esx/jail.lua`](server/events/esx/jail.lua)                                                         |
+| `esx_policeJob:panicButton`     | Custom   | Police panic button activation.                                                           | [`server/events/esx/panic.lua`](server/events/esx/panic.lua)                                                       |
+| `esx_society:fired`             | Custom   | Firing a player from a society/job.                                                       | [`server/events/esx/society.lua`](server/events/esx/society.lua)                                                   |
+| `esx_society:gradeChanged`      | Custom   | Change of a player's job grade in a society.                                              | [`server/events/esx/society.lua`](server/events/esx/society.lua)                                                   |
+| `esx_society:hired`             | Custom   | Hiring a player into a society/job.                                                       | [`server/events/esx/society.lua`](server/events/esx/society.lua)                                                   |
 
 ## Exports
 
@@ -130,30 +199,30 @@ FiveM base events such as `onResourceStart`, etc. are not listed.
 
 The plugin provides the following exports on the **client side** for other resources to use:
 
-| Name             | Description                                                                   | File                                           |
-| ---------------- | ----------------------------------------------------------------------------- | ---------------------------------------------- |
-| `createDispatch` | Creates a dispatch (uses the server event `fivenet:createDispatchFromClient`) | [`client/functions.lua`](client/functions.lua) |
+| Name             | Description                                                                                        | File                                           |
+| ---------------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `createDispatch` | Creates a dispatch for a single job. It calls the server event `fivenet:createDispatchFromClient`. | [`client/functions.lua`](client/functions.lua) |
 
 ### Server
 
 The plugin provides the following exports on the **server side** for other resources to use:
 
-| Name                           | Description                                                                                                                                                                          | File                                           |
-| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------- |
-| **Helpers**                    |                                                                                                                                                                                      |                                                |
-| `getPlayerUniqueIdentifier`    | Returns the unique identifier (license) of a player by source                                                                                                                        | [`server/framework.lua`](server/framework.lua) |
-| `getUserIDFromIdentifier`      | Returns the user's unique database ID for a given user's identifier (e.g., ESX `id` column in `users` table)                                                                         | [`server/framework.lua`](server/framework.lua) |
-| `getUserDBID`                  | Returns the user's unique database ID for a given player's source                                                                                                                    | [`server/framework.lua`](server/framework.lua) |
-| **Features**                   |                                                                                                                                                                                      |                                                |
-| `addUserActivity`              | Adds user activity for the given user identifier (`tIdentifier`) and uses `sIdentifier` as the source user if provided (otherwise it will be `nil` (created by the system))          | [`server/functions.lua`](server/functions.lua) |
-| `setUserProps`                 | Sets the user properties for the given user identifier (`tIdentifier`)                                                                                                               | [`server/functions.lua`](server/functions.lua) |
-| `updateOpenFines`              | Updates the open fines for the given user identifier (`tIdentifier`), if the `fine` is positive it will be added, negative will be substracted from the user's total.                | [`server/functions.lua`](server/functions.lua) |
-| `setUserWantedState`           | Sets the user wanted state for the given user identifier (`tIdentifier`) with a (required) reason.                                                                                   | [`server/functions.lua`](server/functions.lua) |
-| `setUserBloodType`             | Sets the user blood type for the given user identifier (`tIdentifier`). You normally don't use this as the char join/loaded event is used to set it "once."                          | [`server/functions.lua`](server/functions.lua) |
-| `addJobColleagueActivity`      | Adds job colleague activity for the given user identifier (`tIdentifier`) and uses `sIdentifier` as the source use if provided (otherwise it will be `nil` (created by the system))  | [`server/functions.lua`](server/functions.lua) |
-| `setColleagueProps`            | Sets the colleague's properties for the given job and user identifier (`tIdentifier`) with a (required) reason.                                                                      | [`server/functions.lua`](server/functions.lua) |
-| `createDispatch`               | Creates a dispatch for the given **user DB ID**, so you would need to use `getUserDBID` export to get the user's DB ID first. For an example see below [here](#creating-a-dispatch). | [`server/functions.lua`](server/functions.lua) |
-| `createDispatchFromIdentifier` | Creates a dispatch for the given user by their identifier. For an example see below [here](#creating-a-dispatch).                                                                    | [`server/functions.lua`](server/functions.lua) |
+| Name                           | Description                                                                                                                                                                                         | File                                           |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| **Helpers**                    |                                                                                                                                                                                                     |                                                |
+| `getPlayerUniqueIdentifier`    | Returns the unique identifier for a player source. On ESX this is the character identifier, on QB-Core it includes the citizen ID and license.                                                      | [`server/framework.lua`](server/framework.lua) |
+| `getUserIDFromIdentifier`      | Returns the user's database ID for a framework identifier. On ESX this is the `users.id` row for the character identifier. On QB-Core this is the `players.id` row for the citizen ID and CID pair. | [`server/framework.lua`](server/framework.lua) |
+| `getUserDBID`                  | Returns the user's database ID for a player source. This is the helper you usually want when you only have `source`.                                                                                | [`server/framework.lua`](server/framework.lua) |
+| **Features**                   |                                                                                                                                                                                                     |                                                |
+| `addUserActivity`              | Adds user activity for `tIdentifier`. If `sIdentifier` is omitted, the target user's DB ID is reused as the source user.                                                                            | [`server/functions.lua`](server/functions.lua) |
+| `setUserProps`                 | Sets user properties for `tIdentifier`. The helper resolves and injects the internal user DB ID before sending, and mutates the passed table by adding `userId`.                                    | [`server/functions.lua`](server/functions.lua) |
+| `updateOpenFines`              | Adds or subtracts from the open fine total for `tIdentifier`. Positive values add, negative values subtract.                                                                                        | [`server/functions.lua`](server/functions.lua) |
+| `setUserWantedState`           | Sets the wanted state for `tIdentifier`. Pass a reason when you want the change to be attributed.                                                                                                   | [`server/functions.lua`](server/functions.lua) |
+| `setUserBloodType`             | Sets the blood type for `tIdentifier`. This is usually only needed when external systems update it.                                                                                                 | [`server/functions.lua`](server/functions.lua) |
+| `addJobColleagueActivity`      | Adds job colleague activity for `tIdentifier`. Pass both identifiers explicitly; there is no fallback when `sIdentifier` is omitted.                                                                | [`server/functions.lua`](server/functions.lua) |
+| `setColleagueProps`            | Sets colleague properties for `tIdentifier`. The helper resolves and injects the internal user DB ID before sending, and mutates the passed table by adding `userId`.                               | [`server/functions.lua`](server/functions.lua) |
+| `createDispatch`               | Creates a dispatch for the given user DB ID. `job` can be a string or a list of jobs.                                                                                                               | [`server/functions.lua`](server/functions.lua) |
+| `createDispatchFromIdentifier` | Creates a dispatch for the given user identifier. This is the safer helper if you do not already have the DB ID.                                                                                    | [`server/functions.lua`](server/functions.lua) |
 
 (Not all exports are listed here, as some are internal only, e.g., `SetupClient`, etc.)
 
@@ -169,12 +238,11 @@ From the client side, you can create a dispatch like this (this example is for a
 ```lua
 SendDistressSignal = function()
     local coords = GetEntityCoords(PlayerPedId())
-    local heading = GetEntityHeading(PlayerPedId())
     local streetName = GetStreetNameFromHashKey(GetStreetNameAtCoord(coords.x, coords.y, coords.z))
     local message = "Help! I'm in trouble at " .. streetName
 
     -- Create a dispatch (this will trigger the server event `fivenet:createDispatchFromClient`)
-    exports["fivenet"]:createDispatch("ambulance", "Help Request", message, coords.x, coords.y, false, source)
+    exports["fivenet"]:createDispatch("ambulance", "Help Request", message, coords.x, coords.y, false)
 end
 ```
 
@@ -183,7 +251,6 @@ From the server side, you can create a dispatch like this (this example is for a
 ```lua
 local function createAmbulanceDispatchForPlayer(source)
     local coords = GetEntityCoords(GetPlayerPed(source))
-    local heading = GetEntityHeading(GetPlayerPed(source))
     local streetName = GetStreetNameFromHashKey(GetStreetNameAtCoord(coords.x, coords.y, coords.z))
     local message = "Help! I'm in trouble at " .. streetName
 
@@ -195,6 +262,12 @@ local function createAmbulanceDispatchForPlayer(source)
 
     exports["fivenet"]:createDispatchFromIdentifier("ambulance", "Help Request", message, coords.x, coords.y, false, identifier)
 end
+```
+
+If you want one dispatch to target multiple jobs, pass a job list on the server side:
+
+```lua
+exports["fivenet"]:createDispatch({ "ambulance", "police" }, "Multi Agency Call", "Backup requested", coords.x, coords.y, false, identifier)
 ```
 
 ## Building

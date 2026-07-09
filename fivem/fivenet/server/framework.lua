@@ -14,7 +14,9 @@ else
 	print('ERROR: No framework selected for FiveNet, this will cause FiveNet to not work correctly!')
 end
 
--- Extract license from identifier (e.g., 'license:abcd1234' -> 'abcd1234')
+--- Extract the bare license portion from an identifier string.
+---@param identifier string
+---@return string
 function getLicenseFromIdentifier(identifier --[[string]])
 	local start = string.find(identifier, ':', 1, true)
 	if not start then return identifier end
@@ -24,6 +26,11 @@ end
 
 -- Framework independent functions
 
+--- Resolve the framework identifier for a player source.
+--- ESX returns the character identifier.
+--- QB-Core returns `cid:license`.
+---@param source number
+---@return string|nil
 function getPlayerUniqueIdentifier(source)
 	if Config.Framework == 'esx' then
 		-- ESX
@@ -56,9 +63,11 @@ function getPlayerUniqueIdentifier(source)
 end
 exports('getPlayerUniqueIdentifier', getPlayerUniqueIdentifier)
 
--- Get user ID from identifier (retrieves the user DB ID by identifier, depending on the framework using a database query)
--- ESX: Requires the char/user identifier to be passed (e.g., 'char1:abcd1234')
--- QBCore: Requires the citizenid to be passed
+--- Resolve the FiveNet user DB ID for a framework identifier.
+--- ESX expects the character identifier.
+--- QB-Core expects `cid:license`.
+---@param identifier string
+---@return number
 function getUserIDFromIdentifier(identifier --[[string]])
 	local query
 	local params = { identifier }
@@ -83,7 +92,9 @@ function getUserIDFromIdentifier(identifier --[[string]])
 end
 exports('getUserIDFromIdentifier', getUserIDFromIdentifier)
 
--- Get user database ID from source arg
+--- Resolve the FiveNet user DB ID for a player source.
+---@param source number
+---@return number|nil
 function getUserDBID(source)
 	if Config.Framework == 'esx' then
 		-- ESX
@@ -108,6 +119,9 @@ function getUserDBID(source)
 end
 exports('getUserDBID', getUserDBID)
 
+--- Return the player's job information for the active framework.
+---@param source number
+---@return table
 function getPlayerJob(source)
 	if Config.Framework == 'esx' then
 		-- ESX
@@ -142,6 +156,9 @@ function getPlayerJob(source)
 	}
 end
 
+--- Return the framework player object for a source.
+---@param source number
+---@return table|nil
 function getPlayerById(source)
 	if Config.Framework == 'esx' then
         return ESX.GetPlayerFromId(source)
@@ -152,6 +169,8 @@ function getPlayerById(source)
     return nil
 end
 
+--- Return the framework-specific player list.
+---@return table
 function getPlayers()
 	if Config.Framework == 'esx' then
         return ESX.GetExtendedPlayers()

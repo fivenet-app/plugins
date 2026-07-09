@@ -18,24 +18,25 @@ Config.PostalCommand = 'plz'
 
 --
 -- FUNCTIONS
--- These functions are called by FiveNet to interact with your server's framework or other plugins.
---
--- You must implement these functions according to your server's setup, plugins, etc.
+-- These are client integration hooks called by FiveNet.
+-- Replace the default implementations so they match your phone, radio, and other client-side plugins.
+-- If you do not use a feature, you can leave the hook as a no-op or return false.
 --
 Functions = {}
--- Call phone number
+-- Phone hook:
+-- Called when FiveNet wants to dial a number from the tablet UI.
+-- Return false to cancel the action or call your phone resource here.
+-- See the README for a call example.
 Functions.CallNumber = function(number --[[string]])
-	-- Check if the user has a phone item (example for ESX)
-	if ESX ~= nil and not ESX.getInventoryItem('phone') and not ESX.getInventoryItem('phone_jailbreak') then
-		return false
-	end
-
-	-- Your phone plugin call number code here
-	-- Example for GKSPhone
+	-- If your phone plugin requires a client-side availability check, do it here.
+	-- Example for GKSPhone:
 	exports["gksphone"]:StartingCall(number)
 end
 
--- Set radio frequency
+-- Radio hook:
+-- Called when FiveNet wants to set the player's radio frequency from the tablet UI.
+-- Return false to cancel the action or call your radio resource here.
+-- See the README for a radio example.
 Functions.SetRadioFrequency = function(frequency --[[number]])
 	-- This is for pma-voice
 	local currentChannel = exports['pma-voice']:getRadioChannel()

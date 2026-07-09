@@ -6,12 +6,14 @@ import {
     AddColleaguePropsRequest,
     AddDispatchRequest,
     AddJobTimeclockRequest,
+    AddMarkerRequest,
     AddUserActivityRequest,
     AddUserOAuth2ConnRequest,
     AddUserPropsRequest,
     AddUserUpdateRequest,
     DeleteDataRequest,
     DeleteDataResponse,
+    DeleteMarkerRequest,
     DeleteUsersRequest,
     DeleteVehiclesRequest,
     GetStatusRequest,
@@ -140,6 +142,16 @@ async function AddDispatch(request: AddDispatchRequest): Promise<AddActivityResp
     return callSync('AddDispatch', request, (client) => client.addDispatch(request));
 }
 exports('AddDispatch', AddDispatch);
+
+async function AddMarker(request: AddMarkerRequest): Promise<AddActivityResponse | undefined> {
+    return callSync('AddMarker', request, (client) => client.addMarker(request));
+}
+exports('AddMarker', AddMarker);
+
+async function DeleteMarker(request: DeleteMarkerRequest): Promise<AddActivityResponse | undefined> {
+    return callSync('DeleteMarker', request, (client) => client.deleteMarker(request));
+}
+exports('DeleteMarker', DeleteMarker);
 
 // SendData calls
 
