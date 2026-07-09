@@ -12,7 +12,7 @@
     },
     "dependencies": {
         "@fivenet-app/gen": "2026.5.0",
-        "@grpc/grpc-js": "1.14.3",
+        "@grpc/grpc-js": "1.14.4",
         "@protobuf-ts/grpc-transport": "2.11.1"
     },
     "devDependencies": {
