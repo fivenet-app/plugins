@@ -13,7 +13,7 @@
     },
     "dependencies": {
         "@iconify-json/mdi": "1.2.3",
-        "@nuxt/eslint": "1.12.1",
+        "@nuxt/eslint": "1.16.0",
         "@nuxt/fonts": "0.12.1",
         "@nuxt/ui": "2.22.3",
         "@pinia/nuxt": "0.11.3",
@@ -25,19 +25,19 @@
         "vue-router": "4.6.4"
     },
     "devDependencies": {
-        "@citizenfx/client": "2.0.26803-1",
-        "@citizenfx/server": "2.0.26803-1",
+        "@citizenfx/client": "2.0.31725-1",
+        "@citizenfx/server": "2.0.31689-1",
         "@total-typescript/ts-reset": "0.6.1",
-        "@types/node": "24.10.7",
-        "eslint": "9.39.2",
+        "@types/node": "26.1.1",
+        "eslint": "10.6.0",
         "eslint-config-prettier": "10.1.8",
         "eslint-plugin-prettier": "5.5.6",
         "eslint-plugin-vue": "10.9.2",
         "prettier": "3.9.5",
         "prettier-plugin-organize-imports": "4.3.0",
-        "prettier-plugin-tailwindcss": "0.7.2",
-        "sass-embedded": "1.97.2",
-        "typescript": "5.9.3"
+        "prettier-plugin-tailwindcss": "0.8.0",
+        "sass-embedded": "1.100.0",
+        "typescript": "7.0.2"
     },
     "resolutions": {
         "@nuxt/icon": "1.15.0",
