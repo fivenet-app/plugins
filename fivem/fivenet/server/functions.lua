@@ -128,18 +128,35 @@ end
 exports('setColleagueProps', setColleagueProps)
 
 -- Dispatches
-function createDispatch(job --[[string/table]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]], userId --[[number]])
-	local jobs
-	if type(job) ~= "string" then
-		jobs = job
-	else
-		jobs = { job }
+local function normalizeDispatchJobs(job --[[string/table]])
+	local jobs = {}
+
+	if type(job) ~= "table" then
+		job = { job }
 	end
 
+	for _, entry in ipairs(job) do
+		if type(entry) == "table" then
+			jobs[#jobs + 1] = {
+				name = entry.name,
+			}
+		else
+			jobs[#jobs + 1] = {
+				name = entry,
+			}
+		end
+	end
+
+	return {
+		jobs = jobs,
+	}
+end
+
+function createDispatch(job --[[string/table]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]], userId --[[number]])
 	exports[GetCurrentResourceName()]:AddDispatch({
 		dispatch = {
 			id = 0,
-			jobs = jobs,
+			jobs = normalizeDispatchJobs(job),
 			message = message,
 			description = description,
 			x = x,
