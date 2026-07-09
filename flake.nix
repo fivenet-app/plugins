@@ -25,6 +25,7 @@
             # NodeJS stuff
             nodejs_22
             pnpm_10
+            yarn
 
             # Utilities
             ripgrep
