@@ -1,5 +1,7 @@
 /*.zip
 
+.direnv/
+
 node_modules/
 
 .codex
