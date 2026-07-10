@@ -15,7 +15,7 @@ if Config.Framework == 'esx' then
 
 		if Config.TrackCharIDs then
 			-- Update last char ID if user has FiveNet account
-			setLastCharID(identifier)
+			setLastCharID(xPlayer.identifier)
 		end
 
 		-- If lastJob is nil, user left job's duty
