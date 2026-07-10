@@ -22,6 +22,9 @@
       devShells = forEachSupportedSystem ({ pkgs }: {
         default = pkgs.mkShell {
           packages = with pkgs; [
+            # FiveM development
+            lua5_4
+
             # NodeJS stuff
             nodejs_22
             pnpm_10
