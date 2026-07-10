@@ -26,6 +26,8 @@ files {
 server_scripts {
     '@oxmysql/lib/MySQL.lua',
     'config/server.lua',
+    'dist/server.js',
+    'server/bootstrap.lua',
     'server/lib/identifier.lua',
     'server/lib/jobs.lua',
     'server/lib/version.lua',
@@ -37,18 +39,9 @@ server_scripts {
     'server/user_updates.lua',
     'server/lib/tracking.lua',
     'server/updatecheck.lua',
-    'dist/server.js',
     'server/tracking.lua',
-    'server/events/esx/jail.lua',
-    'server/events/esx/discord_oauth2.lua',
-    'server/events/esx/timeclock.lua',
-    'server/events/esx/char_transfer.lua',
-    'server/events/esx/billing.lua',
-    'server/events/esx/panic.lua',
-    'server/events/esx/licenses.lua',
-    'server/events/esx/society.lua',
-    'server/events/esx/tracking.lua',
-    'server/events/qbcore/tracking.lua',
+    'server/events/esx/*.lua',
+    'server/events/qbcore/*.lua',
 }
 
 client_scripts {
