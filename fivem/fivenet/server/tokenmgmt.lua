@@ -4,27 +4,27 @@ RegisterNetEvent('fivenet:openTokenMgmt')
 AddEventHandler('fivenet:resetPassword', function()
 	local source = source
 
-	local identifier = getPlayerUniqueIdentifier(source)
+	local identifier = GetPlayerUniqueIdentifier(source)
 	if not identifier then
 		print('no identifier returned for player', source)
 		return
 	end
 
-	local license = getLicenseFromIdentifier(identifier)
+	local license = GetLicenseFromIdentifier(identifier)
 
 	local data = exports[GetCurrentResourceName()]:RegisterAccount(license, true)
 
 	TriggerClientEvent('fivenet:resetPassword', source, data.username, data.regToken)
 end)
 
-function openTokenMgmt(source)
-	local identifier = getPlayerUniqueIdentifier(source)
+function OpenTokenMgmt(source)
+	local identifier = GetPlayerUniqueIdentifier(source)
 	if not identifier then
 		print('no identifier returned for player', source)
 		return
 	end
 
-	local license = getLicenseFromIdentifier(identifier)
+	local license = GetLicenseFromIdentifier(identifier)
 
 	local data = exports[GetCurrentResourceName()]:RegisterAccount(license, false)
 
@@ -33,7 +33,7 @@ end
 
 AddEventHandler('fivenet:openTokenMgmt', function()
 	local source = source
-	openTokenMgmt(source)
+	OpenTokenMgmt(source)
 end)
 
 RegisterCommand('fivenet', function(source)
@@ -42,5 +42,5 @@ RegisterCommand('fivenet', function(source)
 		return
 	end
 
-	openTokenMgmt(source)
+	OpenTokenMgmt(source)
 end)

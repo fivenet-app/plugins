@@ -11,7 +11,7 @@ if Config.Framework == 'esx' then
 		local job = ESX.GetPlayerInfo(xTarget, "job")
 		if not job then return end
 
-		addJobColleagueActivity(job.name, sIdentifier, tIdentifier, 1, nil, {})
+		AddJobColleagueActivity(job.name, sIdentifier, tIdentifier, 1, nil, {})
 	end)
 
 	AddEventHandler('esx_society:gradeChanged', function(xPlayer, xTarget, promoted)
@@ -24,7 +24,7 @@ if Config.Framework == 'esx' then
 		if not job then return end
 
 		local data = { oneofKind = 'gradeChange', gradeChange = { grade = job.grade, gradeLabel = job.grade_label } }
-		addJobColleagueActivity(job.name, sIdentifier, tIdentifier, promoted and 3 or 4, nil, data)
+		AddJobColleagueActivity(job.name, sIdentifier, tIdentifier, promoted and 3 or 4, nil, data)
 	end)
 
 	AddEventHandler('esx_society:fired', function(xPlayer, xTarget)
@@ -36,6 +36,6 @@ if Config.Framework == 'esx' then
 		local job = ESX.GetPlayerInfo(xPlayer, "job")
 		if not job then return end
 
-		addJobColleagueActivity(job.name, sIdentifier, tIdentifier, 2, nil, {})
+		AddJobColleagueActivity(job.name, sIdentifier, tIdentifier, 2, nil, {})
 	end)
 end

@@ -15,13 +15,13 @@ if Config.Framework == 'esx' then
 		local label = lookupLicenseLabel(type)
 		local data = { oneofKind = 'licensesChange', licensesChange = { added = true, licenses = {{ type = type, label = label }} }}
 
-		addUserActivity(sourceXPlayer.identifier, targetXPlayer.identifier, 5, '', data)
+		AddUserActivity(sourceXPlayer.identifier, targetXPlayer.identifier, 5, '', data)
 	end)
 
 	AddEventHandler('esx_license:removeLicense', function(sourceXPlayer, targetXPlayer, type)
 		local label = lookupLicenseLabel(type)
 		local data = { oneofKind = 'licensesChange', licensesChange = { added = false, licenses = {{ type = type, label = label }} }}
 
-		addUserActivity(sourceXPlayer.identifier, targetXPlayer.identifier, 5, '', data)
+		AddUserActivity(sourceXPlayer.identifier, targetXPlayer.identifier, 5, '', data)
 	end)
 end

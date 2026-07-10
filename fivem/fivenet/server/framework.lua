@@ -16,7 +16,7 @@ local function clearIdentifierToUserIdCache(identifier --[[string]])
 end
 
 local function clearIdentifierToUserIdCacheForSource(playerId --[[number]])
-	clearIdentifierToUserIdCache(getPlayerUniqueIdentifier(playerId))
+	clearIdentifierToUserIdCache(GetPlayerUniqueIdentifier(playerId))
 end
 
 if Config.Framework == 'esx' then
@@ -27,16 +27,6 @@ else
 	print('ERROR: No framework selected for FiveNet, this will cause FiveNet to not work correctly!')
 end
 
---- Extract the bare license portion from an identifier string.
----@param identifier string
----@return string
-function getLicenseFromIdentifier(identifier --[[string]])
-	local start = string.find(identifier, ':', 1, true)
-	if not start then return identifier end
-
-	return string.sub(identifier, start + 1, -1)
-end
-
 -- Framework independent functions
 
 --- Resolve the framework identifier for a player source.
@@ -44,7 +34,7 @@ end
 --- QB-Core returns `cid:license`.
 ---@param source number
 ---@return string|nil
-function getPlayerUniqueIdentifier(source)
+function GetPlayerUniqueIdentifier(source)
 	if Config.Framework == 'esx' then
 		-- ESX
 		local xPlayer = ESX.GetPlayerFromId(source)
@@ -60,7 +50,7 @@ function getPlayerUniqueIdentifier(source)
 			return nil
 		end
 
-		return player.PlayerData.cid .. ':' .. getLicenseFromIdentifier(player.PlayerData.license)
+		return player.PlayerData.cid .. ':' .. GetLicenseFromIdentifier(player.PlayerData.license)
 	end
 
 	-- Fallback
@@ -74,7 +64,7 @@ function getPlayerUniqueIdentifier(source)
 
 	return license
 end
-exports('getPlayerUniqueIdentifier', getPlayerUniqueIdentifier)
+exports('getPlayerUniqueIdentifier', GetPlayerUniqueIdentifier)
 
 if Config.Framework == 'esx' then
 	AddEventHandler('esx:playerDropped', function(playerId)
@@ -95,7 +85,7 @@ end
 --- QB-Core expects `cid:license`.
 ---@param identifier string
 ---@return number
-function getUserIDFromIdentifier(identifier --[[string]])
+function GetUserIDFromIdentifier(identifier --[[string]])
 	local cachedEntry = identifierToUserIdCache[identifier]
 	if cachedEntry ~= nil then
 		if cachedEntry.expiresAt > os.time() then
@@ -111,7 +101,7 @@ function getUserIDFromIdentifier(identifier --[[string]])
 	if Config.Framework == 'esx' then
 		query = 'SELECT `id` FROM `users` WHERE `identifier` = ? LIMIT 1'
 	elseif Config.Framework == 'qbcore' then
-		params[1] = getLicenseFromIdentifier(identifier)
+		params[1] = GetLicenseFromIdentifier(identifier)
 		params[2] = string.sub(identifier, 1, (string.find(identifier, ':', 1, true) or 0) - 1)
 
 		query = 'SELECT `id` FROM `players` WHERE `citizenid` = ? AND `cid` = ? LIMIT 1'
@@ -130,16 +120,16 @@ function getUserIDFromIdentifier(identifier --[[string]])
 	}
 	return id
 end
-exports('getUserIDFromIdentifier', getUserIDFromIdentifier)
+exports('getUserIDFromIdentifier', GetUserIDFromIdentifier)
 
 --- Resolve the FiveNet user DB ID for a player source.
 ---@param source number
 ---@return number|nil
-function getUserDBID(source)
+function GetUserDBID(source)
 	if Config.Framework == 'esx' then
 		-- ESX
 		-- ESX doesn't select the `id` at all when loading the player, so we need to query it ourselves
-		return getUserIDFromIdentifier(getPlayerUniqueIdentifier(source))
+		return GetUserIDFromIdentifier(GetPlayerUniqueIdentifier(source))
 	elseif Config.Framework == 'qbcore' then
 		-- QBCore
 		local player = QBCore.Functions.GetPlayer(source)
@@ -151,18 +141,18 @@ function getUserDBID(source)
 			return player.PlayerData.id
 		end
 
-		return getUserIDFromIdentifier(getPlayerUniqueIdentifier(source))
+		return GetUserIDFromIdentifier(GetPlayerUniqueIdentifier(source))
 	end
 
 	-- Fallback
 	return 0
 end
-exports('getUserDBID', getUserDBID)
+exports('getUserDBID', GetUserDBID)
 
 --- Return the player's job information for the active framework.
 ---@param source number
 ---@return table
-function getPlayerJob(source)
+function GetPlayerJob(source)
 	if Config.Framework == 'esx' then
 		-- ESX
 		local xPlayer = ESX.GetPlayerFromId(source)
@@ -170,21 +160,15 @@ function getPlayerJob(source)
 			return nil
 		end
 
-		return {
-			name = xPlayer.job.name,
-			label = xPlayer.job.label,
-			grade = xPlayer.job.grade,
-			gradeLabel = xPlayer.job.grade_label
-		}
+		return NormalizePlayerJob(xPlayer.job, xPlayer.job.onDuty)
 	elseif Config.Framework == 'qbcore' then
 		-- QBCore
 		local player = QBCore.Functions.GetPlayer(source)
-		return {
-			name = player.PlayerData.job.name,
-			label = player.PlayerData.job.label,
-			grade = player.PlayerData.job.grade.level,
-			gradeLabel = player.PlayerData.job.grade.name
-		}
+		if not player then
+			return nil
+		end
+
+		return NormalizePlayerJob(player.PlayerData.job, player.PlayerData.job.onduty)
 	end
 
 	-- Fallback
@@ -192,14 +176,15 @@ function getPlayerJob(source)
 		name = 'unemployed',
 		label = 'Unemployed',
 		grade = 0,
-		gradeLabel = 'Unemployed'
+		gradeLabel = 'Unemployed',
+		onDuty = false,
 	}
 end
 
 --- Return the framework player object for a source.
 ---@param source number
 ---@return table|nil
-function getPlayerById(source)
+function GetPlayerById(source)
 	if Config.Framework == 'esx' then
         return ESX.GetPlayerFromId(source)
     elseif Config.Framework == 'qbcore' then
@@ -211,7 +196,7 @@ end
 
 --- Return the framework-specific player list.
 ---@return table
-function getPlayers()
+function GetPlayers()
 	if Config.Framework == 'esx' then
         return ESX.GetExtendedPlayers()
     elseif Config.Framework == 'qbcore' then

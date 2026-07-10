@@ -5,6 +5,6 @@ if Config.Framework == 'esx' then
 		if not xPlayer then return end
 
 		-- Send panic button dispatches to source user's job only for now
-		createDispatch(xPlayer.job.name, Config.Dispatches.PanicButtonTitle, name, x, y, false, xPlayer.identifier)
+		CreateDispatch(xPlayer.job.name, Config.Dispatches.PanicButtonTitle, name, x, y, false, xPlayer.identifier)
 	end)
 end

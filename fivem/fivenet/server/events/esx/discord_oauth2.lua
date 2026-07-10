@@ -6,7 +6,7 @@ if Config.Framework == 'esx' then
 			local identifier = ESX.GetIdentifier(source)
 
 			if identifier and discordId then
-				addOAuth2DiscordIdentifier(identifier, discordId, GetPlayerName(newID))
+				AddOAuth2DiscordIdentifier(identifier, discordId, GetPlayerName(newID))
 			end
 		end)
 	end

@@ -2,7 +2,7 @@
 local function timeclockTrack(job --[[string]], identifier --[[string]], clockOn --[[bool]])
 	if not Config.TimeclockJobs[job] then return end
 
-	setTimeclockEntry(identifier, {
+	SetTimeclockEntry(identifier, {
 		job = job,
 		start = clockOn,
 	})
@@ -15,7 +15,7 @@ if Config.Framework == 'esx' then
 
 		if Config.TrackCharIDs then
 			-- Update last char ID if user has FiveNet account
-			setLastCharID(xPlayer.identifier)
+			SetLastCharID(xPlayer.identifier)
 		end
 
 		-- If lastJob is nil, user left job's duty
