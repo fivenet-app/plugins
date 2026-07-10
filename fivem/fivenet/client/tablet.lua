@@ -47,7 +47,7 @@ function OpenTablet()
 	if not IsPedInAnyVehicle(ped) then
 		createTablet()
 
-		loadAnimDict(dict)
+		LoadAnimDict(dict)
 		TaskPlayAnim(ped, dict, anim, 2.0, 2.0, -1, 51, 0, false, false, false)
 
 		AttachEntityToEntity(tablet, ped, GetPedBoneIndex(ped, 28422), -0.05, 0.0, 0.0, 0.0, 0.0, 0.0, true, true, false, true, 1, true)
@@ -276,7 +276,7 @@ RegisterNUICallback('setTabletColors', function(data, cb)
 end)
 
 -- Written by mcnuggets
-function loadAnimDict(dict)
+function LoadAnimDict(dict)
 	if not HasAnimDictLoaded(dict) then
 		RequestAnimDict(dict)
 
