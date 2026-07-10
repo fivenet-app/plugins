@@ -6,6 +6,19 @@
 ESX = nil
 QBCore = nil
 
+local identifierToUserIdCache = {}
+local identifierToUserIdCacheTtl = 60
+
+local function clearIdentifierToUserIdCache(identifier --[[string]])
+	if not identifier then return end
+
+	identifierToUserIdCache[identifier] = nil
+end
+
+local function clearIdentifierToUserIdCacheForSource(playerId --[[number]])
+	clearIdentifierToUserIdCache(getPlayerUniqueIdentifier(playerId))
+end
+
 if Config.Framework == 'esx' then
 	ESX = exports['es_extended']:getSharedObject()
 elseif Config.Framework == 'qbcore' then
@@ -63,12 +76,35 @@ function getPlayerUniqueIdentifier(source)
 end
 exports('getPlayerUniqueIdentifier', getPlayerUniqueIdentifier)
 
+if Config.Framework == 'esx' then
+	AddEventHandler('esx:playerDropped', function(playerId)
+		clearIdentifierToUserIdCacheForSource(playerId)
+	end)
+
+	AddEventHandler('esx:playerLogout', function(playerId)
+		clearIdentifierToUserIdCacheForSource(playerId)
+	end)
+elseif Config.Framework == 'qbcore' then
+	AddEventHandler('QBCore:Server:OnPlayerUnload', function(playerId)
+		clearIdentifierToUserIdCacheForSource(playerId)
+	end)
+end
+
 --- Resolve the FiveNet user DB ID for a framework identifier.
 --- ESX expects the character identifier.
 --- QB-Core expects `cid:license`.
 ---@param identifier string
 ---@return number
 function getUserIDFromIdentifier(identifier --[[string]])
+	local cachedEntry = identifierToUserIdCache[identifier]
+	if cachedEntry ~= nil then
+		if cachedEntry.expiresAt > os.time() then
+			return cachedEntry.id
+		end
+
+		clearIdentifierToUserIdCache(identifier)
+	end
+
 	local query
 	local params = { identifier }
 
@@ -83,12 +119,16 @@ function getUserIDFromIdentifier(identifier --[[string]])
 		return 0
 	end
 
-	local row = MySQL.single.await(query, params)
-	if not row then
+	local id = MySQL.scalar.await(query, params)
+	if not id then
 		return 0
 	end
 
-	return row.id
+	identifierToUserIdCache[identifier] = {
+		id = id,
+		expiresAt = os.time() + identifierToUserIdCacheTtl,
+	}
+	return id
 end
 exports('getUserIDFromIdentifier', getUserIDFromIdentifier)
 
