@@ -141,7 +141,7 @@ end
     - Replace the example radio integration with your own radio resource.
     - Return `false` if you want to block the action.
 
-#### Example: Start a call
+#### Example: Start a Call
 
 ```lua
 Functions.CallNumber = function(number)
@@ -149,11 +149,23 @@ Functions.CallNumber = function(number)
         return false
     end
 
-    exports["gksphone"]:StartingCall(number)
+    -- Your phone's export/event to start a call to `number` here
 end
 ```
 
-#### Example: Set radio frequency
+##### GKSPhone
+
+```lua
+exports["gksphone"]:StartingCall(number)
+```
+
+##### LB Phone
+
+```lua
+exports["lb-phone"]:CreateCall({ number = number })
+```
+
+#### Example: Set Radio Frequency
 
 ```lua
 Functions.SetRadioFrequency = function(frequency)

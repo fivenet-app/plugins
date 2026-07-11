@@ -28,15 +28,21 @@ Functions = {}
 -- Return false to cancel the action or call your phone resource here.
 -- See the README for a call example.
 Functions.CallNumber = function(number --[[string]])
+	if number == nil or number == '' then
+        return false
+    end
+
 	-- If your phone plugin requires a client-side availability check, do it here.
 	-- Example for GKSPhone:
 	exports["gksphone"]:StartingCall(number)
+	-- Example for LB Phone:
+	-- exports["lb-phone"]:CreateCall(number)
 end
 
 -- Radio hook:
 -- Called when FiveNet wants to set the player's radio frequency from the tablet UI.
 -- Return false to cancel the action or call your radio resource here.
--- See the README for a radio example.
+-- See the README for a tgiann's radio example.
 Functions.SetRadioFrequency = function(frequency --[[number]])
 	-- This is for pma-voice
 	local currentChannel = exports['pma-voice']:getRadioChannel()
