@@ -1,13 +1,14 @@
 -- These are non standard events, they need to be added by yourself to take advantage of
 -- the job user activity tracking
 
-local function lookupLicenseLabel(type)
-	local response = MySQL.query.await('SELECT `label` FROM `licenses` WHERE `type` = ? LIMIT 1', { type })
-	if response then
-		return response[1].label or ''
+---@param type string
+---@return string
+local function lookupLicenseLabel(type --[[string]])
+	local label = MySQL.scalar.await('SELECT `label` FROM `licenses` WHERE `type` = ? LIMIT 1', { type })
+	if not label then
+		return type
 	end
-
-	return ''
+	return label
 end
 
 if Config.Framework == 'esx' then

@@ -1,4 +1,7 @@
 -- Timeclock on/off duty tracking
+---@param job string
+---@param identifier string
+---@param clockOn boolean
 local function timeclockTrack(job --[[string]], identifier --[[string]], clockOn --[[bool]])
 	if not Config.TimeclockJobs[job] then return end
 
