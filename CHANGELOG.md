@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.0] - 2026-07-17
+
+### 🚀 Features
+
+- Add user identifier to db id cache
+- Refine tablet input handling
+
+### 🐛 Bug Fixes
+
+- Add yarn to nix flake
+- SetLastCharID call not using identifier (ESX)
+- Re-add missing client setup on resource start
+- Tighten esx event tracking helpers
+- Keep tablet open state in sync
+- *(api)* Normalize protobuf requests before send
+
 ## [1.4.0] - 2026-07-09
 
 ### 🚀 Features
