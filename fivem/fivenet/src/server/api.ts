@@ -57,7 +57,7 @@ async function callSync<Request, Response>(
 }
 
 async function GetStatus(): Promise<GetStatusResponse | undefined> {
-    const request: GetStatusRequest = {};
+    const request = GetStatusRequest.create({});
     return callSync('GetStatus', request, (client) => client.getStatus(request));
 }
 exports('GetStatus', GetStatus);
@@ -67,21 +67,21 @@ async function RegisterAccount(
     resetToken: boolean,
     lastCharId?: number,
 ): Promise<RegisterAccountResponse | undefined> {
-    const request: RegisterAccountRequest = {
+    const request = RegisterAccountRequest.create({
         identifier: license,
         resetToken: resetToken,
         lastCharId: lastCharId,
-    };
+    });
 
     return callSync('RegisterAccount', request, (client) => client.registerAccount(request));
 }
 exports('RegisterAccount', RegisterAccount);
 
 async function TransferAccount(oldLicense: string, newLicense: string): Promise<TransferAccountResponse | undefined> {
-    const request: TransferAccountRequest = {
+    const request = TransferAccountRequest.create({
         oldLicense: oldLicense,
         newLicense: newLicense,
-    };
+    });
 
     return callSync('TransferAccount', request, (client) => client.transferAccount(request));
 }
@@ -99,57 +99,68 @@ async function AddActivity(activity: AddActivityRequest['activity']): Promise<Ad
 exports('AddActivity', AddActivity);
 
 async function AddUserOAuth2Conn(request: AddUserOAuth2ConnRequest): Promise<AddActivityResponse | undefined> {
-    return callSync('AddUserOAuth2Conn', request, (client) => client.addUserOAuth2Conn(request));
+    const normalized = AddUserOAuth2ConnRequest.create(request);
+    return callSync('AddUserOAuth2Conn', normalized, (client) => client.addUserOAuth2Conn(normalized));
 }
 exports('AddUserOAuth2Conn', AddUserOAuth2Conn);
 
 async function AddAccountUpdate(request: AddAccountUpdateRequest): Promise<AddActivityResponse | undefined> {
-    return callSync('AddAccountUpdate', request, (client) => client.addAccountUpdate(request));
+    const normalized = AddAccountUpdateRequest.create(request);
+    return callSync('AddAccountUpdate', normalized, (client) => client.addAccountUpdate(normalized));
 }
 exports('AddAccountUpdate', AddAccountUpdate);
 
 async function AddUserUpdate(request: AddUserUpdateRequest): Promise<AddActivityResponse | undefined> {
-    return callSync('AddUserUpdate', request, (client) => client.addUserUpdate(request));
+    const normalized = AddUserUpdateRequest.create(request);
+    return callSync('AddUserUpdate', normalized, (client) => client.addUserUpdate(normalized));
 }
 exports('AddUserUpdate', AddUserUpdate);
 
 async function AddUserActivity(request: AddUserActivityRequest): Promise<AddActivityResponse | undefined> {
-    return callSync('AddUserActivity', request, (client) => client.addUserActivity(request));
+    const normalized = AddUserActivityRequest.create(request);
+    return callSync('AddUserActivity', normalized, (client) => client.addUserActivity(normalized));
 }
 exports('AddUserActivity', AddUserActivity);
 
 async function AddUserProps(request: AddUserPropsRequest): Promise<AddActivityResponse | undefined> {
-    return callSync('AddUserProps', request, (client) => client.addUserProps(request));
+    const normalized = AddUserPropsRequest.create(request);
+    return callSync('AddUserProps', normalized, (client) => client.addUserProps(normalized));
 }
 exports('AddUserProps', AddUserProps);
 
 async function AddColleagueActivity(request: AddColleagueActivityRequest): Promise<AddActivityResponse | undefined> {
-    return callSync('AddColleagueActivity', request, (client) => client.addColleagueActivity(request));
+    const normalized = AddColleagueActivityRequest.create(request);
+    return callSync('AddColleagueActivity', normalized, (client) => client.addColleagueActivity(normalized));
 }
 exports('AddColleagueActivity', AddColleagueActivity);
 
 async function AddColleagueProps(request: AddColleaguePropsRequest): Promise<AddActivityResponse | undefined> {
-    return callSync('AddColleagueProps', request, (client) => client.addColleagueProps(request));
+    const normalized = AddColleaguePropsRequest.create(request);
+    return callSync('AddColleagueProps', normalized, (client) => client.addColleagueProps(normalized));
 }
 exports('AddColleagueProps', AddColleagueProps);
 
 async function AddJobTimeclock(request: AddJobTimeclockRequest): Promise<AddActivityResponse | undefined> {
-    return callSync('AddJobTimeclock', request, (client) => client.addJobTimeclock(request));
+    const normalized = AddJobTimeclockRequest.create(request);
+    return callSync('AddJobTimeclock', normalized, (client) => client.addJobTimeclock(normalized));
 }
 exports('AddJobTimeclock', AddJobTimeclock);
 
 async function AddDispatch(request: AddDispatchRequest): Promise<AddActivityResponse | undefined> {
-    return callSync('AddDispatch', request, (client) => client.addDispatch(request));
+    const normalized = AddDispatchRequest.create(request);
+    return callSync('AddDispatch', normalized, (client) => client.addDispatch(normalized));
 }
 exports('AddDispatch', AddDispatch);
 
 async function AddMarker(request: AddMarkerRequest): Promise<AddActivityResponse | undefined> {
-    return callSync('AddMarker', request, (client) => client.addMarker(request));
+    const normalized = AddMarkerRequest.create(request);
+    return callSync('AddMarker', normalized, (client) => client.addMarker(normalized));
 }
 exports('AddMarker', AddMarker);
 
 async function DeleteMarker(request: DeleteMarkerRequest): Promise<DeleteDataResponse | undefined> {
-    return callSync('DeleteMarker', request, (client) => client.deleteMarker(request));
+    const normalized = DeleteMarkerRequest.create(request);
+    return callSync('DeleteMarker', normalized, (client) => client.deleteMarker(normalized));
 }
 exports('DeleteMarker', DeleteMarker);
 
@@ -165,37 +176,44 @@ async function SendData(data: SendDataRequest['data']): Promise<SendDataResponse
 exports('SendData', SendData);
 
 async function SendJobs(request: SendJobsRequest): Promise<SendDataResponse | undefined> {
-    return callSync('SendJobs', request, (client) => client.sendJobs(request));
+    const normalized = SendJobsRequest.create(request);
+    return callSync('SendJobs', normalized, (client) => client.sendJobs(normalized));
 }
 exports('SendJobs', SendJobs);
 
 async function SendLicenses(request: SendLicensesRequest): Promise<SendDataResponse | undefined> {
-    return callSync('SendLicenses', request, (client) => client.sendLicenses(request));
+    const normalized = SendLicensesRequest.create(request);
+    return callSync('SendLicenses', normalized, (client) => client.sendLicenses(normalized));
 }
 exports('SendLicenses', SendLicenses);
 
 async function SendAccounts(request: SendAccountsRequest): Promise<SendDataResponse | undefined> {
-    return callSync('SendAccounts', request, (client) => client.sendAccounts(request));
+    const normalized = SendAccountsRequest.create(request);
+    return callSync('SendAccounts', normalized, (client) => client.sendAccounts(normalized));
 }
 exports('SendAccounts', SendAccounts);
 
 async function SendUsers(request: SendUsersRequest): Promise<SendDataResponse | undefined> {
-    return callSync('SendUsers', request, (client) => client.sendUsers(request));
+    const normalized = SendUsersRequest.create(request);
+    return callSync('SendUsers', normalized, (client) => client.sendUsers(normalized));
 }
 exports('SendUsers', SendUsers);
 
 async function SendVehicles(request: SendVehiclesRequest): Promise<SendDataResponse | undefined> {
-    return callSync('SendVehicles', request, (client) => client.sendVehicles(request));
+    const normalized = SendVehiclesRequest.create(request);
+    return callSync('SendVehicles', normalized, (client) => client.sendVehicles(normalized));
 }
 exports('SendVehicles', SendVehicles);
 
 async function SendUserLocations(request: SendUserLocationsRequest): Promise<SendDataResponse | undefined> {
-    return callSync('SendUserLocations', request, (client) => client.sendUserLocations(request));
+    const normalized = SendUserLocationsRequest.create(request);
+    return callSync('SendUserLocations', normalized, (client) => client.sendUserLocations(normalized));
 }
 exports('SendUserLocations', SendUserLocations);
 
 async function SetLastCharID(request: SetLastCharIDRequest): Promise<SendDataResponse | undefined> {
-    return callSync('SetLastCharID', request, (client) => client.setLastCharID(request));
+    const normalized = SetLastCharIDRequest.create(request);
+    return callSync('SetLastCharID', normalized, (client) => client.setLastCharID(normalized));
 }
 exports('SetLastCharID', SetLastCharID);
 
@@ -211,11 +229,13 @@ async function DeleteData(data: DeleteDataRequest['data']): Promise<DeleteDataRe
 exports('DeleteData', DeleteData);
 
 async function DeleteUsers(request: DeleteUsersRequest): Promise<DeleteDataResponse | undefined> {
-    return callSync('DeleteUsers', request, (client) => client.deleteUsers(request));
+    const normalized = DeleteUsersRequest.create(request);
+    return callSync('DeleteUsers', normalized, (client) => client.deleteUsers(normalized));
 }
 exports('DeleteUsers', DeleteUsers);
 
 async function DeleteVehicles(request: DeleteVehiclesRequest): Promise<DeleteDataResponse | undefined> {
-    return callSync('DeleteVehicles', request, (client) => client.deleteVehicles(request));
+    const normalized = DeleteVehiclesRequest.create(request);
+    return callSync('DeleteVehicles', normalized, (client) => client.deleteVehicles(normalized));
 }
 exports('DeleteVehicles', DeleteVehicles);
