@@ -94,7 +94,7 @@ export async function onNUIMessage(event: MessageEvent<NUIMessage>): Promise<voi
 
     if (event.data.type === 'token') {
         tabletStore.setBaseUrl(event.data.webUrl);
-        useTablet().isTabletOpen.value = false;
+        useTablet().setTabletOpen(false, true);
 
         tabletStore.registrationToken = event.data.data.token ?? '';
         tabletStore.username = event.data.data.username ?? '';
@@ -104,9 +104,9 @@ export async function onNUIMessage(event: MessageEvent<NUIMessage>): Promise<voi
         tabletStore.setBaseUrl(event.data.webUrl);
         useModal().close();
 
-        useTablet().isTabletOpen.value = true;
+        useTablet().setTabletOpen(true, true);
     } else if (event.data.type === 'closeTablet') {
-        useTablet().isTabletOpen.value = false;
+        useTablet().setTabletOpen(false, true);
     } else if (event.data.type === 'tabletfix') {
         tabletStore.setBaseUrl(event.data.webUrl);
         tabletStore.setPath('/api/clear-site-data');
