@@ -22,6 +22,7 @@ See [`fivem/fivenet/` directory](fivem/fivenet/) for the code and details. Make 
 ### Releasing New Version
 
 1. Run `pnpm run release-it` and follow the prompts.
+2. The release process will then build and publish the built plugins to the newly created [GitHub release](https://github.com/fivenet-app/plugins/releases).
 
 ## License
 

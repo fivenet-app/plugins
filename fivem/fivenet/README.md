@@ -80,6 +80,7 @@ The config is split into `client.lua` and `server.lua` in the [`config/` directo
 
 - `config/client.lua`:
     - `Config.WebURL` - Needs to be your FiveNet's instance URL, the default one `"https://fivenet.app"` is pointing to FiveNet's documentation page.
+    - `Config.Tablet.DisabledControls` - Optional additional controls to disable while the tablet is open. You can provide plain control IDs like `24` or full entries like `{ group = 0, control = 24 }`.
     - `Functions.CallNumber(number)` - Client hook used by the tablet when a phone number is dialed. Replace the example with your phone resource integration.
     - `Functions.SetRadioFrequency(frequency)` - Client hook used by the tablet when a radio frequency is changed. Replace the example with your radio resource integration.
 - `config/server.lua`:

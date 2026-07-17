@@ -148,7 +148,7 @@ async function AddMarker(request: AddMarkerRequest): Promise<AddActivityResponse
 }
 exports('AddMarker', AddMarker);
 
-async function DeleteMarker(request: DeleteMarkerRequest): Promise<AddActivityResponse | undefined> {
+async function DeleteMarker(request: DeleteMarkerRequest): Promise<DeleteDataResponse | undefined> {
     return callSync('DeleteMarker', request, (client) => client.deleteMarker(request));
 }
 exports('DeleteMarker', DeleteMarker);
