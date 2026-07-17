@@ -1,9 +1,10 @@
-function CreateDispatch(job --[[string]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]])
-	if type(job) ~= "string" then
-		print('error: createDispatch (client-side) expects a string (single job only) for job, got ' .. type(job))
-		return
-	end
+-- Written by mcnuggets
+function LoadAnimDict(dict)
+	if not HasAnimDictLoaded(dict) then
+		RequestAnimDict(dict)
 
-	TriggerServerEvent('fivenet:createDispatchFromClient', job, message, description, x, y, anon)
+		while not HasAnimDictLoaded(dict) do
+			Wait(10)
+		end
+	end
 end
-exports('createDispatch', CreateDispatch)

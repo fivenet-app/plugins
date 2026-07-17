@@ -16,6 +16,11 @@ Config.Hotkey.Key = 'F5'
 -- Postal Code Command (should mark the postal code on the player's map)
 Config.PostalCommand = 'plz'
 
+Config.Tablet = {}
+-- Additional controls to disable while the tablet is open.
+-- You can add either plain control IDs, e.g. `24`, or full entries, e.g. `{ group = 0, control = 24 }`.
+Config.Tablet.DisabledControls = {}
+
 --
 -- FUNCTIONS
 -- These are client integration hooks called by FiveNet.

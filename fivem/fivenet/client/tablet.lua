@@ -1,7 +1,9 @@
-local usingTablet = false -- false = closed, true = open
+-- false = closed, true = open
+local usingTablet = false
+-- false = unblocked, true = blocked
 local blockInputs = false
 
--- Objects
+-- Prop object
 local tablet
 
 function IsInTablet()
@@ -24,6 +26,67 @@ local objectHash = `prop_cs_tablet`
 
 local dict, anim = 'amb@code_human_in_bus_passenger_idles@female@tablet@idle_a', 'idle_a'
 
+local defaultDisabledControls = {
+	{ group = 0, control = 0 },   -- Next Camera
+	{ group = 0, control = 1 },   -- Look Left/Right
+	{ group = 0, control = 2 },   -- Look Up/Down
+	{ group = 0, control = 14 },  -- Scrollwheel up
+	{ group = 0, control = 15 },  -- Scrollwheel down
+	{ group = 0, control = 16 },  -- Select next weapon (scrollwheel down)
+	{ group = 0, control = 17 },  -- Select previous weapon (scrollwheel up)
+	{ group = 0, control = 24 },  -- Attack
+	{ group = 0, control = 25 },  -- Aim
+	{ group = 27, control = 75 }, -- Exit vehicle when driving
+	{ group = 0, control = 36 },  -- Input Duck/Sneak
+	{ group = 0, control = 44 },  -- Cover
+	{ group = 0, control = 45 },  -- Reload
+	{ group = 0, control = 75 },  -- Exit Vehicle
+	{ group = 0, control = 81 },  -- Next Radio (Vehicle)
+	{ group = 0, control = 82 },  -- Previous Radio (Vehicle)
+	{ group = 0, control = 96 },  -- Cinematic camera scroll up (scrollwheel up)
+	{ group = 0, control = 97 },  -- Cinematic camera scroll down (scrollwheel down)
+	{ group = 0, control = 99 },  -- Vehicle select next weapon (scrollwheel up)
+	{ group = 0, control = 100 }, -- Vehicle select previous weapon (scrollwheel down)
+	{ group = 0, control = 115 }, -- Vehicle flying select next weapon (scrollwheel up)
+	{ group = 0, control = 116 }, -- Vehicle flying select previous weapon (scrollwheel down)
+	{ group = 0, control = 180 }, -- Cellphone scroll forward (scrollwheel down)
+	{ group = 0, control = 181 }, -- Cellphone scroll backward (scrollwheel up)
+	{ group = 0, control = 198 }, -- Frontend right axis y (scrollwheel down)
+	{ group = 0, control = 241 }, -- Increase replay FOV (scrollwheel up)
+	{ group = 0, control = 242 }, -- Decrease replay FOV (scrollwheel down)
+	{ group = 0, control = 257 }, -- Attack 2
+	{ group = 0, control = 261 }, -- Scroll up previous weapon (scrollwheel up)
+	{ group = 0, control = 262 }, -- Scroll down next weapon (scrollwheel down)
+	{ group = 0, control = 263 }, -- Melee Attack 1
+}
+
+local disabledControls = {}
+
+local function addDisabledControl(control)
+	if type(control) == 'number' then
+		disabledControls[#disabledControls + 1] = { group = 0, control = control }
+		return
+	end
+
+	if type(control) == 'table' and control.control ~= nil then
+		disabledControls[#disabledControls + 1] = {
+			group = control.group or 0,
+			control = control.control,
+		}
+	end
+end
+
+for _, control in ipairs(defaultDisabledControls) do
+	addDisabledControl(control)
+end
+
+if Config.Tablet and type(Config.Tablet.DisabledControls) == 'table' then
+	for _, control in ipairs(Config.Tablet.DisabledControls) do
+		addDisabledControl(control)
+	end
+end
+
+-- Delete tablet prop
 local function deleteTablet()
 	if DoesEntityExist(tablet) then
 		DeleteEntity(tablet)
@@ -32,12 +95,14 @@ local function deleteTablet()
 	tablet = 0
 end
 
+-- Create tablet prop
 local function createTablet()
 	deleteTablet()
 
 	tablet = CreateObject(objectHash, 0, 0, 0, true, true, false)
 end
 
+-- Open tablet
 function OpenTablet()
 	if IsInTablet() then return end
 
@@ -59,42 +124,9 @@ function OpenTablet()
 		while usingTablet do
 			BlockWeaponWheelThisFrame()
 
-			DisableControlAction(0, 24, true) -- Attack
-			DisableControlAction(0, 257, true) -- Attack 2
-			DisableControlAction(0, 25, true) -- Aim
-			DisableControlAction(0, 263, true) -- Melee Attack 1
-			DisableControlAction(0, 45, true) -- Reload
-			DisableControlAction(0, 44, true) -- Cover
-			DisableControlAction(27, 75, true) -- Exit vehicle when driving
-			DisableControlAction(0, 0, true)  -- Next Camera
-			DisableControlAction(0, 1, true)  -- Look Left/Right
-			DisableControlAction(0, 2, true)  -- Look up/Down
-			DisableControlAction(0, 36, true) -- Input Duck/Sneak
-			DisableControlAction(0, 75, true) -- Exit Vehicle
-			DisableControlAction(0, 81, true) -- Next Radio (Vehicle)
-			DisableControlAction(0, 82, true) -- Previous Radio (Vehicle)
-			DisableControlAction(0, 14, true)  -- Scrollwheel up
-			DisableControlAction(0, 15, true)  -- Scrollwheel down
-			DisableControlAction(0, 16, true)  -- Select next weapon (scrollwheel down)
-			DisableControlAction(0, 17, true)  -- Select previous weapon (scrollwheel up)
-			DisableControlAction(0, 99, true)  -- Vehicle select next weapon (scrollwheel up)
-			DisableControlAction(0, 100, true) -- Vehicle select previous weapon (scrollwheel down)
-			DisableControlAction(0, 115, true) -- Vehicle flying select next weapon (scrollwheel up)
-			DisableControlAction(0, 116, true) -- Vehicle flying select previous weapon (scrollwheel down)
-			DisableControlAction(0, 180, true) -- Cellphone scroll forward (scrollwheel down)
-			DisableControlAction(0, 181, true) -- Cellphone scroll backward (scrollwheel up)
-			DisableControlAction(0, 198, true) -- Frontend right axis y (scrollwheel down)
-			DisableControlAction(0, 241, true) -- Increase replay FOV (scrollwheel up)
-			DisableControlAction(0, 242, true) -- Decrease replay FOV (scrollwheel down)
-			DisableControlAction(0, 261, true) -- Scroll up previous weapon (scrollwheel up)
-			DisableControlAction(0, 262, true) -- Scroll down next weapon (scrollwheel down)
-			DisableControlAction(0, 96, true)  -- Cinematic camera scroll up (scrollwheel up)
-			DisableControlAction(0, 97, true)  -- Cinematic camera scroll down (scrollwheel down)
-			DisableControlAction(0, 241, true) -- Replay FOV increase (scrollwheel up)
-			DisableControlAction(0, 242, true) -- Replay FOV decrease (scrollwheel down)
-			DisableControlAction(0, 180, true) -- Cellphone scroll forward (scrollwheel down)
-			DisableControlAction(0, 181, true) -- Cellphone scroll backward (scrollwheel up)
-			DisableControlAction(0, 24, true) -- Attack
+			for _, control in ipairs(disabledControls) do
+				DisableControlAction(control.group, control.control, true)
+			end
 
 			if blockInputs then
 				DisableAllControlActions(0)
@@ -125,6 +157,7 @@ function OpenTablet()
 	SetNuiFocusKeepInput(true)
 end
 
+-- Close tablet
 function CloseTablet()
 	if not IsInTablet() then return end
 
@@ -145,11 +178,7 @@ function CloseTablet()
 	end
 	RemoveAnimDict(dict)
 
-	-- Unblock with delay so escape key isn't handled by the game
-	CreateThread(function()
-		Wait(100)
-		usingTablet = false
-	end)
+	usingTablet = false
 
 	deleteTablet()
 end
@@ -167,7 +196,7 @@ RegisterNUICallback('closeTablet', function(data, cb)
 end)
 
 RegisterNUICallback('focusTablet', function(data, cb)
-	blockInputs = data.state or false
+	blockInputs = data and data.state == true
 
 	cb(true)
 end)
@@ -248,7 +277,9 @@ RegisterNUICallback('setRadioFrequency', function(data, cb)
 end)
 
 RegisterNUICallback('setWaypointPLZ', function(data, cb)
-	ExecuteCommand(Config.PostalCommand + ' ' .. data.plz)
+	if data and data.plz ~= nil then
+		ExecuteCommand(Config.PostalCommand .. ' ' .. tostring(data.plz))
+	end
 
 	cb(true)
 end)
@@ -274,14 +305,3 @@ RegisterNUICallback('setTabletColors', function(data, cb)
 
 	cb(true)
 end)
-
--- Written by mcnuggets
-function LoadAnimDict(dict)
-	if not HasAnimDictLoaded(dict) then
-		RequestAnimDict(dict)
-
-		while not HasAnimDictLoaded(dict) do
-			Wait(10)
-		end
-	end
-end
