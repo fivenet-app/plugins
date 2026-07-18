@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.0] - 2026-07-18
+
+### 🚀 Features
+
+- *(fivem)* Add configurable logging
+
 ## [1.5.0] - 2026-07-17
 
 ### 🚀 Features
