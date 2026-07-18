@@ -1,18 +1,21 @@
 {
     "compilerOptions": {
-        "baseUrl": ".",
-        "module": "CommonJS",
-        "moduleResolution": "node",
-        "target": "ES6",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "target": "ES2022",
         "jsx": "react",
         "strict": true,
         "esModuleInterop": true,
-        "lib": ["ES2017"],
+        "lib": ["ES2022"],
         "noImplicitAny": false,
         "noEmitOnError": true,
         "allowSyntheticDefaultImports": true,
         "types": ["@citizenfx/server", "@types/node"],
-        "forceConsistentCasingInFileNames": true
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "paths": {
+            "*": ["./*"]
+        }
     },
     "include": [
       "./src/**/*.ts"

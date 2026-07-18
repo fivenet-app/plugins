@@ -1,22 +1,21 @@
 import { SyncServiceClient } from '@fivenet-app/gen/services/sync/sync.client';
 import { ChannelCredentials } from '@grpc/grpc-js';
 import { GrpcTransport } from '@protobuf-ts/grpc-transport';
+import { isDebugEnabled, Logger, setDebug } from './logger';
 
 let transport: GrpcTransport | undefined;
 export let syncClient: SyncServiceClient | undefined;
 let abort: AbortController | undefined;
 
-export let DEBUG = false;
-
 async function SetupClient(host: string, token: string, insecure: boolean, debug: boolean): Promise<void> {
     abort = new AbortController();
 
-    DEBUG = debug;
+    setDebug(debug);
 
     // Enable gRPC trace level log (via env var) if debug is enabled
-    if (DEBUG) process.env.GRPC_NODE_TRACE = 'all';
+    if (isDebugEnabled()) process.env.GRPC_NODE_TRACE = 'all';
 
-    DEBUG && console.debug('Setting up GRPC client for FiveNet Sync API', host);
+    Logger.debug('Setting up GRPC client for FiveNet Sync API', host);
     transport = new GrpcTransport({
         host: host,
         channelCredentials: insecure ? ChannelCredentials.createInsecure() : ChannelCredentials.createSsl(),
@@ -44,10 +43,12 @@ on('onResourceStop', async (resourceName: string) => {
 
     syncClient = undefined;
 
-    console.info(`${resourceName} stopped.`);
+    Logger.info(`${resourceName} stopped.`);
 });
 
 function SetDebug(debug: boolean): void {
-    DEBUG = debug;
+    setDebug(debug);
 }
 exports('SetDebug', SetDebug);
+
+exports('IsDebugEnabled', isDebugEnabled);

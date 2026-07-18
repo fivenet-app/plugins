@@ -32,26 +32,27 @@ import {
     TransferAccountRequest,
     TransferAccountResponse,
 } from '@fivenet-app/gen/services/sync/sync';
-import { DEBUG, syncClient } from './client';
+import { syncClient } from './client';
+import { Logger } from './logger';
 
 async function callSync<Request, Response>(
     name: string,
     request: Request,
     call: (client: NonNullable<typeof syncClient>) => PromiseLike<{ response: Response }>,
 ): Promise<Response | undefined> {
-    DEBUG && console.debug(`${name} request:`, request);
+    Logger.debug(`${name} request:`, request);
 
     if (!syncClient) {
-        console.error('Sync client is not initialized');
+        Logger.error('Sync client is not initialized');
         return;
     }
 
     try {
         const { response } = await call(syncClient);
-        DEBUG && console.debug(`${name} response:`, response);
+        Logger.debug(`${name} response:`, response);
         return response;
     } catch (e) {
-        console.error(`Error calling ${name}:`, e);
+        Logger.error(`Error calling ${name}:`, e);
         return undefined;
     }
 }
