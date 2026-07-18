@@ -6,7 +6,7 @@ AddEventHandler('fivenet:resetPassword', function()
 
 	local identifier = GetPlayerUniqueIdentifier(source)
 	if not identifier then
-		print('no identifier returned for player', source)
+		Logger.error(('No identifier returned for player %s.'):format(source))
 		return
 	end
 
@@ -20,7 +20,7 @@ end)
 function OpenTokenMgmt(source)
 	local identifier = GetPlayerUniqueIdentifier(source)
 	if not identifier then
-		print('no identifier returned for player', source)
+		Logger.error(('No identifier returned for player %s.'):format(source))
 		return
 	end
 
@@ -38,7 +38,7 @@ end)
 
 RegisterCommand('fivenet', function(source)
 	if source == 0 then
-		print('/fivenet command is only for players!')
+		Logger.warn('/fivenet command is only for players.')
 		return
 	end
 

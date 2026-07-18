@@ -11,7 +11,7 @@ function IsInTablet()
 end
 
 AddEventHandler('fivenet:viewTablet', function(state)
-	if Config.Debug then print('fivenet:viewTablet called with state:', state) end
+	if Logger.isDebugEnabled() then Logger.debug(('fivenet:viewTablet called with state: %s'):format(tostring(state))) end
 
 	if not state then
 		blockInputs = false

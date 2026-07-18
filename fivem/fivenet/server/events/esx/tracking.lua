@@ -32,7 +32,7 @@ if Config.Framework == 'esx' and Config.Tracking.Enable then
 	AddEventHandler('esx:playerDropped', function(source)
 		local identifier = GetPlayerUniqueIdentifier(source)
 		if not identifier then
-			print('no identifier returned for player', source)
+			Logger.error(('No identifier returned for player %s.'):format(source))
 			return
 		end
 

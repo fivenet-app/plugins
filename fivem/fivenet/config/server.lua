@@ -1,7 +1,7 @@
 Config = {}
 
--- Enable debug mode for additional logging
-Config.Debug = false
+-- Log level: 'debug', 'info', 'warn', 'error', or 'off'
+Config.LogLevel = 'info'
 
 -- !!! Must be set to the framework you are using! Can be `esx` or `qbcore`
 Config.Framework = 'esx'
@@ -29,7 +29,7 @@ Config.TrackCharIDs = true
 Config.Tracking = {}
 -- Enable the tracking of players (location updates)
 Config.Tracking.Enable = true
--- Theses jobs will be tracked fully (location updates)
+-- These jobs will be tracked fully (location updates)
 Config.Tracking.Jobs = {
 	['ambulance'] = true,
 	['doj'] = true,

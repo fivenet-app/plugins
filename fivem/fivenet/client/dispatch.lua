@@ -1,6 +1,6 @@
 function CreateDispatch(job --[[string]], message --[[string]], description --[[string]], x --[[number]], y --[[number]], anon --[[bool]])
 	if type(job) ~= "string" then
-		print('error: createDispatch (client-side) expects a string (single job only) for job, got ' .. type(job))
+		Logger.error('createDispatch (client-side) expects a string (single job only) for job, got ' .. type(job))
 		return
 	end
 

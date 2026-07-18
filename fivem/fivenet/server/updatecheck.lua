@@ -3,9 +3,6 @@ local repo_name  = "plugins"
 
 local checkIntervalMs = 6 * 60 * 60 * 1000 -- every 6h
 
-local function logInfo(msg) print(("^2[FiveNet]^7 %s"):format(msg)) end
-local function logError(msg) print(("^1[FiveNet]^7 %s"):format(msg)) end
-
 -- GitHub Latest Releases API Check
 local function checkForUpdate()
     local current = GetCurrentResourceVersion()
@@ -24,7 +21,7 @@ local function checkForUpdate()
 
         local ok, data = pcall(function() return json.decode(body) end)
         if not ok or type(data) ~= "table" then
-            logError("Failed to parse GitHub API response.")
+            Logger.error("Failed to parse GitHub API response.")
             return
         end
 
@@ -39,10 +36,10 @@ local function checkForUpdate()
 
         local latest = SanitizeVersion(tag)
         if CompareSemVer(latest, current) > 0 then
-            logInfo(("New release available: ^5%s^7 (current ^5%s^7)"):format(latest, current))
-            logInfo(("Get it here: %s"):format(html))
+            Logger.info(("New release available: ^5%s^7 (current ^5%s^7)"):format(latest, current))
+            Logger.info(("Get it here: %s"):format(html))
             if notes ~= "" then
-                logInfo(("Notes: %s%s"):format(notes, (#data.body or 0) > 200 and "..." or ""))
+                Logger.info(("Notes: %s%s"):format(notes, (#data.body or 0) > 200 and "..." or ""))
             end
         end
     end, "GET", "", headers)

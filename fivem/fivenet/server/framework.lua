@@ -24,7 +24,7 @@ if Config.Framework == 'esx' then
 elseif Config.Framework == 'qbcore' then
 	QBCore = exports['qb-core']:GetCoreObject()
 else
-	print('ERROR: No framework selected for FiveNet, this will cause FiveNet to not work correctly!')
+	Logger.error('No framework selected for FiveNet, this will cause FiveNet to not work correctly!')
 end
 
 -- Framework independent functions
@@ -127,7 +127,6 @@ exports('getUserIDFromIdentifier', GetUserIDFromIdentifier)
 ---@return number|nil
 function GetUserDBID(source)
 	if Config.Framework == 'esx' then
-		-- ESX
 		-- ESX doesn't select the `id` at all when loading the player, so we need to query it ourselves
 		return GetUserIDFromIdentifier(GetPlayerUniqueIdentifier(source))
 	elseif Config.Framework == 'qbcore' then

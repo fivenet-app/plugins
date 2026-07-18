@@ -79,19 +79,21 @@ The config is split into `client.lua` and `server.lua` in the [`config/` directo
 **Config hints:**
 
 - `config/client.lua`:
+    - `Config.LogLevel` - Client-side log level. Can be `debug`, `info`, `warn`, `error`, or `off`.
     - `Config.WebURL` - Needs to be your FiveNet's instance URL, the default one `"https://fivenet.app"` is pointing to FiveNet's documentation page.
     - `Config.Tablet.DisabledControls` - Optional additional controls to disable while the tablet is open. You can provide plain control IDs like `24` or full entries like `{ group = 0, control = 24 }`.
     - `Functions.CallNumber(number)` - Client hook used by the tablet when a phone number is dialed. Replace the example with your phone resource integration.
     - `Functions.SetRadioFrequency(frequency)` - Client hook used by the tablet when a radio frequency is changed. Replace the example with your radio resource integration.
 - `config/server.lua`:
+    - `Config.LogLevel` - Server-side log level. Can be `debug`, `info`, `warn`, `error`, or `off`.
     - `Config.Framework` - **Must be set to the framework you are using!** Can be `esx` or `qbcore`.
     - `Config.API` section
-        - Make sure to set the host and token (`Config.API.Host` and `Config.API.Token`) are set to your FiveNet Instances' DBSync API details, e.g., in FiveNet Cloud you can get the Sync API credentials from the instance settings page.
+        - Make sure to set the host and token (`Config.API.Host` and `Config.API.Token`) to your FiveNet instance's DBSync API details, e.g., in FiveNet Cloud you can get the Sync API credentials from the instance settings page.
     - `Config.Dispatches.DisableClientDispatches` - If set to `true`, it will disable dispatches created from the client side, and only allow dispatches created from the server side. This is recommended for better security (default `false`).
 
 ### User Tracking (Livemap Locations)
 
-- `Config.Tracking.Enabled` - Enables user tracking, which sends the user's location to FiveNet every `Config.Tracking.Interval` milliseconds.
+- `Config.Tracking.Enable` - Enables user tracking, which sends the user's location to FiveNet every `Config.Tracking.Interval` milliseconds.
 - `Config.Tracking.Jobs` - A list of jobs that will be tracked.
 - `Config.Tracking.Item` - If set, this item is required to be in the user's inventory for the user to appear on the map (if on duty).
     - This requires you to configure `Functions.CheckIfPlayerHidden` in `config/server.lua` so it checks your server's inventory system.

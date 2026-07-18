@@ -31,7 +31,7 @@ if Config.Framework == 'qbcore' and Config.Tracking.Enable then
 	AddEventHandler('QBCore:Server:PlayerDropped', function(source)
 		local identifier = GetPlayerUniqueIdentifier(source)
 		if not identifier then
-			print('no identifier returned for player', source)
+			Logger.error(('No identifier returned for player %s.'):format(source))
 			return
 		end
 

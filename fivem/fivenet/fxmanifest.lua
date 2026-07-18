@@ -6,6 +6,7 @@ description 'FiveNet Plugin for FiveM servers.'
 version 'v1.5.0'
 
 lua54 'yes'
+node_version '22'
 
 dependencies {
     'yarn'
@@ -23,21 +24,21 @@ files {
 	'ui/.output/public/**/*.png',
 }
 
+shared_scripts {
+	'shared/lib/*.lua',
+}
+
 server_scripts {
     '@oxmysql/lib/MySQL.lua',
     'config/server.lua',
     'dist/server.js',
     'server/bootstrap.lua',
-    'server/lib/identifier.lua',
-    'server/lib/jobs.lua',
-    'server/lib/version.lua',
-    'server/lib/user_locations.lua',
+    'server/lib/*.lua',
     'server/framework.lua',
     'server/helpers.lua',
     'server/activity.lua',
     'server/dispatch.lua',
     'server/user_updates.lua',
-    'server/lib/tracking.lua',
     'server/updatecheck.lua',
     'server/tracking.lua',
     'server/events/esx/*.lua',
@@ -46,7 +47,11 @@ server_scripts {
 
 client_scripts {
 	'config/client.lua',
-	'client/*.lua'
+	'client/bootstrap.lua',
+	'client/functions.lua',
+	'client/tablet.lua',
+	'client/tokenmgmt.lua',
+	'client/dispatch.lua',
 }
 
 convar_category 'FiveNet' {

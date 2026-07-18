@@ -1,7 +1,7 @@
 Config = {}
 
--- Enable debug mode for additional logging
-Config.Debug = false
+-- Log level: 'debug', 'info', 'warn', 'error', or 'off'
+Config.LogLevel = 'info'
 
 -- Your FiveNet URL without a trailing slash but with the protocol (http:// or https://) in front
 -- The port is only needed when using a non-standard port (not 80 for http or 443 for https)
