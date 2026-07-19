@@ -11,18 +11,40 @@ local function lookupLicenseLabel(type --[[string]])
 	return label
 end
 
+local function getPlayerIdentifier(player)
+	if not player then return nil end
+	if type(player) == 'string' then return player end
+
+	local identifier = ESX.GetPlayerInfo(player, 'identifier')
+	if identifier then return identifier end
+
+	if type(player) == 'table' then
+		return player.identifier
+	end
+
+	return nil
+end
+
 if Config.Framework == 'esx' then
 	AddEventHandler('esx_license:addLicense', function(sourceXPlayer, targetXPlayer, type)
+		local sourceIdentifier = getPlayerIdentifier(sourceXPlayer)
+		local targetIdentifier = getPlayerIdentifier(targetXPlayer)
+		if not targetIdentifier then return end
+
 		local label = lookupLicenseLabel(type)
 		local data = { oneofKind = 'licensesChange', licensesChange = { added = true, licenses = {{ type = type, label = label }} }}
 
-		AddUserActivity(sourceXPlayer.identifier, targetXPlayer.identifier, 5, '', data)
+		AddUserActivity(sourceIdentifier, targetIdentifier, 5, '', data)
 	end)
 
 	AddEventHandler('esx_license:removeLicense', function(sourceXPlayer, targetXPlayer, type)
+		local sourceIdentifier = getPlayerIdentifier(sourceXPlayer)
+		local targetIdentifier = getPlayerIdentifier(targetXPlayer)
+		if not targetIdentifier then return end
+
 		local label = lookupLicenseLabel(type)
 		local data = { oneofKind = 'licensesChange', licensesChange = { added = false, licenses = {{ type = type, label = label }} }}
 
-		AddUserActivity(sourceXPlayer.identifier, targetXPlayer.identifier, 5, '', data)
+		AddUserActivity(sourceIdentifier, targetIdentifier, 5, '', data)
 	end)
 end

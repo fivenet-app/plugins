@@ -9,11 +9,13 @@
 --- If `sIdentifier` is omitted, the target user's DB ID is reused as the source user.
 function AddUserActivity(sIdentifier --[[string/nil]], tIdentifier --[[string]], type --[[number]], reason --[[string]], data --[[UserActivityData]])
 	local sourceUserId = nil
-	if not sIdentifier then
-		sourceUserId = GetUserIDFromIdentifier(tIdentifier)
-	end
-
 	local targetUserId = GetUserIDFromIdentifier(tIdentifier)
+
+	if sIdentifier then
+		sourceUserId = GetUserIDFromIdentifier(sIdentifier)
+	else
+		sourceUserId = targetUserId
+	end
 
 	exports[GetCurrentResourceName()]:AddUserActivity({
 		userActivity = {
