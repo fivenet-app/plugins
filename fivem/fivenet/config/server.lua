@@ -68,8 +68,6 @@ Config.Dispatches.PanicButtonTitle = 'Panikknopf ausgelöst'
 -- Please note that this will not disable the client-side function, but the server will ignore any client-side createDispatch event calls.
 Config.Dispatches.DisableClientDispatches = false
 
-Config.UserProps = {}
-
 --
 -- FUNCTIONS
 -- These are server integration hooks called by FiveNet.
