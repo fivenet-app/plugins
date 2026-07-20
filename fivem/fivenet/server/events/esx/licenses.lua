@@ -11,24 +11,10 @@ local function lookupLicenseLabel(type --[[string]])
 	return label
 end
 
-local function getPlayerIdentifier(player)
-	if not player then return nil end
-	if type(player) == 'string' then return player end
-
-	local identifier = ESX.GetPlayerInfo(player, 'identifier')
-	if identifier then return identifier end
-
-	if type(player) == 'table' then
-		return player.identifier
-	end
-
-	return nil
-end
-
 if Config.Framework == 'esx' then
 	AddEventHandler('esx_license:addLicense', function(sourceXPlayer, targetXPlayer, type)
-		local sourceIdentifier = getPlayerIdentifier(sourceXPlayer)
-		local targetIdentifier = getPlayerIdentifier(targetXPlayer)
+		local sourceIdentifier = GetESXPlayerIdentifier(sourceXPlayer)
+		local targetIdentifier = GetESXPlayerIdentifier(targetXPlayer)
 		if not targetIdentifier then return end
 
 		local label = lookupLicenseLabel(type)
@@ -38,8 +24,8 @@ if Config.Framework == 'esx' then
 	end)
 
 	AddEventHandler('esx_license:removeLicense', function(sourceXPlayer, targetXPlayer, type)
-		local sourceIdentifier = getPlayerIdentifier(sourceXPlayer)
-		local targetIdentifier = getPlayerIdentifier(targetXPlayer)
+		local sourceIdentifier = GetESXPlayerIdentifier(sourceXPlayer)
+		local targetIdentifier = GetESXPlayerIdentifier(targetXPlayer)
 		if not targetIdentifier then return end
 
 		local label = lookupLicenseLabel(type)
