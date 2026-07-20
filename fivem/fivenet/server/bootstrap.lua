@@ -84,6 +84,6 @@ AddEventHandler('onResourceStart', function(resourceName)
 		Config.API.Host,
 		Config.API.Token,
 		Config.API.Insecure,
-		Logger.isDebugEnabled()
+		Config.LogLevel
 	)
 end)
