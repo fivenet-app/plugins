@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.1] - 2026-07-20
+
+### 🐛 Bug Fixes
+
+- Esx licenses identifier vs source handling
+- *(fivem)* Resolve ESX event player payloads portably
+
 ## [1.6.0] - 2026-07-18
 
 ### 🚀 Features
