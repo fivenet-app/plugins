@@ -82,6 +82,10 @@ export type NUIMessage =
           };
       }
     | {
+          type: 'openURLInWindow';
+          url: string;
+      }
+    | {
           type: undefined;
       };
 
@@ -122,12 +126,24 @@ export async function onNUIMessage(event: MessageEvent<NUIMessage>): Promise<voi
         const appConfig = useAppConfig();
         appConfig.ui.primary = event.data.data.primary;
         appConfig.ui.gray = event.data.data.gray;
+    } else if (event.data.type === 'openURLInWindow') {
+        openURLInWindow(event.data.url);
     } else {
         logger.error('Message - Unknown message type received', event);
     }
 }
 
 // NUI Callbacks
+
+export function openURLInWindow(url: string): void {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if (!(window as any).invokeNative) {
+        return;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).invokeNative('openUrl', url);
+}
 
 export async function toggleTablet(state: boolean): Promise<void> {
     return await fetchNUI(state ? 'openTablet' : 'closeTablet', { ok: true });

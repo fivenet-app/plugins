@@ -1,7 +1,8 @@
 <script lang="ts" setup>
+import { copyToClipboard } from '../utils/clipboard';
 import { useTabletStore } from '../stores/tablet';
 import FiveNetLogo from './FiveNetLogo.vue';
-import { fetchNUI } from '../composables/nui';
+import { fetchNUI, openURLInWindow } from '../composables/nui';
 
 const { isOpen } = useModal();
 
@@ -17,16 +18,6 @@ watch(isOpen, async () => {
         isTabletOpen.value = false;
     }
 });
-
-function openURLInWindow(url: string): void {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    if (!(window as any).invokeNative) {
-        return;
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (window as any).invokeNative('openUrl', url);
-}
 
 const loading = ref(false);
 
@@ -67,15 +58,15 @@ async function openRegistration(): Promise<void> {
                 <UFormGroup v-if="username" label="Dein Benutzername">
                     <div class="inline-flex w-full justify-center gap-2">
                         <div class="inline-flex gap-1.5">
-                        <UInput
-                            disabled
-                            :model-value="username"
-                            block
-                            size="xl"
-                            class="flex-1"
-                            :ui="{ base: 'text-center text-white font-semibold' }"
-                        />
-                    </div>
+                            <UInput
+                                disabled
+                                :model-value="username"
+                                block
+                                size="xl"
+                                class="flex-1"
+                                :ui="{ base: 'text-center text-white font-semibold' }"
+                            />
+                        </div>
 
                         <UButton
                             icon="i-mdi-clipboard-plus"
@@ -114,7 +105,9 @@ async function openRegistration(): Promise<void> {
                     icon="i-mdi-information"
                     :description="
                         username
-                            ? (registrationToken ? 'Nutze diesen Token, um dein Passwort zurückzusetzen.' : 'Dein FiveNet-Konto wurde mit diesem Nutzernamen erstellt.')
+                            ? registrationToken
+                                ? 'Nutze diesen Token, um dein Passwort zurückzusetzen.'
+                                : 'Dein FiveNet-Konto wurde mit diesem Nutzernamen erstellt.'
                             : 'Nutze diesen Token, um dein FiveNet-Konto zu erstellen.'
                     "
                 />
