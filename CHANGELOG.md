@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.3] - 2026-07-21
+
+### 🐛 Bug Fixes
+
+- Add basic fivenet_get_status command
+- Remove double prefix from js/ts logger
+
 ## [1.6.2] - 2026-07-21
 
 ### 🐛 Bug Fixes
