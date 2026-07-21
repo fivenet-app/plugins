@@ -180,6 +180,16 @@ Functions.SetRadioFrequency = function(frequency)
 end
 ```
 
+## Commands and Permissions
+
+The `/fivenet_get_status` debug command calls the FiveNet Sync API `GetStatus` endpoint and prints the response in the server console. When an authorized player runs it in-game, the response is also printed in their client console.
+
+This command is restricted by FiveM ACE permissions. Grant it only to your admin group in `server.cfg`:
+
+```cfg
+add_ace group.admin command.fivenet_get_status allow
+```
+
 ## Convars
 
 | Name                  | Description                                                                                                                                               | Default |

@@ -40,6 +40,7 @@ server_scripts {
     'server/dispatch.lua',
     'server/user_updates.lua',
     'server/updatecheck.lua',
+    'client/cmds/*.lua',
     'server/tracking.lua',
     'server/events/esx/*.lua',
     'server/events/qbcore/*.lua',
@@ -52,6 +53,7 @@ client_scripts {
 	'client/tablet.lua',
 	'client/tokenmgmt.lua',
 	'client/dispatch.lua',
+	'client/cmds/*.lua',
 }
 
 convar_category 'FiveNet' {
