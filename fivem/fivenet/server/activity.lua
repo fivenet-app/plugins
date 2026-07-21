@@ -64,14 +64,6 @@ function SetUserWantedState(tIdentifier --[[string]], wanted --[[bool]], reason 
 end
 exports('setUserWantedState', SetUserWantedState)
 
---- Set the blood type for a user.
----@param tIdentifier string
----@param bloodType string
-function SetUserBloodType(tIdentifier --[[string]], bloodType --[[string]])
-	SetUserProps(tIdentifier, nil, { bloodType = bloodType })
-end
-exports('setUserBloodType', SetUserBloodType)
-
 -- Jobs User Activity
 -- activityType: 1 = HIRED, 2 = FIRED, 3 = PROMOTED, 4 = DEMOTED
 --- Add a job colleague activity entry.

@@ -38,6 +38,7 @@ server_scripts {
     'server/helpers.lua',
     'server/activity.lua',
     'server/dispatch.lua',
+    'server/markers.lua',
     'server/user_updates.lua',
     'server/updatecheck.lua',
     'client/cmds/*.lua',

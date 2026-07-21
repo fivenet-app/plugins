@@ -200,23 +200,23 @@ add_ace group.admin command.fivenet_get_status allow
 
 FiveM base events such as `onResourceStart`, etc. are not listed.
 
-| Name                            | Type     | Description                                                                               | File                                                                                                               |
-| ------------------------------- | -------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Name                            | Type     | Description                                                                               | File                                                                                                                                     |
+| ------------------------------- | -------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | `esx:playerDropped`             | Base ESX | Player/Character dropped/quit server                                                      | [`server/events/esx/tracking.lua`](server/events/esx/tracking.lua), [`server/events/esx/timeclock.lua`](server/events/esx/timeclock.lua) |
-| `esx_multichar:onCharTransfer`  | Custom   | Custom event added after a char has been transfered.                                      | [`server/events/esx/char_transfer.lua`](server/events/esx/char_transfer.lua)                                       |
-| `esx:setJob`                    | Base ESX | Event should be already triggered by ESX accordingly when a char is selected/logged into. | [`server/events/esx/timeclock.lua`](server/events/esx/timeclock.lua)                                               |
-| `esx_billing:sentBill`          | Custom   | Custom event sent after a bill has been sent to an user.                                  | [`server/events/esx/billing.lua`](server/events/esx/billing.lua)                                                   |
-| `esx_billing:removedBill`       | Custom   | Removal of a bill from a player.                                                          | [`server/events/esx/billing.lua`](server/events/esx/billing.lua)                                                   |
-| `esx_billing:paidBill`          | Custom   | Payment of a bill by a player.                                                            | [`server/events/esx/billing.lua`](server/events/esx/billing.lua)                                                   |
-| `esx_license:addLicense`        | Custom   | Addition of a license to a player.                                                        | [`server/events/esx/licenses.lua`](server/events/esx/licenses.lua)                                                 |
-| `esx_license:removeLicense`     | Custom   | Removal of a license from a player.                                                       | [`server/events/esx/licenses.lua`](server/events/esx/licenses.lua)                                                 |
-| `esx_prison:jailPlayer`         | Custom   | Sending a player to jail.                                                                 | [`server/events/esx/jail.lua`](server/events/esx/jail.lua)                                                         |
-| `esx_prison:unjailedByPlayer`   | Custom   | Releasing a player from jail by another player.                                           | [`server/events/esx/jail.lua`](server/events/esx/jail.lua)                                                         |
-| `esx_prison:escapePoliceNotify` | Custom   | Notification to police of a player's escape from jail.                                    | [`server/events/esx/jail.lua`](server/events/esx/jail.lua)                                                         |
-| `esx_policeJob:panicButton`     | Custom   | Police panic button activation.                                                           | [`server/events/esx/panic.lua`](server/events/esx/panic.lua)                                                       |
-| `esx_society:fired`             | Custom   | Firing a player from a society/job.                                                       | [`server/events/esx/society.lua`](server/events/esx/society.lua)                                                   |
-| `esx_society:gradeChanged`      | Custom   | Change of a player's job grade in a society.                                              | [`server/events/esx/society.lua`](server/events/esx/society.lua)                                                   |
-| `esx_society:hired`             | Custom   | Hiring a player into a society/job.                                                       | [`server/events/esx/society.lua`](server/events/esx/society.lua)                                                   |
+| `esx_multichar:onCharTransfer`  | Custom   | Custom event added after a char has been transfered.                                      | [`server/events/esx/char_transfer.lua`](server/events/esx/char_transfer.lua)                                                             |
+| `esx:setJob`                    | Base ESX | Event should be already triggered by ESX accordingly when a char is selected/logged into. | [`server/events/esx/timeclock.lua`](server/events/esx/timeclock.lua)                                                                     |
+| `esx_billing:sentBill`          | Custom   | Custom event sent after a bill has been sent to an user.                                  | [`server/events/esx/billing.lua`](server/events/esx/billing.lua)                                                                         |
+| `esx_billing:removedBill`       | Custom   | Removal of a bill from a player.                                                          | [`server/events/esx/billing.lua`](server/events/esx/billing.lua)                                                                         |
+| `esx_billing:paidBill`          | Custom   | Payment of a bill by a player.                                                            | [`server/events/esx/billing.lua`](server/events/esx/billing.lua)                                                                         |
+| `esx_license:addLicense`        | Custom   | Addition of a license to a player.                                                        | [`server/events/esx/licenses.lua`](server/events/esx/licenses.lua)                                                                       |
+| `esx_license:removeLicense`     | Custom   | Removal of a license from a player.                                                       | [`server/events/esx/licenses.lua`](server/events/esx/licenses.lua)                                                                       |
+| `esx_prison:jailPlayer`         | Custom   | Sending a player to jail.                                                                 | [`server/events/esx/jail.lua`](server/events/esx/jail.lua)                                                                               |
+| `esx_prison:unjailedByPlayer`   | Custom   | Releasing a player from jail by another player.                                           | [`server/events/esx/jail.lua`](server/events/esx/jail.lua)                                                                               |
+| `esx_prison:escapePoliceNotify` | Custom   | Notification to police of a player's escape from jail.                                    | [`server/events/esx/jail.lua`](server/events/esx/jail.lua)                                                                               |
+| `esx_policeJob:panicButton`     | Custom   | Police panic button activation.                                                           | [`server/events/esx/panic.lua`](server/events/esx/panic.lua)                                                                             |
+| `esx_society:fired`             | Custom   | Firing a player from a society/job.                                                       | [`server/events/esx/society.lua`](server/events/esx/society.lua)                                                                         |
+| `esx_society:gradeChanged`      | Custom   | Change of a player's job grade in a society.                                              | [`server/events/esx/society.lua`](server/events/esx/society.lua)                                                                         |
+| `esx_society:hired`             | Custom   | Hiring a player into a society/job.                                                       | [`server/events/esx/society.lua`](server/events/esx/society.lua)                                                                         |
 
 ## Exports
 
@@ -239,15 +239,16 @@ The plugin provides the following exports on the **server side** for other resou
 | `getUserIDFromIdentifier`      | Returns the user's database ID for a framework identifier. On ESX this is the `users.id` row for the character identifier. On QB-Core this is the `players.id` row for the citizen ID and CID pair. | [`server/framework.lua`](server/framework.lua) |
 | `getUserDBID`                  | Returns the user's database ID for a player source. This is the helper you usually want when you only have `source`.                                                                                | [`server/framework.lua`](server/framework.lua) |
 | **Features**                   |                                                                                                                                                                                                     |                                                |
-| `addUserActivity`              | Adds user activity for `tIdentifier`. If `sIdentifier` is omitted, the target user's DB ID is reused as the source user.                                                                            | [`server/activity.lua`](server/activity.lua) |
-| `setUserProps`                 | Sets user properties for `tIdentifier`. The helper resolves and injects the internal user DB ID before sending, and mutates the passed table by adding `userId`.                                    | [`server/activity.lua`](server/activity.lua) |
-| `updateOpenFines`              | Adds or subtracts from the open fine total for `tIdentifier`. Positive values add, negative values subtract.                                                                                        | [`server/activity.lua`](server/activity.lua) |
-| `setUserWantedState`           | Sets the wanted state for `tIdentifier`. Pass a reason when you want the change to be attributed.                                                                                                   | [`server/activity.lua`](server/activity.lua) |
-| `setUserBloodType`             | Sets the blood type for `tIdentifier`. This is usually only needed when external systems update it.                                                                                                 | [`server/activity.lua`](server/activity.lua) |
-| `addJobColleagueActivity`      | Adds job colleague activity for `tIdentifier`. Pass both identifiers explicitly; there is no fallback when `sIdentifier` is omitted.                                                                | [`server/activity.lua`](server/activity.lua) |
-| `setColleagueProps`            | Sets colleague properties for `tIdentifier`. The helper resolves and injects the internal user DB ID before sending, and mutates the passed table by adding `userId`.                               | [`server/activity.lua`](server/activity.lua) |
-| `createDispatch`               | Creates a dispatch for the given user DB ID. `job` can be a string or a list of jobs.                                                                                                               | [`server/dispatch.lua`](server/dispatch.lua) |
-| `createDispatchFromIdentifier` | Creates a dispatch for the given user identifier. This is the safer helper if you do not already have the DB ID.                                                                                    | [`server/dispatch.lua`](server/dispatch.lua) |
+| `addUserActivity`              | Adds user activity for `tIdentifier`. If `sIdentifier` is omitted, the target user's DB ID is reused as the source user.                                                                            | [`server/activity.lua`](server/activity.lua)   |
+| `setUserProps`                 | Sets user properties for `tIdentifier`. The helper resolves and injects the internal user DB ID before sending, and mutates the passed table by adding `userId`.                                    | [`server/activity.lua`](server/activity.lua)   |
+| `updateOpenFines`              | Adds or subtracts from the open fine total for `tIdentifier`. Positive values add, negative values subtract.                                                                                        | [`server/activity.lua`](server/activity.lua)   |
+| `setUserWantedState`           | Sets the wanted state for `tIdentifier`. Pass a reason when you want the change to be attributed.                                                                                                   | [`server/activity.lua`](server/activity.lua)   |
+| `addJobColleagueActivity`      | Adds job colleague activity for `tIdentifier`. Pass both identifiers explicitly; there is no fallback when `sIdentifier` is omitted.                                                                | [`server/activity.lua`](server/activity.lua)   |
+| `setColleagueProps`            | Sets colleague properties for `tIdentifier`. The helper resolves and injects the internal user DB ID before sending, and mutates the passed table by adding `userId`.                               | [`server/activity.lua`](server/activity.lua)   |
+| `createDispatch`               | Creates a dispatch for the given user DB ID. `job` can be a string or a list of jobs.                                                                                                               | [`server/dispatch.lua`](server/dispatch.lua)   |
+| `createDispatchFromIdentifier` | Creates a dispatch for the given user identifier. This is the safer helper if you do not already have the DB ID.                                                                                    | [`server/dispatch.lua`](server/dispatch.lua)   |
+| `addMarker`                    | Adds or updates a live map marker. Pass a marker table using the FiveNet marker payload shape.                                                                                                      | [`server/markers.lua`](server/markers.lua)     |
+| `deleteMarker`                 | Deletes a live map marker by ID.                                                                                                                                                                    | [`server/markers.lua`](server/markers.lua)     |
 
 (Not all exports are listed here, as some are internal only, e.g., `SetupClient`, etc.)
 
@@ -293,6 +294,48 @@ If you want one dispatch to target multiple jobs, pass a job list on the server 
 
 ```lua
 exports["fivenet"]:createDispatch({ "ambulance", "police" }, "Multi Agency Call", "Backup requested", coords.x, coords.y, false, identifier)
+```
+
+### Creating and Deleting a Livemap Marker
+
+From the server side, you can create a livemap marker by passing the marker payload:
+
+```lua
+local markerId = 123
+-- If no expiration is given, a default 24 hour expiration is added.
+local expiresAt = os.time() + 3600 -- One hour from now
+
+exports["fivenet"]:addMarker({
+    id = markerId,
+    x = 425.1,
+    y = -979.5,
+    name = "Road Closure",
+    description = "Temporary closure near Mission Row.",
+    color = "#ff3333",
+    job = "police",
+    jobLabel = "Police",
+    expiresAt = {
+        timestamp = {
+            seconds = expiresAt,
+            nanos = 0,
+        },
+    },
+    public = false,
+    type = 2, -- MARKER_TYPE_CIRCLE
+    data = {
+        data = {
+            oneofKind = "circle",
+            circle = {
+                radius = 75,
+                opacity = 0.35,
+                stroke = true,
+                strokeWidth = 2,
+            },
+        },
+    },
+})
+
+exports["fivenet"]:deleteMarker(markerId)
 ```
 
 ## Building
