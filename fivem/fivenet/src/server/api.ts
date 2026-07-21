@@ -40,7 +40,7 @@ async function callSync<Request, Response>(
     request: Request,
     call: (client: NonNullable<typeof syncClient>) => PromiseLike<{ response: Response }>,
 ): Promise<Response | undefined> {
-    Logger.debug(`${name} request:`, request);
+    if (Logger.isDebugEnabled()) Logger.debug(`${name} request:`, request);
 
     if (!syncClient) {
         Logger.error('Sync client is not initialized');
@@ -49,7 +49,7 @@ async function callSync<Request, Response>(
 
     try {
         const { response } = await call(syncClient);
-        Logger.debug(`${name} response:`, response);
+        if (Logger.isDebugEnabled()) Logger.debug(`${name} response:`, response);
         return response;
     } catch (e) {
         Logger.error(`Error calling ${name}:`, e);
