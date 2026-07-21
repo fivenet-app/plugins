@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.2] - 2026-07-21
+
+### 🐛 Bug Fixes
+
+- *(fivem)* Cleanup js/ts logger
+- Remove unused server config option UserProps
+- Add openURLInWindow nui message/handler
+- Add debug enabled check for debug logs in api client path
+
 ## [1.6.1] - 2026-07-20
 
 ### 🐛 Bug Fixes
