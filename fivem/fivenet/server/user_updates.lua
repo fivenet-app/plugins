@@ -33,7 +33,7 @@ function SetLastCharID(identifier --[[string]])
 
 	exports[GetCurrentResourceName()]:SetLastCharID({
 		lastCharId = {
-			identifier = identifier,
+			license = GetLicenseFromIdentifier(identifier),
 			lastCharId = userId,
 		},
 	})
