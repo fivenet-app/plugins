@@ -86,6 +86,10 @@ end
 ---@param identifier string
 ---@return number
 function GetUserIDFromIdentifier(identifier --[[string]])
+	if not identifier then
+		return 0
+	end
+
 	local cachedEntry = identifierToUserIdCache[identifier]
 	if cachedEntry ~= nil then
 		if cachedEntry.expiresAt > os.time() then
@@ -122,6 +126,31 @@ function GetUserIDFromIdentifier(identifier --[[string]])
 end
 exports('getUserIDFromIdentifier', GetUserIDFromIdentifier)
 
+--- Mark the framework user row as changed so DBSync can pick it up.
+--- ESX updates `users.last_seen`.
+--- QB-Core updates `players.updated_at`.
+---@param identifier string
+---@return boolean
+function MarkUserForSync(identifier --[[string]])
+	local userId = GetUserIDFromIdentifier(identifier)
+	if not userId or userId == 0 then
+		return false
+	end
+
+	local query
+	if Config.Framework == 'esx' then
+		query = 'UPDATE `users` SET `last_seen` = CURRENT_TIMESTAMP WHERE `id` = ? LIMIT 1'
+	elseif Config.Framework == 'qbcore' then
+		query = 'UPDATE `players` SET `updated_at` = CURRENT_TIMESTAMP WHERE `id` = ? LIMIT 1'
+	else
+		return false
+	end
+
+	local affectedRows = MySQL.update.await(query, { userId })
+	return affectedRows ~= nil and affectedRows > 0
+end
+exports('markUserForSync', MarkUserForSync)
+
 --- Resolve the FiveNet user DB ID for a player source.
 ---@param source number
 ---@return number|nil
@@ -147,6 +176,19 @@ function GetUserDBID(source)
 	return 0
 end
 exports('getUserDBID', GetUserDBID)
+
+--- Mark the framework user row for a player source as changed so DBSync can pick it up.
+---@param source number
+---@return boolean
+function MarkPlayerForSync(source)
+	local identifier = GetPlayerUniqueIdentifier(source)
+	if not identifier then
+		return false
+	end
+
+	return MarkUserForSync(identifier)
+end
+exports('markPlayerForSync', MarkPlayerForSync)
 
 --- Return the player's job information for the active framework.
 ---@param source number
