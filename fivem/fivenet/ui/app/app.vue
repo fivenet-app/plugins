@@ -30,25 +30,29 @@ onBeforeUnmount(async () => {
 
 const { isTabletOpen } = useTablet();
 
+const tabletStore = useTabletStore();
+
 const devMode = import.meta.dev;
 if (devMode) {
-    useTabletStore().setBaseUrl('https://demo.fivenet.app');
+    tabletStore.setBaseUrl('https://demo.fivenet.app');
 }
+
+onBeforeMount(() => tabletStore.setTabletColors());
 </script>
 
 <template>
     <div>
-        <NuxtRouteAnnouncer />
+        <UApp>
+            <NuxtRouteAnnouncer />
 
-        <Tablet v-model="isTabletOpen" />
+            <Tablet v-model="isTabletOpen" />
 
-        <NuxtPage />
+            <NuxtPage />
 
-        <UButtonGroup v-if="devMode" class="absolute bottom-8 left-1/2 -translate-x-1/2 transform">
-            <UButton label="Token Mgmt" @click="tokenMgmtOverlay.open()" />
-            <UButton label="Tablet" @click="isTabletOpen = true" />
-        </UButtonGroup>
-
-        <UOverlayProvider />
+            <UFieldGroup v-if="devMode" class="absolute bottom-8 left-1/2 -translate-x-1/2 transform">
+                <UButton label="Token Mgmt" @click="tokenMgmtOverlay.open()" />
+                <UButton label="Tablet" @click="isTabletOpen = true" />
+            </UFieldGroup>
+        </UApp>
     </div>
 </template>

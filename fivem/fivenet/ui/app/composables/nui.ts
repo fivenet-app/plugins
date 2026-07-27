@@ -123,9 +123,7 @@ export async function onNUIMessage(event: MessageEvent<NUIMessage>): Promise<voi
     } else if (event.data.type === 'copyToClipboard') {
         copyToClipboard(event.data.text);
     } else if (event.data.type === 'setTabletColors') {
-        const appConfig = useAppConfig();
-        appConfig.ui.primary = event.data.data.primary;
-        appConfig.ui.gray = event.data.data.gray;
+        tabletStore.setTabletColors(event.data.data);
     } else if (event.data.type === 'openURLInWindow') {
         openURLInWindow(event.data.url);
     } else {

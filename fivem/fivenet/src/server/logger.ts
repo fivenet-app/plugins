@@ -47,3 +47,8 @@ export const Logger = {
         console.error(message, ...optionalParams);
     },
 };
+
+function setLogLevel(level: LogLevel | undefined): void {
+    Logger.setLevel(level);
+}
+exports('setLogLevel', setLogLevel);

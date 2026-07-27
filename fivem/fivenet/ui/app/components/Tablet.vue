@@ -80,7 +80,7 @@ onClickOutside(modalRef, (event) => {
             isTabletOpen ? 'flex' : 'hidden',
         ]"
     >
-        <div class="relative w-full flex-1 rounded border-[14px] border-gray-800 bg-gray-800">
+        <div class="relative w-full flex-1 rounded border-[14px] border-neutral-800 bg-neutral-800">
             <UTooltip text="Schließen" class="absolute -top-[32px] right-[24px] w-[64px]">
                 <UButton
                     class="rounded-b-none rounded-t-lg shadow-none ring-0"
@@ -93,7 +93,7 @@ onClickOutside(modalRef, (event) => {
 
             <UTooltip text="Neuladen" class="absolute -end-[32px] top-[100px] h-[44px]">
                 <UButton
-                    class="rounded-e-lg rounded-l-none border-none shadow-none ring-0 dark:hover:bg-gray-700"
+                    class="rounded-e-lg rounded-l-none border-none shadow-none ring-0 dark:hover:bg-neutral-700"
                     color="gray"
                     icon="i-mdi-refresh"
                     @click="refreshTablet()"
@@ -102,7 +102,7 @@ onClickOutside(modalRef, (event) => {
 
             <UTooltip :text="folded ? 'Aufklappen' : 'Zuklappen'" class="absolute -end-[32px] top-[154px] h-[44px]">
                 <UButton
-                    class="rounded-e-lg rounded-l-none shadow-none ring-0 dark:hover:bg-gray-700"
+                    class="rounded-e-lg rounded-l-none shadow-none ring-0 dark:hover:bg-neutral-700"
                     :color="folded ? 'gray' : 'white'"
                     :icon="folded ? 'i-mdi-phone-rotate-landscape' : 'i-mdi-phone-rotate-portrait'"
                     @click="folded = !folded"
@@ -112,25 +112,25 @@ onClickOutside(modalRef, (event) => {
             <UTooltip :text="turnedOn ? 'Ausschalten' : 'Einschalten'" class="absolute -end-[20px] top-[262px] h-[64px]">
                 <UButton
                     class="w-[20px] rounded-e-lg rounded-l-none shadow-none ring-0"
-                    :class="turnedOn ? 'dark:hover:bg-gray-700' : 'hover:bg-orange-500 dark:hover:bg-orange-500'"
+                    :class="turnedOn ? 'dark:hover:bg-neutral-700' : 'hover:bg-orange-500 dark:hover:bg-orange-500'"
                     :color="turnedOn ? 'gray' : 'orange'"
                     block
                     @click="turnedOn = !turnedOn"
                 />
             </UTooltip>
 
-            <div class="size-full overflow-hidden rounded border-2 border-gray-900 bg-gray-900">
+            <div class="size-full overflow-hidden rounded border-2 border-neutral-900 bg-neutral-900">
                 <iframe
                     ref="tabletIframe"
                     sandbox="allow-forms allow-modals allow-same-origin allow-scripts"
                     allow="autoplay *; clipboard-read *; clipboard-write *;"
-                    class="hero size-full bg-gray-900"
+                    class="hero size-full bg-neutral-900"
                     :class="turnedOn ? '' : 'screenOff opacity-0'"
                 />
             </div>
 
             <UButton
-                class="absolute -bottom-3 left-1/2 !h-[8px] w-52 -translate-x-1/2 rounded-b-xl bg-gray-300 shadow-none"
+                class="absolute -bottom-3 left-1/2 !h-[8px] w-52 -translate-x-1/2 rounded-b-xl bg-neutral-300 shadow-none"
                 size="xs"
                 @click="
                     turnedOn = true;

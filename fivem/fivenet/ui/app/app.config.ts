@@ -1,50 +1,90 @@
 export default defineAppConfig({
     // Nuxt UI app config
     ui: {
-        primary: 'blue',
-        gray: 'neutral',
+        colors: {
+            primary: 'blue',
+            secondary: 'neutral',
+            info: 'blue',
+            success: 'green',
+            warning: 'yellow',
+            error: 'red',
+            // Palette colors
+            amber: 'amber',
+            blue: 'blue',
+            cyan: 'cyan',
+            emerald: 'emerald',
+            fuchsia: 'fuchsia',
+            green: 'green',
+            indigo: 'indigo',
+            lime: 'lime',
+            orange: 'orange',
+            pink: 'pink',
+            purple: 'purple',
+            red: 'red',
+            rose: 'rose',
+            sky: 'sky',
+            teal: 'teal',
+            violet: 'violet',
+            white: 'white',
+            yellow: 'yellow',
+            // Gray Colors
+            gray: 'gray',
+            neutral: 'neutral',
+            slate: 'slate',
+            stone: 'stone',
+            zinc: 'zinc',
+            taupe: 'taupe',
+            mauve: 'mauve',
+            mist: 'mist',
+            olive: 'olive',
+        },
 
-        button: {
-            default: {
-                loadingIcon: 'i-mdi-loading',
-            },
+        icons: {
+            arrowDown: 'i-mdi-arrow-down',
+            arrowLeft: 'i-mdi-arrow-left',
+            arrowRight: 'i-mdi-arrow-right',
+            arrowUp: 'i-mdi-arrow-up',
+            caution: 'i-mdi-alert-circle',
+            check: 'i-mdi-check',
+            chevronDoubleLeft: 'i-mdi-chevron-double-left',
+            chevronDoubleRight: 'i-mdi-chevron-double-right',
+            chevronDown: 'i-mdi-chevron-down',
+            chevronLeft: 'i-mdi-chevron-left',
+            chevronRight: 'i-mdi-chevron-right',
+            chevronUp: 'i-mdi-chevron-up',
+            close: 'i-mdi-close',
+            copy: 'i-mdi-content-copy',
+            copyCheck: 'i-mdi-check-circle-outline',
+            dark: 'i-mdi-moon-waning-crescent',
+            drag: 'i-mdi-drag-vertical',
+            ellipsis: 'i-mdi-dots-horizontal',
+            error: 'i-mdi-close-circle',
+            external: 'i-mdi-arrow-top-right',
+            eye: 'i-mdi-eye',
+            eyeOff: 'i-mdi-eye-off',
+            file: 'i-mdi-file-document',
+            folder: 'i-mdi-folder',
+            folderOpen: 'i-mdi-folder-open',
+            hash: 'i-mdi-pound',
+            info: 'i-mdi-information',
+            light: 'i-mdi-white-balance-sunny',
+            loading: 'i-mdi-loading',
+            menu: 'i-mdi-menu',
+            minus: 'i-mdi-minus',
+            panelClose: 'i-mdi-menu-close',
+            panelOpen: 'i-mdi-menu-open',
+            plus: 'i-mdi-plus',
+            reload: 'i-mdi-reload',
+            search: 'i-mdi-magnify',
+            star: 'i-mdi-star-outline',
+            stop: 'i-mdi-stop',
+            success: 'i-mdi-check-circle',
+            system: 'i-mdi-monitor',
+            tip: 'i-mdi-lightbulb-variant',
+            upload: 'i-mdi-upload',
+            warning: 'i-mdi-alert',
         },
-        input: {
-            default: {
-                loadingIcon: 'i-mdi-loading',
-            },
-        },
-        select: {
-            default: {
-                loadingIcon: 'i-mdi-loading',
-                trailingIcon: 'i-mdi-chevron-down',
-            },
-        },
-        selectMenu: {
-            default: {
-                selectedIcon: 'i-mdi-check',
-            },
-        },
-        commandPalette: {
-            default: {
-                icon: 'i-mdi-search',
-                loadingIcon: 'i-mdi-loading',
-                selectedIcon: 'i-mdi-check',
-                emptyState: {
-                    icon: 'i-mdi-search',
-                },
-            },
-        },
-        accordion: {
-            default: {
-                openIcon: 'i-mdi-chevron-down',
-            },
-        },
-        breadcrumb: {
-            default: {
-                divider: 'i-mdi-chevron-right',
-            },
-        },
+
         card: {
             header: {
                 padding: 'px-2 py-3 sm:px-4',

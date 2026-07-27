@@ -54,12 +54,12 @@ async function openRegistration(): Promise<void> {
 <template>
     <UModal v-model:open="open" :overlay="false" :close="false" :ui="{ content: 'w-full max-w-xl' }">
         <template #content>
-            <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
+            <UCard>
                 <template #header>
                     <div class="flex items-center justify-between">
                         <FiveNetLogo class="h-5 w-5" />
 
-                        <h3 class="text-2xl font-semibold leading-6 text-gray-900 dark:text-white">
+                        <h3 class="text-2xl font-semibold leading-6 text-neutral-900 dark:text-white">
                             {{ username ? 'Konto-Verwaltung' : 'Konto-Erstellung' }}
                         </h3>
 
@@ -83,7 +83,7 @@ async function openRegistration(): Promise<void> {
 
                             <UButton
                                 icon="i-mdi-clipboard-plus"
-                                color="black"
+                                color="neutral"
                                 size="xl"
                                 label="Kopieren"
                                 class="flex-1"
@@ -105,7 +105,7 @@ async function openRegistration(): Promise<void> {
 
                             <UButton
                                 icon="i-mdi-clipboard-plus"
-                                color="black"
+                                color="neutral"
                                 size="xl"
                                 label="Kopieren"
                                 class="flex-1"
@@ -168,9 +168,9 @@ async function openRegistration(): Promise<void> {
                 </UContainer>
 
                 <template #footer>
-                    <UButtonGroup class="inline-flex w-full">
-                        <UButton color="black" block class="flex-1" @click="open = false"> Schließen </UButton>
-                    </UButtonGroup>
+                    <UFieldGroup class="inline-flex w-full">
+                        <UButton color="neutral" block class="flex-1" @click="open = false"> Schließen </UButton>
+                    </UFieldGroup>
                 </template>
             </UCard>
         </template>

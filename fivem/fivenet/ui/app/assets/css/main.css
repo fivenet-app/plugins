@@ -37,3 +37,7 @@ html {
 .dark {
     color-scheme: light !important;
 }
+
+body {
+    @apply antialiased text-default bg-transparent scheme-light dark:scheme-dark;
+}

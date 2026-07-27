@@ -72,6 +72,14 @@ AddEventHandler('onResourceStart', function(resourceName)
 	if resourceName ~= GetCurrentResourceName() then return end
 
 	Logger.setLevel(Config and Config.LogLevel)
+	exports[GetCurrentResourceName()]:setLogLevel(Config and Config.LogLevel)
+
+	local initialStartConvar = 'modernv_fivenet_initial_start_done'
+	local isInitialStart = GetConvar(initialStartConvar, 'false') ~= 'true'
+	SetConvar(initialStartConvar, 'true')
+
+	-- Only run cleanup on initial server start and not on every resource restart
+	if not isInitialStart then return end
 
 	if not validateConfig() then
 		Logger.error('FiveNet startup stopped because required config values are missing or invalid.')

@@ -18,7 +18,6 @@ files {
 	'ui/.output/public/**/*.html',
 	'ui/.output/public/**/*.js',
 	'ui/.output/public/**/*.css',
-	'ui/.output/public/**/*.woff',
 	'ui/.output/public/**/*.woff2',
 	'ui/.output/public/**/*.json',
 	'ui/.output/public/**/*.png',
