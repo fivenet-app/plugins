@@ -1,4 +1,4 @@
-import TokenMgmtModal from '../components/TokenMgmtModal.vue';
+import { useTokenMgmtOverlay } from './useTokenMgmtOverlay';
 import { useTablet } from './useTablet';
 
 const logger = useLogger('🎮 NUI');
@@ -103,10 +103,10 @@ export async function onNUIMessage(event: MessageEvent<NUIMessage>): Promise<voi
         tabletStore.registrationToken = event.data.data.token ?? '';
         tabletStore.username = event.data.data.username ?? '';
 
-        useModal().open(TokenMgmtModal);
+        useTokenMgmtOverlay().open();
     } else if (event.data.type === 'openTablet') {
         tabletStore.setBaseUrl(event.data.webUrl);
-        useModal().close();
+        useTokenMgmtOverlay().close();
 
         useTablet().setTabletOpen(true, true);
     } else if (event.data.type === 'closeTablet') {

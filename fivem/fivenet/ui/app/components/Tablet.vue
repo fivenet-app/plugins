@@ -4,8 +4,9 @@ import '~/assets/css/herofull-pattern.css';
 import { useTabletStore } from '../stores/tablet';
 import { useTablet } from '../composables/useTablet';
 import { getParentResourceName, toggleTablet } from '../composables/nui';
+import { useTokenMgmtOverlay } from '../composables/useTokenMgmtOverlay';
 
-const modal = useModal();
+const tokenMgmtOverlay = useTokenMgmtOverlay();
 
 const tabletStore = useTabletStore();
 const { refreshTablet } = tabletStore;
@@ -16,7 +17,7 @@ watch(isTabletOpen, async () => {
     if (!isTabletOpen.value) {
         await toggleTablet(isTabletOpen.value);
     } else {
-        modal.close();
+        tokenMgmtOverlay.close();
 
         if (initiated.value === false) {
             initiated.value = true;

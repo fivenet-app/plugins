@@ -1,6 +1,22 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@import '@nuxt/ui';
+
+:root {
+    --ui-radius: 0.25rem;
+
+    --ui-white: rgba(0, 0, 0, 1);
+}
+
+.dark {
+    --ui-white: rgba(255, 255, 255, 1);
+}
+
+@theme static {
+    --color-black: rgb(0, 0, 0);
+    --color-white: rgb(255, 255, 255);
+
+    --font-sans: 'Public Sans', sans-serif;
+}
 
 @layer base {
     input[type='number']::-webkit-inner-spin-button,
@@ -16,7 +32,6 @@
 
 html {
     scroll-behavior: smooth;
-
 }
 
 .dark {

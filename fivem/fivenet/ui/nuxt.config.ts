@@ -7,13 +7,7 @@ export default defineNuxtConfig({
 
     modules: ['@nuxt/eslint', '@nuxt/ui', '@nuxt/fonts', '@vueuse/nuxt', '@pinia/nuxt', 'pinia-plugin-persistedstate/nuxt'],
 
-    future: {
-        compatibilityVersion: 4,
-    },
-
-    fonts: {
-        families: [{ name: 'DM Sans', weights: [100, 200, 300, 400, 500, 600, 700, 800, 900], global: true }],
-    },
+    css: ['~/assets/css/main.css', '~/assets/css/polyfills.css'],
 
     colorMode: {
         preference: 'dark',
@@ -25,31 +19,54 @@ export default defineNuxtConfig({
 
     app: {
         baseURL: '/ui/.output/public',
+        head: {
+            htmlAttrs: {
+                class: 'polyfills',
+            },
+        },
     },
 
     ui: {
-        safelistColors: [
-            // Primary - Default
-            'primary',
-            'green',
-            'teal',
-            'cyan',
-            'sky',
-            'blue',
-            'indigo',
-            'violet',
-            // Custom
-            'error',
-            'warn',
-            'info',
-            'success',
-            // Gray Colors
-            'slate',
-            'cool',
-            'zinc',
-            'neutral',
-            'stone',
-        ],
+        theme: {
+            colors: [
+                // Theme colors
+                'primary',
+                'secondary',
+                'success',
+                'info',
+                'warning',
+                'error',
+                // Palette colors
+                'amber',
+                'blue',
+                'cyan',
+                'emerald',
+                'fuchsia',
+                'green',
+                'indigo',
+                'lime',
+                'orange',
+                'pink',
+                'purple',
+                'red',
+                'rose',
+                'sky',
+                'teal',
+                'violet',
+                'white',
+                'yellow',
+                // Gray Colors
+                'gray',
+                'neutral',
+                'slate',
+                'stone',
+                'zinc',
+                'taupe',
+                'mauve',
+                'mist',
+                'olive',
+            ],
+        },
     },
 
     icon: {
@@ -58,13 +75,99 @@ export default defineNuxtConfig({
         fallbackToApi: false,
         clientBundle: {
             scan: true,
-            sizeLimitKb: 512,
+            sizeLimitKb: 768,
+            icons: [
+                // Custom UI Icons (from app.config.ts)
+                'mdi:sort',
+                'mdi:sort-ascending',
+                'mdi:sort-descending',
+                // Nuxt UI Icons (from app.config.ts)
+                'mdi:arrow-down',
+                'mdi:arrow-left',
+                'mdi:arrow-right',
+                'mdi:arrow-up',
+                'mdi:alert-circle',
+                'mdi:check',
+                'mdi:chevron-double-left',
+                'mdi:chevron-double-right',
+                'mdi:chevron-down',
+                'mdi:chevron-left',
+                'mdi:chevron-right',
+                'mdi:chevron-up',
+                'mdi:close',
+                'mdi:content-copy',
+                'mdi:check-circle-outline',
+                'mdi:moon-waning-crescent',
+                'mdi:drag-vertical',
+                'mdi:dots-horizontal',
+                'mdi:close-circle',
+                'mdi:arrow-top-right',
+                'mdi:eye',
+                'mdi:eye-off',
+                'mdi:file-document',
+                'mdi:folder',
+                'mdi:folder-open',
+                'mdi:pound',
+                'mdi:information',
+                'mdi:white-balance-sunny',
+                'mdi:loading',
+                'mdi:menu',
+                'mdi:minus',
+                'mdi:menu-close',
+                'mdi:menu-open',
+                'mdi:plus',
+                'mdi:reload',
+                'mdi:magnify',
+                'mdi:star-outline',
+                'mdi:stop',
+                'mdi:check-circle',
+                'mdi:monitor',
+                'mdi:lightbulb-variant',
+                'mdi:upload',
+                'mdi:alert',
+            ],
         },
+    },
+
+    postcss: {
+        plugins: {
+            '../../../internal/postcss/postcss-color-mix-transparency-fallback': {},
+            'postcss-preset-env': {
+                stage: 2,
+                features: {
+                    'oklab-function': {
+                        preserve: true,
+                        enableProgressiveCustomProperties: true,
+                        subFeatures: {
+                            displayP3: false,
+                        },
+                    },
+                    // Not in use by Nuxt UI (yet)
+                    'random-function': false,
+                    'sign-functions': false,
+                    'stepped-value-functions': false,
+                    'trigonometric-functions': false,
+                },
+                enableClientSidePolyfills: false,
+                preserve: true,
+                browsers: 'chrome >= 103',
+            },
+            '../../../internal/postcss/postcss-cef-fixup': {},
+        },
+    },
+
+    sourcemap: {
+        client: true,
+        server: false,
     },
 
     piniaPluginPersistedstate: {
         storage: 'localStorage',
     },
 
-    compatibilityDate: '2025-01-13',
+    future: {
+        compatibilityVersion: 4,
+    },
+
+    compatibilityDate: '2026-04-26',
 });

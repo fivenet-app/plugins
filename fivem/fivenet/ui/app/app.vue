@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import TokenMgmtModal from '~/components/TokenMgmtModal.vue';
 import Tablet from './components/Tablet.vue';
+import { useTokenMgmtOverlay } from './composables/useTokenMgmtOverlay';
 import { useTablet } from './composables/useTablet';
 import { useTabletStore } from './stores/tablet';
 
-const modal = useModal();
+const tokenMgmtOverlay = useTokenMgmtOverlay();
 
 onMounted(async () => {
     if (!import.meta.client) {
@@ -31,7 +31,6 @@ onBeforeUnmount(async () => {
 const { isTabletOpen } = useTablet();
 
 const devMode = import.meta.dev;
-
 if (devMode) {
     useTabletStore().setBaseUrl('https://demo.fivenet.app');
 }
@@ -46,10 +45,10 @@ if (devMode) {
         <NuxtPage />
 
         <UButtonGroup v-if="devMode" class="absolute bottom-8 left-1/2 -translate-x-1/2 transform">
-            <UButton label="Token Mgmt" @click="modal.open(TokenMgmtModal)" />
+            <UButton label="Token Mgmt" @click="tokenMgmtOverlay.open()" />
             <UButton label="Tablet" @click="isTabletOpen = true" />
         </UButtonGroup>
 
-        <UModals />
+        <UOverlayProvider />
     </div>
 </template>

@@ -6,5 +6,5 @@ module.exports = {
     singleQuote: true,
     printWidth: 128,
     plugins: ['prettier-plugin-organize-imports', 'prettier-plugin-tailwindcss'],
-    tailwindConfig: './ui/tailwind.config.ts',
+    tailwindStylesheet: 'app/assets/css/main.css',
 };

@@ -14,34 +14,30 @@
     "dependencies": {
         "@iconify-json/mdi": "1.2.3",
         "@nuxt/eslint": "1.16.0",
-        "@nuxt/fonts": "0.12.1",
-        "@nuxt/ui": "2.22.3",
-        "@pinia/nuxt": "0.11.3",
-        "@vueuse/nuxt": "13.9.0",
-        "nuxt": "3.20.2",
-        "pinia": "3.0.4",
-        "pinia-plugin-persistedstate": "4.5.0",
-        "vue": "3.5.26",
-        "vue-router": "4.6.4"
+        "@nuxt/fonts": "0.14.0",
+        "@nuxt/ui": "4.10.0",
+        "@pinia/nuxt": "1.0.1",
+        "@vueuse/nuxt": "14.3.0",
+        "nuxt": "4.5.1",
+        "pinia": "4.0.2",
+        "pinia-plugin-persistedstate": "4.7.1",
+        "vue": "3.5.40",
+        "vue-router": "5.2.0"
     },
     "devDependencies": {
-        "@citizenfx/client": "2.0.31725-1",
-        "@citizenfx/server": "2.0.31689-1",
+        "@citizenfx/client": "2.0.33746-1",
+        "@citizenfx/server": "2.0.32561-1",
         "@total-typescript/ts-reset": "0.6.1",
-        "@types/node": "26.1.1",
-        "eslint": "10.7.0",
+        "@types/node": "26.1.2",
+        "eslint": "10.8.0",
         "eslint-config-prettier": "10.1.8",
         "eslint-plugin-prettier": "5.5.6",
         "eslint-plugin-vue": "10.10.0",
-        "prettier": "3.9.5",
+        "prettier": "3.9.6",
         "prettier-plugin-organize-imports": "4.3.0",
         "prettier-plugin-tailwindcss": "0.8.1",
         "sass-embedded": "1.100.0",
         "typescript": "7.0.2"
-    },
-    "resolutions": {
-        "@nuxt/icon": "1.15.0",
-        "nuxt": "3.20.1"
     },
     "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
