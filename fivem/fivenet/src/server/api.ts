@@ -11,11 +11,15 @@ import {
     AddUserOAuth2ConnRequest,
     AddUserPropsRequest,
     AddUserUpdateRequest,
+    CloseUserDispatchesRequest,
+    CloseUserDispatchesResponse,
     DeleteDataRequest,
     DeleteDataResponse,
     DeleteMarkerRequest,
     DeleteUsersRequest,
     DeleteVehiclesRequest,
+    EndActiveJobTimeclocksRequest,
+    EndActiveJobTimeclocksResponse,
     GetStatusRequest,
     GetStatusResponse,
     RegisterAccountRequest,
@@ -31,8 +35,6 @@ import {
     SetLastCharIDRequest,
     TransferAccountRequest,
     TransferAccountResponse,
-    EndActiveJobTimeclocksRequest,
-    EndActiveJobTimeclocksResponse,
 } from '@fivenet-app/gen/services/sync/sync';
 import { syncClient } from './client';
 import { Logger } from './logger';
@@ -172,6 +174,12 @@ async function EndActiveJobTimeclocks(request: EndActiveJobTimeclocksRequest): P
     return callSync('EndActiveJobTimeclocks', normalized, (client) => client.endActiveJobTimeclocks(normalized));
 }
 exports('EndActiveJobTimeclocks', EndActiveJobTimeclocks);
+
+async function CloseUserDispatches(request: CloseUserDispatchesRequest): Promise<CloseUserDispatchesResponse | undefined> {
+    const normalized = CloseUserDispatchesRequest.create(request);
+    return callSync('CloseUserDispatches', normalized, (client) => client.closeUserDispatches(normalized));
+}
+exports('CloseUserDispatches', CloseUserDispatches);
 
 // SendData calls
 
