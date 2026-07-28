@@ -89,7 +89,7 @@ The config is split into `client.lua` and `server.lua` in the [`config/` directo
     - `Config.Framework` - **Must be set to the framework you are using!** Can be `esx` or `qbcore`.
     - `Config.API` section
         - Make sure to set the host and token (`Config.API.Host` and `Config.API.Token`) to your FiveNet instance's DBSync API details, e.g., in FiveNet Cloud you can get the Sync API credentials from the instance settings page.
-        - `Config.API.Host`, `Config.API.Token`, and `Config.API.Insecure` can be overridden with the `fivenet_sync_api_url`, `fivenet_sync_api_token`, and `fivenet_sync_api_insecure` convars when they are not empty.
+        - `Config.API.Host`, `Config.API.Token`, and `Config.API.Insecure` can be overridden with the `fivenet_sync_api_host`, `fivenet_sync_api_token`, and `fivenet_sync_api_insecure` convars when they are not empty.
     - `Config.Dispatches.DisableClientDispatches` - If set to `true`, it will disable dispatches created from the client side, and only allow dispatches created from the server side. This is recommended for better security (default `false`).
 
 ### User Tracking (Livemap Locations)
@@ -198,7 +198,7 @@ add_ace group.admin command.fivenet_get_status allow
 | `fivenet_locations_clear_on_start` | If set to `true`, it will clear all user locations on server start. This is useful if the server crashed and users are still marked as online on the map.              | `true`  |
 | `fivenet_end_timeclock_on_start`   | If set to `true`, it will end all active timeclock entries on server start.                                                                                            | `true`  |
 | `fivenet_tablet_client_url`        | Overrides `Config.WebURL` for the client-side tablet URL when set to a non-empty value. Use `setr` so clients can read it.                                             | empty   |
-| `fivenet_sync_api_url`             | Overrides `Config.API.Host` for the Sync API when set to a non-empty value. Use `host:port` without `http://`, `https://`, or a trailing slash.                        | empty   |
+| `fivenet_sync_api_host`             | Overrides `Config.API.Host` for the Sync API when set to a non-empty value. Use `host:port` without `http://`, `https://`, or a trailing slash.                        | empty   |
 | `fivenet_sync_api_token`           | Overrides `Config.API.Token` for the Sync API when set to a non-empty value.                                                                                           | empty   |
 | `fivenet_sync_api_insecure`        | Overrides `Config.API.Insecure` for the Sync API when set to a non-empty value. Accepts `true`/`1` for insecure mode; any other non-empty value is treated as `false`. | empty   |
 

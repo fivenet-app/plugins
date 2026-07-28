@@ -1,5 +1,5 @@
 local function isBlank(value)
-	return value == nil or value == ''
+	return value == nil or value == '' or (type(value) == 'string' and value:match('^%s*$') ~= nil)
 end
 
 local function isBoolean(value)
@@ -10,6 +10,31 @@ local function isLogLevel(value)
 	return value == 'debug' or value == 'info' or value == 'warn' or value == 'error' or value == 'off'
 end
 
+local function getConvarIfSet(name)
+	local value = GetConvar(name, '')
+	if isBlank(value) then return nil end
+
+	return value
+end
+
+local function applyConfigConvars()
+	local apiHost = getConvarIfSet('fivenet_sync_api_host')
+	if apiHost ~= nil then
+		Config.API.Host = apiHost
+	end
+
+	local apiToken = getConvarIfSet('fivenet_sync_api_token')
+	if apiToken ~= nil then
+		Config.API.Token = apiToken
+	end
+
+	local apiInsecure = getConvarIfSet('fivenet_sync_api_insecure')
+	if apiInsecure ~= nil then
+		local value = apiInsecure:lower()
+		Config.API.Insecure = value == 'true' or value == '1'
+	end
+end
+
 local function validateConfig()
 	local valid = true
 
@@ -18,15 +43,17 @@ local function validateConfig()
 		return false
 	end
 
-	if Config.API == nil then
-		Logger.error('Missing Config.API section in config/server.lua.')
-		return false
-	end
-
 	if Config.Framework ~= 'esx' and Config.Framework ~= 'qbcore' then
 		Logger.error(("Invalid Config.Framework: %s. Expected 'esx' or 'qbcore'."):format(tostring(Config.Framework)))
 		valid = false
 	end
+
+	if Config.API == nil then
+		Logger.warn('Missing Config.API section in config/server.lua, assuming convars are used for API.')
+		Config.API = {}
+	end
+
+	applyConfigConvars()
 
 	if type(Config.API.Host) ~= 'string' then
 		Logger.error('Invalid Config.API.Host. Expected a host:port string, e.g. demo.fivenet.app:443.')
@@ -71,20 +98,13 @@ end
 AddEventHandler('onResourceStart', function(resourceName)
 	if resourceName ~= GetCurrentResourceName() then return end
 
-	Logger.setLevel(Config and Config.LogLevel)
-	exports[GetCurrentResourceName()]:setLogLevel(Config and Config.LogLevel)
-
-	local initialStartConvar = 'fivenet_initial_start_done'
-	local isInitialStart = GetConvar(initialStartConvar, 'false') ~= 'true'
-	SetConvar(initialStartConvar, 'true')
-
-	-- Only run cleanup on initial server start and not on every resource restart
-	if not isInitialStart then return end
-
 	if not validateConfig() then
 		Logger.error('FiveNet startup stopped because required config values are missing or invalid.')
 		return
 	end
+
+	Logger.setLevel(Config and Config.LogLevel)
+	exports[GetCurrentResourceName()]:setLogLevel(Config and Config.LogLevel)
 
 	Logger.info('Config check passed. Starting FiveNet API.')
 
@@ -94,6 +114,13 @@ AddEventHandler('onResourceStart', function(resourceName)
 		Config.API.Insecure,
 		Config.LogLevel
 	)
+
+	local initialStartConvar = 'fivenet_initial_start_done'
+	local isInitialStart = GetConvar(initialStartConvar, 'false') ~= 'true'
+	SetConvar(initialStartConvar, 'true')
+
+	-- Only run cleanups on initial server start and not on every resource restart
+	if not isInitialStart then return end
 
 	if GetConvar('fivenet_locations_clear_on_start', 'false') == 'true' then
 		CreateThread(function()

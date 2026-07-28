@@ -64,8 +64,8 @@ convar_category 'FiveNet' {
 		-- Tablet URL for clients to override the config
 		{ 'Tablet - Client URL', '$fivenet_tablet_client_url', 'CV_STRING', '' },
 		-- Sync API convars to override the config
-		{ 'Sync - API URL', 'fivenet_sync_api_url', 'CV_STRING', '' },
+		{ 'Sync - API Host', 'fivenet_sync_api_host', 'CV_STRING', '' },
 		{ 'Sync - API Token', 'fivenet_sync_api_token', 'CV_PASSWORD', '' },
-		{ 'Sync - API Insecure', '$fivenet_sync_api_insecure', 'CV_BOOL', '' },
+		{ 'Sync - API Insecure', 'fivenet_sync_api_insecure', 'CV_BOOL', '' },
 	}
 }
