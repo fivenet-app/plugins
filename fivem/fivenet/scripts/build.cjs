@@ -34,14 +34,11 @@ const buildBundle = async () => {
             logLevel: 'info',
             bundle: true,
             platform: 'node',
-            format: 'esm',
+            format: 'cjs',
             charset: 'utf8',
             minifyWhitespace: true,
             absWorkingDir: process.cwd(),
             metafile: true,
-            banner: {
-                js: 'import { createRequire } from "module";const require=createRequire(import.meta.url);',
-            },
         };
 
         for (const targetOpts of TARGET_ENTRIES) {
