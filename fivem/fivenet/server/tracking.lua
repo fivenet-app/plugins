@@ -53,16 +53,3 @@ if Config.Tracking.Enable then
 		end
 	end)
 end
-
-AddEventHandler('onResourceStart', function(resourceName)
-	if resourceName == GetCurrentResourceName() and GetConvar('fnet_clear_on_start', 'false') == 'true' then
-		CreateThread(function()
-			Wait(1000)
-			-- Clear user locations table on resource (re-)start, which most likely will be server restarts
-			exports[GetCurrentResourceName()]:SendUserLocations({
-				users = {},
-				clearAll = true,
-			})
-		end)
-	end
-end)

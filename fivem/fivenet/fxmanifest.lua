@@ -59,6 +59,13 @@ client_scripts {
 convar_category 'FiveNet' {
 	'Configuration Options',
 	{
-		{ 'Tracking - Clear Table on resource start', '$fnet_clear_on_start', 'CV_BOOL', 'false' },
+		{ 'Tracking - Clear Table on resource start', 'fivenet_locations_clear_on_start', 'CV_BOOL', 'true' },
+		{ 'Timeclock - End active entries on resource start', 'fivenet_end_timeclock_on_start', 'CV_BOOL', 'true' },
+		-- Tablet URL for clients to override the config
+		{ 'Tablet - Client URL', '$fivenet_tablet_client_url', 'CV_STRING', '' },
+		-- Sync API convars to override the config
+		{ 'Sync - API URL', 'fivenet_sync_api_url', 'CV_STRING', '' },
+		{ 'Sync - API Token', 'fivenet_sync_api_token', 'CV_STRING', '' },
+		{ 'Sync - API Insecure', '$fivenet_sync_api_insecure', 'CV_BOOL', '' },
 	}
 }

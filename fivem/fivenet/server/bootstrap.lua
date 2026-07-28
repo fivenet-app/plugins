@@ -74,7 +74,7 @@ AddEventHandler('onResourceStart', function(resourceName)
 	Logger.setLevel(Config and Config.LogLevel)
 	exports[GetCurrentResourceName()]:setLogLevel(Config and Config.LogLevel)
 
-	local initialStartConvar = 'modernv_fivenet_initial_start_done'
+	local initialStartConvar = 'fivenet_initial_start_done'
 	local isInitialStart = GetConvar(initialStartConvar, 'false') ~= 'true'
 	SetConvar(initialStartConvar, 'true')
 
@@ -94,4 +94,26 @@ AddEventHandler('onResourceStart', function(resourceName)
 		Config.API.Insecure,
 		Config.LogLevel
 	)
+
+	if GetConvar('fivenet_locations_clear_on_start', 'false') == 'true' then
+		CreateThread(function()
+			Wait(1000)
+			-- Clear user locations data
+			exports[GetCurrentResourceName()]:SendUserLocations({
+				users = {},
+				clearAll = true,
+			})
+		end)
+	end
+
+	if GetConvar('fivenet_end_timeclock_on_start', 'false') == 'true' then
+		CreateThread(function()
+			Wait(1000)
+			-- End timecloock entries
+			exports[GetCurrentResourceName()]:EndActiveJobTimeclocks({
+				users = {},
+				clearAll = true,
+			})
+		end)
+	end
 end)

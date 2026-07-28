@@ -31,6 +31,8 @@ import {
     SetLastCharIDRequest,
     TransferAccountRequest,
     TransferAccountResponse,
+    EndActiveJobTimeclocksRequest,
+    EndActiveJobTimeclocksResponse,
 } from '@fivenet-app/gen/services/sync/sync';
 import { syncClient } from './client';
 import { Logger } from './logger';
@@ -164,6 +166,12 @@ async function DeleteMarker(request: DeleteMarkerRequest): Promise<DeleteDataRes
     return callSync('DeleteMarker', normalized, (client) => client.deleteMarker(normalized));
 }
 exports('DeleteMarker', DeleteMarker);
+
+async function EndActiveJobTimeclocks(request: EndActiveJobTimeclocksRequest): Promise<EndActiveJobTimeclocksResponse | undefined> {
+    const normalized = EndActiveJobTimeclocksRequest.create(request);
+    return callSync('EndActiveJobTimeclocks', normalized, (client) => client.endActiveJobTimeclocks(normalized));
+}
+exports('EndActiveJobTimeclocks', EndActiveJobTimeclocks);
 
 // SendData calls
 

@@ -80,7 +80,7 @@ The config is split into `client.lua` and `server.lua` in the [`config/` directo
 
 - `config/client.lua`:
     - `Config.LogLevel` - Client-side log level. Can be `debug`, `info`, `warn`, `error`, or `off`.
-    - `Config.WebURL` - Needs to be your FiveNet's instance URL, the default one `"https://fivenet.app"` is pointing to FiveNet's documentation page.
+    - `Config.WebURL` - Needs to be your FiveNet's instance URL, the default one `"https://fivenet.app"` is pointing to FiveNet's documentation page. Can be overridden with `fivenet_tablet_client_url` when the convar is not empty.
     - `Config.Tablet.DisabledControls` - Optional additional controls to disable while the tablet is open. You can provide plain control IDs like `24` or full entries like `{ group = 0, control = 24 }`.
     - `Functions.CallNumber(number)` - Client hook used by the tablet when a phone number is dialed. Replace the example with your phone resource integration.
     - `Functions.SetRadioFrequency(frequency)` - Client hook used by the tablet when a radio frequency is changed. Replace the example with your radio resource integration.
@@ -89,6 +89,7 @@ The config is split into `client.lua` and `server.lua` in the [`config/` directo
     - `Config.Framework` - **Must be set to the framework you are using!** Can be `esx` or `qbcore`.
     - `Config.API` section
         - Make sure to set the host and token (`Config.API.Host` and `Config.API.Token`) to your FiveNet instance's DBSync API details, e.g., in FiveNet Cloud you can get the Sync API credentials from the instance settings page.
+        - `Config.API.Host`, `Config.API.Token`, and `Config.API.Insecure` can be overridden with the `fivenet_sync_api_url`, `fivenet_sync_api_token`, and `fivenet_sync_api_insecure` convars when they are not empty.
     - `Config.Dispatches.DisableClientDispatches` - If set to `true`, it will disable dispatches created from the client side, and only allow dispatches created from the server side. This is recommended for better security (default `false`).
 
 ### User Tracking (Livemap Locations)
@@ -192,9 +193,14 @@ add_ace group.admin command.fivenet_get_status allow
 
 ## Convars
 
-| Name                  | Description                                                                                                                                               | Default |
-| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `fnet_clear_on_start` | If set to `true`, it will clear all user locations on server start. This is useful if the server crashed and users are still marked as online on the map. | `false` |
+| Name                               | Description                                                                                                                                                            | Default |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `fivenet_locations_clear_on_start` | If set to `true`, it will clear all user locations on server start. This is useful if the server crashed and users are still marked as online on the map.              | `true`  |
+| `fivenet_end_timeclock_on_start`   | If set to `true`, it will end all active timeclock entries on server start.                                                                                            | `true`  |
+| `fivenet_tablet_client_url`        | Overrides `Config.WebURL` for the client-side tablet URL when set to a non-empty value. Use `setr` so clients can read it.                                             | empty   |
+| `fivenet_sync_api_url`             | Overrides `Config.API.Host` for the Sync API when set to a non-empty value. Use `host:port` without `http://`, `https://`, or a trailing slash.                        | empty   |
+| `fivenet_sync_api_token`           | Overrides `Config.API.Token` for the Sync API when set to a non-empty value.                                                                                           | empty   |
+| `fivenet_sync_api_insecure`        | Overrides `Config.API.Insecure` for the Sync API when set to a non-empty value. Accepts `true`/`1` for insecure mode; any other non-empty value is treated as `false`. | empty   |
 
 ## Event List
 
@@ -238,7 +244,7 @@ The plugin provides the following exports on the **server side** for other resou
 | `getPlayerUniqueIdentifier`    | Returns the unique identifier for a player source. On ESX this is the character identifier, on QB-Core it includes the citizen ID and license.                                                      | [`server/framework.lua`](server/framework.lua) |
 | `getUserIDFromIdentifier`      | Returns the user's database ID for a framework identifier. On ESX this is the `users.id` row for the character identifier. On QB-Core this is the `players.id` row for the citizen ID and CID pair. | [`server/framework.lua`](server/framework.lua) |
 | `getUserDBID`                  | Returns the user's database ID for a player source. This is the helper you usually want when you only have `source`.                                                                                | [`server/framework.lua`](server/framework.lua) |
-| `markUserForSync`              | Marks a framework user row as changed so DBSync can pick it up. On ESX this updates `users.last_seen`; on QB-Core this updates `players.updated_at`.                                               | [`server/framework.lua`](server/framework.lua) |
+| `markUserForSync`              | Marks a framework user row as changed so DBSync can pick it up. On ESX this updates `users.last_seen`; on QB-Core this updates `players.updated_at`.                                                | [`server/framework.lua`](server/framework.lua) |
 | `markPlayerForSync`            | Marks a player source's framework user row as changed so DBSync can pick it up.                                                                                                                     | [`server/framework.lua`](server/framework.lua) |
 | `GetHexColorFromBlipColor`     | Converts a FiveM/GTA blip color ID to an approximate RGB hex color. Returns the default FiveNet map color when the input is missing, invalid, or unknown.                                           | [`server/lib/blips.lua`](server/lib/blips.lua) |
 | **Features**                   |                                                                                                                                                                                                     |                                                |
