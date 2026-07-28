@@ -256,6 +256,7 @@ The plugin provides the following exports on the **server side** for other resou
 | `setColleagueProps`            | Sets colleague properties for `tIdentifier`. The helper resolves and injects the internal user DB ID before sending, and mutates the passed table by adding `userId`.                               | [`server/activity.lua`](server/activity.lua)   |
 | `createDispatch`               | Creates a dispatch for the given user DB ID. `job` can be a string or a list of jobs.                                                                                                               | [`server/dispatch.lua`](server/dispatch.lua)   |
 | `createDispatchFromIdentifier` | Creates a dispatch for the given user identifier. This is the safer helper if you do not already have the DB ID.                                                                                    | [`server/dispatch.lua`](server/dispatch.lua)   |
+| `CloseUserDispatches`          | Closes active dispatches created for the given user DB ID. Optionally limit by job and attach close coordinates or a reason.                                                                        | [`src/server/api.ts`](src/server/api.ts)       |
 | `addMarker`                    | Adds or updates a live map marker. Pass a marker table using the FiveNet marker payload shape.                                                                                                      | [`server/markers.lua`](server/markers.lua)     |
 | `deleteMarker`                 | Deletes a live map marker by ID.                                                                                                                                                                    | [`server/markers.lua`](server/markers.lua)     |
 
@@ -305,6 +306,35 @@ If you want one dispatch to target multiple jobs, pass a job list on the server 
 exports["fivenet"]:createDispatch({ "ambulance", "police" }, "Multi Agency Call", "Backup requested", coords.x, coords.y, false, identifier)
 ```
 
+### Closing User Dispatches
+
+From the server side, you can close active dispatches that were created for a user. This example closes the player's active ambulance dispatches at their current location:
+
+```lua
+local function closeAmbulanceDispatchesForPlayer(source)
+    local userId = exports["fivenet"]:getUserDBID(source)
+    if not userId then return end
+
+    local coords = GetEntityCoords(GetPlayerPed(source))
+
+    local response = exports["fivenet"]:CloseUserDispatches({
+        targetUserId = userId,
+        limitJobs = { "ambulance" }, -- Optional
+        coords = {
+            x = coords.x,
+            y = coords.y,
+        },
+        reason = "Player was revived",
+    })
+
+    if response then
+        print(("Closed %s dispatches"):format(response.rowsAffected))
+    end
+end
+```
+
+Leave `limitJobs` empty or omit it to close the user's active dispatches for all jobs.
+
 ### Creating and Deleting a Livemap Marker
 
 From the server side, you can create a livemap marker by passing the marker payload:
@@ -322,7 +352,6 @@ exports["fivenet"]:addMarker({
     description = "Temporary closure near Mission Row.",
     color = "#ff3333",
     job = "police",
-    jobLabel = "Police",
     expiresAt = {
         timestamp = {
             seconds = expiresAt,
