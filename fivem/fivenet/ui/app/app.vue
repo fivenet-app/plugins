@@ -50,8 +50,8 @@ onBeforeMount(() => tabletStore.setTabletColors());
             <NuxtPage />
 
             <UFieldGroup v-if="devMode" class="absolute bottom-8 left-1/2 -translate-x-1/2 transform">
-                <UButton label="Token Mgmt" @click="tokenMgmtOverlay.open()" />
-                <UButton label="Tablet" @click="isTabletOpen = true" />
+                <UButton label="Token Mgmt" icon="i-mdi-account-key" @click="tokenMgmtOverlay.open()" />
+                <UButton label="Tablet" icon="i-mdi-tablet" @click="isTabletOpen = true" />
             </UFieldGroup>
         </UApp>
     </div>

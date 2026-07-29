@@ -128,7 +128,7 @@ async function openRegistration(): Promise<void> {
                     <UButton
                         v-if="username && registrationToken"
                         icon="i-mdi-lock-question"
-                        color="amber"
+                        color="warning"
                         size="md"
                         block
                         :loading="loading"
@@ -139,7 +139,7 @@ async function openRegistration(): Promise<void> {
                     <UButton
                         v-else-if="username"
                         icon="i-mdi-lock-question"
-                        color="amber"
+                        color="warning"
                         size="md"
                         block
                         :loading="loading"

@@ -7782,7 +7782,7 @@ postcss-place@^11.0.0:
   dependencies:
     postcss-value-parser "^4.2.0"
 
-postcss-preset-env@^11.3.2:
+postcss-preset-env@11.3.2:
   version "11.3.2"
   resolved "https://registry.yarnpkg.com/postcss-preset-env/-/postcss-preset-env-11.3.2.tgz#868b63441a5177bcd7009eed9e07ed14379787f2"
   integrity sha512-O7aA42UBH/89RkGy1YXgJqb+LxZ2+zvR8bHn9qyYcYc+lOo4g9TuIpb75nZT1tN77Bd6pX3DMZ+eYohS4MfKQg==

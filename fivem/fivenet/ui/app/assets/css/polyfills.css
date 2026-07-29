@@ -462,6 +462,19 @@ html.polyfills:root {
     --color-olive-950: #0c0c09;
     --color-olive: var(--color-olive-500);
 
+    --color-old-neutral-50: #fafafa;
+    --color-old-neutral-100: #f5f5f5;
+    --color-old-neutral-200: #e5e5e5;
+    --color-old-neutral-300: #d4d4d4;
+    --color-old-neutral-400: #a1a1a1;
+    --color-old-neutral-500: #737373;
+    --color-old-neutral-600: #525252;
+    --color-old-neutral-700: #404040;
+    --color-old-neutral-800: #262626;
+    --color-old-neutral-900: #171717;
+    --color-old-neutral-950: #0a0a0a;
+    --color-old-neutral: var(--color-old-neutral-500);
+
     --color-error-50: var(--color-red-50);
     --color-error-100: var(--color-red-100);
     --color-error-200: var(--color-red-200);
@@ -817,6 +830,19 @@ html.polyfills:root {
     --color-neutral-950-rgb: 10, 10, 10;
     --color-neutral-rgb: var(--color-neutral-500-rgb);
 
+    --color-old-neutral-50-rgb: 250, 250, 250;
+    --color-old-neutral-100-rgb: 245, 245, 245;
+    --color-old-neutral-200-rgb: 229, 229, 229;
+    --color-old-neutral-300-rgb: 212, 212, 212;
+    --color-old-neutral-400-rgb: 161, 161, 161;
+    --color-old-neutral-500-rgb: 115, 115, 115;
+    --color-old-neutral-600-rgb: 82, 82, 82;
+    --color-old-neutral-700-rgb: 64, 64, 64;
+    --color-old-neutral-800-rgb: 38, 38, 38;
+    --color-old-neutral-900-rgb: 23, 23, 23;
+    --color-old-neutral-950-rgb: 10, 10, 10;
+    --color-old-neutral-rgb: var(--color-old-neutral-500-rgb);
+
     --color-stone-50-rgb: 250, 250, 249;
     --color-stone-100-rgb: 245, 245, 244;
     --color-stone-200-rgb: 231, 229, 228;
@@ -936,9 +962,54 @@ html.polyfills:root {
     --color-success-900-rgb: var(--color-green-900-rgb);
     --color-success-950-rgb: var(--color-green-950-rgb);
     --color-success-rgb: var(--color-green-500-rgb);
+
+    --ui-color-neutral-50: var(--color-neutral-50);
+    --ui-color-neutral-100: var(--color-neutral-100);
+    --ui-color-neutral-200: var(--color-neutral-200);
+    --ui-color-neutral-300: var(--color-neutral-300);
+    --ui-color-neutral-400: var(--color-neutral-400);
+    --ui-color-neutral-500: var(--color-neutral-500);
+    --ui-color-neutral-600: var(--color-neutral-600);
+    --ui-color-neutral-700: var(--color-neutral-700);
+    --ui-color-neutral-800: var(--color-neutral-800);
+    --ui-color-neutral-900: var(--color-neutral-900);
+    --ui-color-neutral-950: var(--color-neutral-950);
+    --ui-color-neutral: var(--color-neutral-500);
+
+    --ui-text-dimmed: var(--ui-color-neutral-400);
+    --ui-text-muted: var(--ui-color-neutral-500);
+    --ui-text-toned: var(--ui-color-neutral-600);
+    --ui-text: var(--ui-color-neutral-700);
+    --ui-text-highlighted: var(--ui-color-neutral-900);
+    --ui-text-inverted: #ffffff;
+    --ui-bg: #ffffff;
+    --ui-bg-muted: var(--ui-color-neutral-50);
+    --ui-bg-elevated: var(--ui-color-neutral-100);
+    --ui-bg-accented: var(--ui-color-neutral-200);
+    --ui-bg-inverted: var(--ui-color-neutral-900);
+    --ui-border: var(--ui-color-neutral-200);
+    --ui-border-muted: var(--ui-color-neutral-200);
+    --ui-border-accented: var(--ui-color-neutral-300);
+    --ui-border-inverted: var(--ui-color-neutral-900);
 }
 
 html.polyfills.dark:root {
+    --ui-text-dimmed: var(--ui-color-neutral-500);
+    --ui-text-muted: var(--ui-color-neutral-400);
+    --ui-text-toned: var(--ui-color-neutral-300);
+    --ui-text: var(--ui-color-neutral-200);
+    --ui-text-highlighted: #ffffff;
+    --ui-text-inverted: var(--ui-color-neutral-900);
+    --ui-bg: var(--ui-color-neutral-900);
+    --ui-bg-muted: var(--ui-color-neutral-800);
+    --ui-bg-elevated: var(--ui-color-neutral-800);
+    --ui-bg-accented: var(--ui-color-neutral-700);
+    --ui-bg-inverted: #ffffff;
+    --ui-border: var(--ui-color-neutral-800);
+    --ui-border-muted: var(--ui-color-neutral-700);
+    --ui-border-accented: var(--ui-color-neutral-700);
+    --ui-border-inverted: #ffffff;
+
     --ui-primary-rgb: var(--ui-color-primary-400-rgb);
     --ui-secondary-rgb: var(--color-secondary-400-rgb);
     --ui-success-rgb: var(--color-success-400-rgb);
@@ -958,6 +1029,22 @@ html.polyfills.dark:root {
 }
 
 html.polyfills.light:root {
+    --ui-text-dimmed: var(--ui-color-neutral-400);
+    --ui-text-muted: var(--ui-color-neutral-500);
+    --ui-text-toned: var(--ui-color-neutral-600);
+    --ui-text: var(--ui-color-neutral-700);
+    --ui-text-highlighted: var(--ui-color-neutral-900);
+    --ui-text-inverted: #ffffff;
+    --ui-bg: #ffffff;
+    --ui-bg-muted: var(--ui-color-neutral-50);
+    --ui-bg-elevated: var(--ui-color-neutral-100);
+    --ui-bg-accented: var(--ui-color-neutral-200);
+    --ui-bg-inverted: var(--ui-color-neutral-900);
+    --ui-border: var(--ui-color-neutral-200);
+    --ui-border-muted: var(--ui-color-neutral-200);
+    --ui-border-accented: var(--ui-color-neutral-300);
+    --ui-border-inverted: var(--ui-color-neutral-900);
+
     --ui-primary-rgb: var(--ui-color-primary-500-rgb);
     --ui-secondary-rgb: var(--color-secondary-500-rgb);
     --ui-success-rgb: var(--color-success-500-rgb);
