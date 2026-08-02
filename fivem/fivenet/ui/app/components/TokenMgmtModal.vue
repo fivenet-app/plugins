@@ -127,30 +127,26 @@ async function openRegistration(): Promise<void> {
 
                     <UButton
                         v-if="username && registrationToken"
-                        icon="i-mdi-lock-question"
                         color="warning"
-                        size="md"
                         block
+                        icon="i-mdi-lock-question"
+                        label="Setze nun hier dein Passwort zurück!"
                         :loading="loading"
+                        size="md"
                         @click="openResetPassword"
-                    >
-                        Setze nun hier dein Passwort zurück!
-                    </UButton>
+                    />
                     <UButton
                         v-else-if="username"
                         icon="i-mdi-lock-question"
                         color="warning"
-                        size="md"
-                        block
-                        :loading="loading"
                         :disabled="!!registrationToken"
+                        block
+                        label="Passwort vergessen? Hier zurücksetzen"
+                        :loading="loading"
+                        size="md"
                         @click="resetPassword"
-                    >
-                        Passwort vergessen? Hier zurücksetzen
-                    </UButton>
-                    <UButton v-else icon="i-mdi-user-add" color="green" size="md" block @click="openRegistration()">
-                        Konto erstellen
-                    </UButton>
+                    />
+                    <UButton v-else block color="green" icon="i-mdi-user-add" label="Konto erstellen" size="md" @click="openRegistration()" />
 
                     <UButton
                         v-if="baseUrl"
@@ -163,13 +159,13 @@ async function openRegistration(): Promise<void> {
                         @click="openURLInWindow(baseUrl)"
                     >
                         <span>FiveNet URL:</span>
-                        <span>{{ baseUrl }}</span>
+                        <span class="font-mono">{{ baseUrl }}</span>
                     </UButton>
                 </UContainer>
 
                 <template #footer>
                     <UFieldGroup class="inline-flex w-full">
-                        <UButton color="neutral" block class="flex-1" @click="open = false"> Schließen </UButton>
+                        <UButton color="neutral" block class="flex-1" label="Schließen" @click="open = false" />
                     </UFieldGroup>
                 </template>
             </UCard>
