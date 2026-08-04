@@ -7,7 +7,7 @@
 ---@param reason string
 ---@param data table|nil
 --- If `sIdentifier` is omitted, the target user's DB ID is reused as the source user.
-function AddUserActivity(sIdentifier --[[string/nil]], tIdentifier --[[string]], type --[[number]], reason --[[string]], data --[[UserActivityData]])
+function AddUserActivity(sIdentifier, tIdentifier, type, reason, data)
 	local sourceUserId = nil
 	local targetUserId = GetUserIDFromIdentifier(tIdentifier)
 
@@ -29,12 +29,24 @@ function AddUserActivity(sIdentifier --[[string/nil]], tIdentifier --[[string]],
 end
 exports('addUserActivity', AddUserActivity)
 
---- Set user properties for a target identifier.
+--- Get user props for a target identifier.
+---@param identifier string
+---@return GetUserPropsResponse
+function GetUserProps(identifier)
+	local userId = GetUserIDFromIdentifier(identifier)
+
+	return exports[GetCurrentResourceName()]:GetUserProps({
+		userId = userId,
+	})
+end
+exports('getUserProps', GetUserProps)
+
+--- Set user props for a target identifier.
 ---@param identifier string
 ---@param reason string|nil
 ---@param data table
 --- The helper mutates `data` by adding `userId`.
-function SetUserProps(identifier --[[string]], reason --[[string]], data --[[UserProps]])
+function SetUserProps(identifier, reason, data)
 	local userId = GetUserIDFromIdentifier(identifier)
 	data.userId = userId
 
@@ -50,7 +62,7 @@ exports('setUserProps', SetUserProps)
 --- Add or subtract from the open fine total for a user.
 ---@param tIdentifier string
 ---@param fine number
-function UpdateOpenFines(tIdentifier --[[string]], fine --[[number]])
+function UpdateOpenFines(tIdentifier, fine)
 	SetUserProps(tIdentifier, nil, { openFines = fine })
 end
 exports('updateOpenFines', UpdateOpenFines)
@@ -59,7 +71,7 @@ exports('updateOpenFines', UpdateOpenFines)
 ---@param tIdentifier string
 ---@param wanted boolean
 ---@param reason string|nil
-function SetUserWantedState(tIdentifier --[[string]], wanted --[[bool]], reason --[[string/nil]])
+function SetUserWantedState(tIdentifier, wanted, reason)
 	SetUserProps(tIdentifier, reason, { wanted = wanted })
 end
 exports('setUserWantedState', SetUserWantedState)
@@ -73,7 +85,7 @@ exports('setUserWantedState', SetUserWantedState)
 ---@param activityType number
 ---@param reason string
 ---@param data table|nil
-function AddJobColleagueActivity(job --[[string]], sIdentifier --[[string]], tIdentifier --[[string]], activityType --[[number]], reason --[[string]], data --[[JobColleagueActivityData]])
+function AddJobColleagueActivity(job, sIdentifier, tIdentifier, activityType, reason, data)
 	local sourceUserId = GetUserIDFromIdentifier(sIdentifier)
 	local targetUserId = GetUserIDFromIdentifier(tIdentifier)
 
@@ -91,12 +103,12 @@ end
 exports('addJobColleagueActivity', AddJobColleagueActivity)
 
 -- Jobs User Props
---- Set colleague properties for a target identifier.
+--- Set colleague props for a target identifier.
 ---@param identifier string
 ---@param reason string|nil
 ---@param props table
 --- The helper mutates `props` by adding `userId`.
-function SetColleagueProps(identifier --[[string]], reason --[[string]], props --[[ColleagueProps]])
+function SetColleagueProps(identifier, reason, props)
 	local userId = GetUserIDFromIdentifier(identifier)
 	props.userId = userId
 

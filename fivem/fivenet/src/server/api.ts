@@ -22,6 +22,8 @@ import {
     EndActiveJobTimeclocksResponse,
     GetStatusRequest,
     GetStatusResponse,
+    GetUserPropsRequest,
+    GetUserPropsResponse,
     RegisterAccountRequest,
     RegisterAccountResponse,
     SendAccountsRequest,
@@ -132,6 +134,12 @@ async function AddUserProps(request: AddUserPropsRequest): Promise<AddActivityRe
     return callSync('AddUserProps', normalized, (client) => client.addUserProps(normalized));
 }
 exports('AddUserProps', AddUserProps);
+
+async function GetUserProps(request: GetUserPropsRequest): Promise<GetUserPropsResponse | undefined> {
+    const normalized = GetUserPropsRequest.create(request);
+    return callSync('GetUserProps', normalized, (client) => client.getUserProps(normalized));
+}
+exports('GetUserProps', GetUserProps);
 
 async function AddColleagueActivity(request: AddColleagueActivityRequest): Promise<AddActivityResponse | undefined> {
     const normalized = AddColleagueActivityRequest.create(request);

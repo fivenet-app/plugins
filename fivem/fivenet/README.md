@@ -198,7 +198,7 @@ add_ace group.admin command.fivenet_get_status allow
 | `fivenet_locations_clear_on_start` | If set to `true`, it will clear all user locations on server start. This is useful if the server crashed and users are still marked as online on the map.              | `true`  |
 | `fivenet_end_timeclock_on_start`   | If set to `true`, it will end all active timeclock entries on server start.                                                                                            | `true`  |
 | `fivenet_tablet_client_url`        | Overrides `Config.WebURL` for the client-side tablet URL when set to a non-empty value. Use `setr` so clients can read it.                                             | empty   |
-| `fivenet_sync_api_host`             | Overrides `Config.API.Host` for the Sync API when set to a non-empty value. Use `host:port` without `http://`, `https://`, or a trailing slash.                        | empty   |
+| `fivenet_sync_api_host`            | Overrides `Config.API.Host` for the Sync API when set to a non-empty value. Use `host:port` without `http://`, `https://`, or a trailing slash.                        | empty   |
 | `fivenet_sync_api_token`           | Overrides `Config.API.Token` for the Sync API when set to a non-empty value.                                                                                           | empty   |
 | `fivenet_sync_api_insecure`        | Overrides `Config.API.Insecure` for the Sync API when set to a non-empty value. Accepts `true`/`1` for insecure mode; any other non-empty value is treated as `false`. | empty   |
 
@@ -249,11 +249,12 @@ The plugin provides the following exports on the **server side** for other resou
 | `GetHexColorFromBlipColor`     | Converts a FiveM/GTA blip color ID to an approximate RGB hex color. Returns the default FiveNet map color when the input is missing, invalid, or unknown.                                           | [`server/lib/blips.lua`](server/lib/blips.lua) |
 | **Features**                   |                                                                                                                                                                                                     |                                                |
 | `addUserActivity`              | Adds user activity for `tIdentifier`. If `sIdentifier` is omitted, the target user's DB ID is reused as the source user.                                                                            | [`server/activity.lua`](server/activity.lua)   |
-| `setUserProps`                 | Sets user properties for `tIdentifier`. The helper resolves and injects the internal user DB ID before sending, and mutates the passed table by adding `userId`.                                    | [`server/activity.lua`](server/activity.lua)   |
+| `getUserProps`                 | Get user props for `identifier`. The helper resolves and injects the internal user DB ID before sending.                                                                                            | [`server/activity.lua`](server/activity.lua)   |
+| `setUserProps`                 | Sets user props for `tIdentifier`. The helper resolves and injects the internal user DB ID before sending, and mutates the passed table by adding `userId`.                                         | [`server/activity.lua`](server/activity.lua)   |
 | `updateOpenFines`              | Adds or subtracts from the open fine total for `tIdentifier`. Positive values add, negative values subtract.                                                                                        | [`server/activity.lua`](server/activity.lua)   |
 | `setUserWantedState`           | Sets the wanted state for `tIdentifier`. Pass a reason when you want the change to be attributed.                                                                                                   | [`server/activity.lua`](server/activity.lua)   |
 | `addJobColleagueActivity`      | Adds job colleague activity for `tIdentifier`. Pass both identifiers explicitly; there is no fallback when `sIdentifier` is omitted.                                                                | [`server/activity.lua`](server/activity.lua)   |
-| `setColleagueProps`            | Sets colleague properties for `tIdentifier`. The helper resolves and injects the internal user DB ID before sending, and mutates the passed table by adding `userId`.                               | [`server/activity.lua`](server/activity.lua)   |
+| `setColleagueProps`            | Sets colleague props for `tIdentifier`. The helper resolves and injects the internal user DB ID before sending, and mutates the passed table by adding `userId`.                                    | [`server/activity.lua`](server/activity.lua)   |
 | `createDispatch`               | Creates a dispatch for the given user DB ID. `job` can be a string or a list of jobs.                                                                                                               | [`server/dispatch.lua`](server/dispatch.lua)   |
 | `createDispatchFromIdentifier` | Creates a dispatch for the given user identifier. This is the safer helper if you do not already have the DB ID.                                                                                    | [`server/dispatch.lua`](server/dispatch.lua)   |
 | `CloseUserDispatches`          | Closes active dispatches created for the given user DB ID. Optionally limit by job and attach close coordinates or a reason.                                                                        | [`src/server/api.ts`](src/server/api.ts)       |
@@ -263,6 +264,24 @@ The plugin provides the following exports on the **server side** for other resou
 (Not all exports are listed here, as some are internal only, e.g., `SetupClient`, etc.)
 
 ## Examples
+
+### Getting User Props
+
+```lua
+-- ESX example to get the player's identifier
+local xPlayer = ESX.GetPlayerFromId(source)
+if not xPlayer then return end
+local identifier = xPlayer.identifier
+
+local props = exports["fivenet"]:getUserProps(identifier)
+
+-- Make sure to nil check properly
+if props and props.userProps and props.userProps.wanted then
+    print('User is wanted!', props.userProps.userId)
+else
+    print('User is not wanted.', props.userProps.userId)
+end
+```
 
 ### Creating a Dispatch
 
