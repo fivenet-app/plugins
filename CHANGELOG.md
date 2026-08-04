@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.0] - 2026-08-04
+
+### 🚀 Features
+
+- Add marker exports
+- Update to nuxt ui v4
+- Add GetHexColorFromBlipColor to convert blip color to hex code
+- Add convars for override and clear data on start
+- Update to fivenet api v2026.7.3
+- Use UPinInput for registration token
+- Add GetUserProps api call
+
+### 🐛 Bug Fixes
+
+- Add export to mark user for sync
+- LastCharID request fields
+- Add postcss-preset-env for fivem ui
+- Issues caused by nuxt ui v4 update
+- Mark sync api token convar as CV_PASSWORD
+- Build issue caused by not targeting cjs
+- Improve config validation and cleanup convars
+- Add CloseUserDispatches usage example
+- Improve color polyfills and cleanup tabllet border
+
 ## [1.6.3] - 2026-07-21
 
 ### 🐛 Bug Fixes
