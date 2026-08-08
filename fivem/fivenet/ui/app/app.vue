@@ -7,9 +7,7 @@ import { useTabletStore } from './stores/tablet';
 const tokenMgmtOverlay = useTokenMgmtOverlay();
 
 onMounted(async () => {
-    if (!import.meta.client) {
-        return;
-    }
+    if (!import.meta.client) return;
 
     // NUI message handling
     window.addEventListener('message', onNUIMessage);
@@ -18,9 +16,7 @@ onMounted(async () => {
 });
 
 onBeforeUnmount(async () => {
-    if (!import.meta.client) {
-        return;
-    }
+    if (!import.meta.client) return;
 
     // NUI message handling
     window.removeEventListener('message', onNUIMessage);
@@ -31,6 +27,13 @@ onBeforeUnmount(async () => {
 const { isTabletOpen } = useTablet();
 
 const tabletStore = useTabletStore();
+
+onKeyStroke('Escape', (e) => {
+    if (!isTabletOpen.value) return;
+
+    e.preventDefault();
+    isTabletOpen.value = false;
+});
 
 const devMode = import.meta.dev;
 if (devMode) {
