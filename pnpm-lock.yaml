@@ -10,10 +10,10 @@ importers:
     devDependencies:
       '@release-it/bumper':
         specifier: 8.0.0
-        version: 8.0.0(release-it@21.0.1)
+        version: 8.0.0(release-it@21.0.2)
       release-it:
-        specifier: 21.0.1
-        version: 21.0.1
+        specifier: 21.0.2
+        version: 21.0.2
 
 packages:
 
@@ -733,8 +733,8 @@ packages:
     resolution: {integrity: sha512-9u/XQ1pvrQtYyMpZe7DXKv2p5CNvyVwzUB6uhLAnQwHMSgKMBR62lc7AHljaeteeHXn11XTAaLLUVZYVZyuRBQ==}
     engines: {node: '>= 20.19.0'}
 
-  release-it@21.0.1:
-    resolution: {integrity: sha512-xbPuv2tau3gb0Xw0NVqV3QjOhytFvbsBZDqzmURqlwtgNpFIlIbpDbuZG64ptytFOX4H/7k65bbPSLTwAL34/g==}
+  release-it@21.0.2:
+    resolution: {integrity: sha512-QwyDnWiQNB4d8Hc2b5FLMHcsKz9S2O1dMNnPB7w+0knsL5r8+qbnznDA1X7Bw5D863+Ud7eRHc71Cfth5Tlrgg==}
     engines: {node: ^22.21.0 || >=24.0.0}
     hasBin: true
 
@@ -1023,7 +1023,7 @@ snapshots:
 
   '@phun-ky/typeof@2.0.3': {}
 
-  '@release-it/bumper@8.0.0(release-it@21.0.1)':
+  '@release-it/bumper@8.0.0(release-it@21.0.2)':
     dependencies:
       '@decimalturn/toml-patch': 2.1.0
       '@iarna/toml': 3.0.0
@@ -1033,7 +1033,7 @@ snapshots:
       ini: 6.0.0
       js-yaml: 5.2.3
       lodash-es: 4.18.1
-      release-it: 21.0.1
+      release-it: 21.0.2
       semver: 7.8.5
 
   '@types/parse-path@7.1.0':
@@ -1528,7 +1528,7 @@ snapshots:
 
   readdirp@5.0.0: {}
 
-  release-it@21.0.1:
+  release-it@21.0.2:
     dependencies:
       '@inquirer/prompts': 8.5.2
       '@octokit/rest': 22.0.1
