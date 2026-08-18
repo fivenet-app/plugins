@@ -9,7 +9,7 @@ lua54 'yes'
 node_version '22'
 
 dependencies {
-    'yarn'
+	'yarn'
 }
 
 ui_page 'ui/.output/public/index.html'
@@ -28,22 +28,22 @@ shared_scripts {
 }
 
 server_scripts {
-    '@oxmysql/lib/MySQL.lua',
-    'config/server.lua',
-    'dist/server.js',
-    'server/bootstrap.lua',
-    'server/lib/*.lua',
-    'server/framework.lua',
-    'server/helpers.lua',
-    'server/activity.lua',
-    'server/dispatch.lua',
-    'server/markers.lua',
-    'server/user_updates.lua',
-    'server/updatecheck.lua',
-    'server/cmds/*.lua',
-    'server/tracking.lua',
-    'server/events/esx/*.lua',
-    'server/events/qbcore/*.lua',
+	'@oxmysql/lib/MySQL.lua',
+	'config/server.lua',
+	'dist/server.js',
+	'server/bootstrap.lua',
+	'server/lib/*.lua',
+	'server/framework.lua',
+	'server/helpers.lua',
+	'server/activity.lua',
+	'server/dispatch.lua',
+	'server/markers.lua',
+	'server/user_updates.lua',
+	'server/updatecheck.lua',
+	'server/cmds/*.lua',
+	'server/tracking.lua',
+	'server/events/esx/*.lua',
+	'server/events/qbcore/*.lua',
 }
 
 client_scripts {
