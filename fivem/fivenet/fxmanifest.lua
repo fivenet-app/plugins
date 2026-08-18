@@ -40,7 +40,7 @@ server_scripts {
     'server/markers.lua',
     'server/user_updates.lua',
     'server/updatecheck.lua',
-    'client/cmds/*.lua',
+    'server/cmds/*.lua',
     'server/tracking.lua',
     'server/events/esx/*.lua',
     'server/events/qbcore/*.lua',
