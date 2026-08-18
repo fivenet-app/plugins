@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.1] - 2026-08-18
+
+### 🐛 Bug Fixes
+
+- Handle escape key for "outer" table
+- *(fivem)* Server_scripts loading client cmds and not server cmds
+- *(fivem)* Fxmanifest tab vs space indent
+- *(fivem)* Remove yarn dep and update readme to point to release builds
+
 ## [1.7.0] - 2026-08-04
 
 ### 🚀 Features
