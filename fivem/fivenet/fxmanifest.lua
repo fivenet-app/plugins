@@ -8,10 +8,6 @@ version 'v1.7.0'
 lua54 'yes'
 node_version '22'
 
-dependencies {
-	'yarn'
-}
-
 ui_page 'ui/.output/public/index.html'
 
 files {

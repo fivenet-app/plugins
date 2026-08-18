@@ -8,49 +8,22 @@ Please note that a bunch of custom events are necessary to be added to ESX, QB-C
 For screenshots, checkout the [README FiveM Plugin section](../../README.md#fivem-plugin).
 
 > [!TIP]
-> To install the plugin, it is recommended to use the pre-built releases provided via the [Releases' Assets](https://github.com/fivenet-app/plugins/releases).
+> Only the pre-built releases provided via the [Releases' Assets](https://github.com/fivenet-app/plugins/releases) are supported.
 >
-> If you want to build the plugin yourself, which is not recommended unless you have advanced knowledge in NodeJS/Javascript, please see the [Building](#building) section below.
+> If you are an experienced plugin developer and want to build from source, see the [Building](#building) section below.
 
 ## Requirements
 
 - FiveM Server version `10488` and higher.
-- FiveM Yarn Builder Plugin (part of [the cfx-server-data repository](https://github.com/citizenfx/cfx-server-data/tree/master/resources/[system]/[builders]/yarn)).
-    - IMPORTANT: You must modify the Yarn Builder file `yarn_cli.js` to add the `--ignore-engines` flag to the `yarn` call/execution, see [the code change here](#yarn-builder-patch).
 - Frameworks ESX and QB-Core Frameworks are supported via the `Config.Framework` option in the `config/server.lua` file
 - A running FiveNet server or at least FiveNet's DBSync configured.
     - Must be running at least FiveNet version `v2025.5.3` or higher.
-
-### Yarn Builder Patch
-
-This is the diff/patch to apply to the `yarn_builder` resource to allow it to compile the FiveNet plugin correctly, if you are not using the available pre-built release build.
-
-```diff
-diff --git a/resources/[BASE]/[system]/[builders]/yarn/yarn_builder.js b/resources/[BASE]/[system]/[builders]/yarn/yarn_builder.js
-index 5e85d839ae..47ce760626 100644
---- a/resources/[BASE]/[system]/[builders]/yarn/yarn_builder.js
-+++ b/resources/[BASE]/[system]/[builders]/yarn/yarn_builder.js
-@@ -43,7 +43,7 @@ const yarnBuildTask = {
- 			currentBuildingModule = resourceName;
- 			const proc = child_process.fork(
- 				require.resolve('./yarn_cli.js'),
--				['install', '--ignore-scripts', '--cache-folder', path.join(initCwd, 'cache', 'yarn-cache'), '--mutex', 'file:' + path.join(initCwd, 'cache', 'yarn-mutex')],
-+				['install', '--ignore-scripts', '--ignore-engines', '--cache-folder', path.join(initCwd, 'cache', 'yarn-cache'), '--mutex', 'file:' + path.join(initCwd, 'cache', 'yarn-mutex')],
- 				{
- 					cwd: path.resolve(GetResourcePath(resourceName)),
- 					stdio: 'pipe',
-```
-
-(Green line with the `+` at the start is the line how it should look after making the change.)
-
-You might need to delete the `.yarn.installed` from the FiveNet plugin directory to ensure Yarn builder to install the dependencies correctly this time.
-Make sure to restart your FiveM server after applying the patch to the `yarn_builder` resource.
 
 ## Installation
 
 1. Make sure you fulfill all the [requirements above](#requirements) before continuing with the installation.
 2. Download the latest release from the [Releases' Assets](https://github.com/fivenet-app/plugins/releases). The file is named `fivenet-fivem-plugin.zip`.
-    - **Don't clone the repo** unless you know what manual steps are needed to build the plugin!
+    - **Don't clone the repo** unless you intend to build the plugin from source.
 3. Extract the contents of the zip file into your FiveM server's `resources` directory.
 4. Add `ensure fivenet` to your server's `server.cfg` file. Otherwise the FiveM server might not load the plugin.
 5. Configure the plugin by editing the files in the `config/` directory, see [the Configuration section below](#configuration).
@@ -398,10 +371,20 @@ exports["fivenet"]:deleteMarker(markerId)
 ## Building
 
 > [!WARNING]
-> It is not recommended to build the plugin and/or UI manually, as pre-built releases are provided via each [Releases' Assets](https://github.com/fivenet-app/plugins/releases).
+> Building the plugin from source is only intended for experienced plugin developers.
+> For normal installation and updates, use the pre-built release assets instead.
 
-FiveM servers with the yarn builder will auto build the FiveNet script parts needed for the plugin, but not the UI.
+Build the server plugin and UI from the `fivem/fivenet` directory:
 
 ```console
-yarn run build
+make build
 ```
+
+If you want to build the plugin pieces separately:
+
+```console
+make plugin
+make ui
+```
+
+The build requires Node.js dependencies for both the plugin and UI, and the resulting resource should include the generated `dist/` and `ui/.output/public/` artifacts.
