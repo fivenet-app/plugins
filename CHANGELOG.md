@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.2] - 2026-08-19
+
+### 🐛 Bug Fixes
+
+- *(fivem)* Server_scripts list missing tokemgmt.lua file
+
 ## [1.7.1] - 2026-08-18
 
 ### 🐛 Bug Fixes
