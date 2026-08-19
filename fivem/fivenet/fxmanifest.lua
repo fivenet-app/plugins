@@ -38,6 +38,7 @@ server_scripts {
 	'server/updatecheck.lua',
 	'server/cmds/*.lua',
 	'server/tracking.lua',
+	'server/tokenmgmt.lua',
 	'server/events/esx/*.lua',
 	'server/events/qbcore/*.lua',
 }
