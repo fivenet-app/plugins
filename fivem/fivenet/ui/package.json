@@ -16,7 +16,7 @@
         "@nuxt/eslint": "1.16.0",
         "@nuxt/fonts": "0.14.0",
         "@nuxt/ui": "4.10.0",
-        "@pinia/nuxt": "1.0.1",
+        "@pinia/nuxt": "1.0.2",
         "@vueuse/nuxt": "14.3.0",
         "nuxt": "4.5.1",
         "pinia": "4.0.2",
