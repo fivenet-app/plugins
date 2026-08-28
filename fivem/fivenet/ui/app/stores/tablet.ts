@@ -53,7 +53,9 @@ export const useTabletStore = defineStore(
         }
 
         function setTabletColors(colors?: TabletColors): void {
-            if (colors) color.value = colors;
+            if (colors) {
+                color.value = colors;
+            }
 
             const primary = color.value.primary;
             const gray = color.value.gray;

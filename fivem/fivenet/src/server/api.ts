@@ -177,7 +177,9 @@ async function DeleteMarker(request: DeleteMarkerRequest): Promise<DeleteDataRes
 }
 exports('DeleteMarker', DeleteMarker);
 
-async function EndActiveJobTimeclocks(request: EndActiveJobTimeclocksRequest): Promise<EndActiveJobTimeclocksResponse | undefined> {
+async function EndActiveJobTimeclocks(
+    request: EndActiveJobTimeclocksRequest,
+): Promise<EndActiveJobTimeclocksResponse | undefined> {
     const normalized = EndActiveJobTimeclocksRequest.create(request);
     return callSync('EndActiveJobTimeclocks', normalized, (client) => client.endActiveJobTimeclocks(normalized));
 }

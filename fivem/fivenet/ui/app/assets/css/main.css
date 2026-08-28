@@ -39,5 +39,5 @@ html {
 }
 
 body {
-    @apply antialiased text-default bg-transparent scheme-light dark:scheme-dark;
+    @apply bg-transparent text-default antialiased scheme-light dark:scheme-dark;
 }

@@ -86,14 +86,10 @@ export default defineAppConfig({
         },
 
         card: {
-            header: {
-                padding: 'px-2 py-3 sm:px-4',
-            },
-            body: {
-                padding: 'px-2 py-3 sm:px-4',
-            },
-            footer: {
-                padding: 'px-2 py-3 sm:px-4',
+            slots: {
+                header: 'px-2 py-3 sm:px-4',
+                body: 'px-2 py-3 sm:px-4',
+                footer: 'px-2 py-3 sm:px-4',
             },
         },
     },
