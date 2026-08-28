@@ -53,17 +53,32 @@ The config is split into `client.lua` and `server.lua` in the [`config/` directo
 
 - `config/client.lua`:
     - `Config.LogLevel` - Client-side log level. Can be `debug`, `info`, `warn`, `error`, or `off`.
+    - `Config.Locale` - Language for client-side player-facing text (`en` or `de`). Defaults to `en`; missing translations fall back to English.
     - `Config.WebURL` - Needs to be your FiveNet's instance URL, the default one `"https://fivenet.app"` is pointing to FiveNet's documentation page. Can be overridden with `fivenet_tablet_client_url` when the convar is not empty.
     - `Config.Tablet.DisabledControls` - Optional additional controls to disable while the tablet is open. You can provide plain control IDs like `24` or full entries like `{ group = 0, control = 24 }`.
     - `Functions.CallNumber(number)` - Client hook used by the tablet when a phone number is dialed. Replace the example with your phone resource integration.
     - `Functions.SetRadioFrequency(frequency)` - Client hook used by the tablet when a radio frequency is changed. Replace the example with your radio resource integration.
 - `config/server.lua`:
     - `Config.LogLevel` - Server-side log level. Can be `debug`, `info`, `warn`, `error`, or `off`.
+    - `Config.Locale` - Language for server-generated player-facing text (`en` or `de`). Defaults to `en`; missing translations fall back to English.
     - `Config.Framework` - **Must be set to the framework you are using!** Can be `esx` or `qbcore`.
     - `Config.API` section
         - Make sure to set the host and token (`Config.API.Host` and `Config.API.Token`) to your FiveNet instance's DBSync API details, e.g., in FiveNet Cloud you can get the Sync API credentials from the instance settings page.
         - `Config.API.Host`, `Config.API.Token`, and `Config.API.Insecure` can be overridden with the `fivenet_sync_api_host`, `fivenet_sync_api_token`, and `fivenet_sync_api_insecure` convars when they are not empty.
     - `Config.Dispatches.DisableClientDispatches` - If set to `true`, it will disable dispatches created from the client side, and only allow dispatches created from the server side. This is recommended for better security (default `false`).
+
+### Locales
+
+The plugin currently supports:
+
+- `en` - English (fallback language)
+- `de` - German
+
+To add a new locale, add a `Locales.<code>` table to [`shared/lib/locales.lua`](shared/lib/locales.lua), using `Locales.en` as the complete key reference, then set `Config.Locale` to the new code in the relevant client or server config. Missing keys fall back to English.
+
+Pull requests to add new locales are welcome.
+
+The client sends the current locale to the NUI with a `setLocale` message. The NUI can request it with the `getLocale` callback. Other client resources can change it at runtime with `TriggerEvent('fivenet:setLocale', 'de')` or read it with `exports.fivenet:getLocale()`.
 
 ### User Tracking (Livemap Locations)
 

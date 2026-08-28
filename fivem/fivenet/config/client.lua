@@ -3,6 +3,9 @@ Config = {}
 -- Log level: 'debug', 'info', 'warn', 'error', or 'off'
 Config.LogLevel = 'info'
 
+-- Locale used for player-facing client messages. Falls back to English.
+Config.Locale = 'en'
+
 -- Your FiveNet URL without a trailing slash but with the protocol (http:// or https://) in front
 -- The port is only needed when using a non-standard port (not 80 for http or 443 for https)
 Config.WebURL = 'https://demo.fivenet.app'

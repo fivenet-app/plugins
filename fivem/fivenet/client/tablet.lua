@@ -119,6 +119,7 @@ function OpenTablet()
 	end
 
 	usingTablet = true
+	SendLocaleToNUI()
 
 	CreateThread(function()
 		while usingTablet do
@@ -201,6 +202,10 @@ RegisterNUICallback('focusTablet', function(data, cb)
 	cb(true)
 end)
 
+RegisterNUICallback('getLocale', function(data, cb)
+	cb({ locale = GetLocale() })
+end)
+
 RegisterCommand('tablet', function()
 	TriggerEvent('fivenet:viewTablet', not usingTablet)
 end)
@@ -213,12 +218,12 @@ RegisterCommand('tabletfix', function()
 end)
 
 CreateThread(function()
-	TriggerEvent('chat:addSuggestion', '/tablet', 'FiveNet Tablet öffnen')
-	TriggerEvent('chat:addSuggestion', '/tabletfix', 'Probleme mit FiveNet Tablet lösen')
+	TriggerEvent('chat:addSuggestion', '/tablet', Locale('tablet.open'))
+	TriggerEvent('chat:addSuggestion', '/tabletfix', Locale('tablet.fix'))
 end)
 
 if Config.Hotkey.Enable then
-	RegisterKeyMapping('tablet', 'Tablet öffnen', 'keyboard', Config.Hotkey.Key)
+	RegisterKeyMapping('tablet', Locale('tablet.keybind'), 'keyboard', Config.Hotkey.Key)
 end
 
 -- Hide tablet on resource stop and player relog

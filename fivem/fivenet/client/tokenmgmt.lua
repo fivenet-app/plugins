@@ -22,6 +22,7 @@ end)
 
 RegisterNetEvent('fivenet:resetPassword', function(registered, token)
 	usingTokenMgmt = true
+	SendLocaleToNUI()
 
 	SendNUIMessage({
 		type = 'token',
@@ -32,13 +33,14 @@ RegisterNetEvent('fivenet:resetPassword', function(registered, token)
 		webUrl = Config.WebURL,
 	})
 
-	TriggerEvent('notifications', 'Nutze den Token ~g~'..token..'~s~, um dein FiveNet-Passwort zurückzusetzen.', 'FIVENET', 'success')
+	TriggerEvent('notifications', Locale('token.reset', { token = token }), 'FIVENET', 'success')
 end)
 
 RegisterNetEvent('fivenet:registration', function(registered, token)
 	if not registered and not token then return end
 
 	usingTokenMgmt = true
+	SendLocaleToNUI()
 	SetNuiFocus(true, true)
 	SendNUIMessage({
 		type = 'token',
@@ -51,5 +53,5 @@ RegisterNetEvent('fivenet:registration', function(registered, token)
 end)
 
 CreateThread(function()
-	TriggerEvent('chat:addSuggestion', '/fivenet', 'FiveNet Konto-Verwaltung öffnen')
+	TriggerEvent('chat:addSuggestion', '/fivenet', Locale('token.open'))
 end)

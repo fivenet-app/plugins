@@ -3,6 +3,9 @@ Config = {}
 -- Log level: 'debug', 'info', 'warn', 'error', or 'off'
 Config.LogLevel = 'info'
 
+-- Locale used for server-generated player-facing text. Falls back to English.
+Config.Locale = 'en'
+
 -- !!! Must be set to the framework you are using! Can be `esx` or `qbcore`
 Config.Framework = 'esx'
 
@@ -63,6 +66,7 @@ Config.Discord.OAuth2Provider = 'discord'
 
 Config.Dispatches = {}
 -- Panic button dispatch title, sent when the `esx_policeJob:panicButton` event is triggered
+-- Set this to override the localized default.
 Config.Dispatches.PanicButtonTitle = 'Panikknopf ausgelöst'
 -- Disable client side dispatch creation (recommended to avoid abuse, only use server side dispatches)
 -- Please note that this will not disable the client-side function, but the server will ignore any client-side createDispatch event calls.
