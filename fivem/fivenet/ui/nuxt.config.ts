@@ -5,9 +5,21 @@ export default defineNuxtConfig({
     },
     ssr: false,
 
-    modules: ['@nuxt/eslint', '@nuxt/ui', '@nuxt/fonts', '@vueuse/nuxt', '@pinia/nuxt', 'pinia-plugin-persistedstate/nuxt'],
+    modules: [
+        '@nuxt/eslint',
+        '@nuxt/ui',
+        '@nuxt/fonts',
+        '@vueuse/nuxt',
+        '@pinia/nuxt',
+        'pinia-plugin-persistedstate/nuxt',
+        '@nuxtjs/i18n',
+    ],
 
     css: ['~/assets/css/main.css', '~/assets/css/polyfills.css'],
+
+    fonts: {
+        provider: 'npm',
+    },
 
     colorMode: {
         preference: 'dark',
@@ -70,7 +82,7 @@ export default defineNuxtConfig({
     },
 
     icon: {
-        collections: ['mdi'],
+        collections: ['mdi', 'flagpack'],
         provider: 'iconify',
         fallbackToApi: false,
         clientBundle: {
@@ -129,9 +141,38 @@ export default defineNuxtConfig({
         },
     },
 
+    i18n: {
+        strategy: 'no_prefix',
+        defaultLocale: 'en',
+        detectBrowserLanguage: false,
+        parallelPlugin: true,
+        compilation: {
+            strictMessage: false,
+        },
+
+        locales: [
+            {
+                name: 'English',
+                code: 'en',
+                language: 'en',
+                isCatchallLocale: true,
+                file: 'en.json',
+                icon: 'i-flagpack-gb-ukm',
+            },
+            {
+                name: 'German',
+                code: 'de',
+                language: 'de',
+                file: 'de.json',
+                icon: 'i-flagpack-de',
+            },
+        ],
+    },
+
     postcss: {
         plugins: {
             '../../../internal/postcss/postcss-color-mix-transparency-fallback': {},
+            '../../../internal/postcss/postcss-viewport-unit-fixup': {},
             'postcss-preset-env': {
                 stage: 2,
                 features: {

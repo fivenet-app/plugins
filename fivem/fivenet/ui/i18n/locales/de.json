@@ -1,0 +1,25 @@
+{
+    "tablet": {
+        "close": "Schließen",
+        "reload": "Neuladen",
+        "expand": "Aufklappen",
+        "collapse": "Zuklappen",
+        "powerOn": "Einschalten",
+        "powerOff": "Ausschalten"
+    },
+    "tokenManagement": {
+        "managementTitle": "Konto-Verwaltung",
+        "registrationTitle": "Konto-Erstellung",
+        "username": "Dein Benutzername",
+        "registrationToken": "Dein Registrierungstoken",
+        "copy": "Kopieren",
+        "resetPassword": "Setze nun hier dein Passwort zurück!",
+        "forgotPassword": "Passwort vergessen? Hier zurücksetzen",
+        "createAccount": "Konto erstellen",
+        "close": "Schließen",
+        "url": "FiveNet URL:",
+        "resetDescription": "Nutze diesen Token, um dein Passwort zurückzusetzen.",
+        "createdDescription": "Dein FiveNet-Konto wurde mit diesem Nutzernamen erstellt.",
+        "registrationDescription": "Nutze diesen Token, um dein FiveNet-Konto zu erstellen."
+    }
+}

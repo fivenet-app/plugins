@@ -1,0 +1,25 @@
+{
+    "tablet": {
+        "close": "Close",
+        "reload": "Reload",
+        "expand": "Expand",
+        "collapse": "Collapse",
+        "powerOn": "Turn on",
+        "powerOff": "Turn off"
+    },
+    "tokenManagement": {
+        "managementTitle": "Account Management",
+        "registrationTitle": "Account Creation",
+        "username": "Your username",
+        "registrationToken": "Your registration token",
+        "copy": "Copy",
+        "resetPassword": "Reset your password here",
+        "forgotPassword": "Forgot your password? Reset it here",
+        "createAccount": "Create account",
+        "close": "Close",
+        "url": "FiveNet URL:",
+        "resetDescription": "Use this token to reset your password.",
+        "createdDescription": "Your FiveNet account was created with this username.",
+        "registrationDescription": "Use this token to create your FiveNet account."
+    }
+}

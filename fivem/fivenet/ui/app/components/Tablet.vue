@@ -7,6 +7,7 @@ import { getParentResourceName, toggleTablet } from '../composables/nui';
 import { useTokenMgmtOverlay } from '../composables/useTokenMgmtOverlay';
 
 const tokenMgmtOverlay = useTokenMgmtOverlay();
+const { t } = useI18n();
 
 const tabletStore = useTabletStore();
 const { refreshTablet } = tabletStore;
@@ -79,13 +80,11 @@ onClickOutside(modalRef, (event) => {
             isTabletOpen ? 'flex' : 'hidden',
         ]"
     >
-        <div
-            class="relative w-full flex-1 rounded-[calc(var(--ui-radius)*2)] shadow-lg ring ring-[var(--ui-border)]"
-        >
-            <div class="transform-flat relative size-full rounded border-[14px] border-neutral-800 bg-neutral-800">
-                <UTooltip text="Schließen" class="absolute -top-[32px] right-[24px] w-[64px]">
+        <div class="relative w-full flex-1 rounded-[calc(var(--ui-radius)*2)] shadow-lg ring ring-[var(--ui-border)]">
+            <div class="relative size-full rounded border-[14px] border-neutral-800 bg-neutral-800 transform-flat">
+                <UTooltip :text="t('tablet.close')" class="absolute -top-[32px] right-[24px] w-[64px]">
                     <UButton
-                        class="rounded-b-none rounded-t-lg shadow-none ring-0"
+                        class="rounded-t-lg rounded-b-none shadow-none ring-0"
                         color="primary"
                         icon="i-mdi-close"
                         block
@@ -93,7 +92,7 @@ onClickOutside(modalRef, (event) => {
                     />
                 </UTooltip>
 
-                <UTooltip text="Neuladen" class="absolute -end-[32px] top-[100px] h-[44px]">
+                <UTooltip :text="t('tablet.reload')" class="absolute -end-[32px] top-[100px] h-[44px]">
                     <UButton
                         class="rounded-e-lg rounded-l-none border-none shadow-none ring-0 dark:hover:bg-neutral-700"
                         color="gray"
@@ -102,7 +101,10 @@ onClickOutside(modalRef, (event) => {
                     />
                 </UTooltip>
 
-                <UTooltip :text="folded ? 'Aufklappen' : 'Zuklappen'" class="absolute -end-[32px] top-[154px] h-[44px]">
+                <UTooltip
+                    :text="folded ? t('tablet.expand') : t('tablet.collapse')"
+                    class="absolute -end-[32px] top-[154px] h-[44px]"
+                >
                     <UButton
                         class="rounded-e-lg rounded-l-none shadow-none ring-0 dark:hover:bg-neutral-700"
                         :color="folded ? 'gray' : 'white'"
@@ -111,7 +113,10 @@ onClickOutside(modalRef, (event) => {
                     />
                 </UTooltip>
 
-                <UTooltip :text="turnedOn ? 'Ausschalten' : 'Einschalten'" class="absolute -end-[20px] top-[262px] h-[64px]">
+                <UTooltip
+                    :text="turnedOn ? t('tablet.powerOff') : t('tablet.powerOn')"
+                    class="absolute -end-[20px] top-[262px] h-[64px]"
+                >
                     <UButton
                         class="w-[20px] rounded-e-lg rounded-l-none shadow-none ring-0"
                         :class="turnedOn ? 'dark:hover:bg-neutral-700' : 'hover:bg-orange-500 dark:hover:bg-orange-500'"
@@ -125,7 +130,7 @@ onClickOutside(modalRef, (event) => {
                     <iframe
                         ref="tabletIframe"
                         sandbox="allow-forms allow-modals allow-same-origin allow-scripts"
-                        allow="autoplay *; clipboard-read *; clipboard-write *;"
+                        allow="autoplay *; clipboard-read *; clipboard-write *"
                         class="hero absolute inset-0 block size-full border-0 bg-neutral-900"
                         :class="turnedOn ? '' : 'screenOff opacity-0'"
                     />

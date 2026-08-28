@@ -12,6 +12,7 @@ const emit = defineEmits<{
 }>();
 
 const tabletStore = useTabletStore();
+const { t } = useI18n();
 const { registrationToken, username, baseUrl } = storeToRefs(tabletStore);
 
 const { isTabletOpen } = useTablet();
@@ -59,8 +60,8 @@ async function openRegistration(): Promise<void> {
                     <div class="flex items-center justify-between">
                         <FiveNetLogo class="h-5 w-5" />
 
-                        <h3 class="text-2xl font-semibold leading-6 text-neutral-900 dark:text-white">
-                            {{ username ? 'Konto-Verwaltung' : 'Konto-Erstellung' }}
+                        <h3 class="text-2xl leading-6 font-semibold text-neutral-900 dark:text-white">
+                            {{ username ? t('tokenManagement.managementTitle') : t('tokenManagement.registrationTitle') }}
                         </h3>
 
                         <UButton color="white" variant="ghost" icon="i-mdi-window-close" class="-my-1" @click="open = false" />
@@ -68,7 +69,7 @@ async function openRegistration(): Promise<void> {
                 </template>
 
                 <UContainer class="flex flex-col gap-y-2">
-                    <UFormGroup v-if="username" label="Dein Benutzername">
+                    <UFormGroup v-if="username" :label="t('tokenManagement.username')">
                         <div class="inline-flex w-full justify-center gap-2">
                             <div class="inline-flex gap-1.5">
                                 <UInput
@@ -85,14 +86,14 @@ async function openRegistration(): Promise<void> {
                                 icon="i-mdi-clipboard-plus"
                                 color="neutral"
                                 size="xl"
-                                label="Kopieren"
+                                :label="t('tokenManagement.copy')"
                                 class="flex-1"
                                 @click="copyToClipboard(username)"
                             />
                         </div>
                     </UFormGroup>
 
-                    <UFormGroup v-if="registrationToken" label="Dein Registrierungstoken">
+                    <UFormGroup v-if="registrationToken" :label="t('tokenManagement.registrationToken')">
                         <div class="inline-flex w-full justify-center gap-2">
                             <div class="inline-flex gap-1.5">
                                 <UInput
@@ -107,7 +108,7 @@ async function openRegistration(): Promise<void> {
                                 icon="i-mdi-clipboard-plus"
                                 color="neutral"
                                 size="xl"
-                                label="Kopieren"
+                                :label="t('tokenManagement.copy')"
                                 class="flex-1"
                                 @click="copyToClipboard(registrationToken)"
                             />
@@ -119,9 +120,9 @@ async function openRegistration(): Promise<void> {
                         :description="
                             username
                                 ? registrationToken
-                                    ? 'Nutze diesen Token, um dein Passwort zurückzusetzen.'
-                                    : 'Dein FiveNet-Konto wurde mit diesem Nutzernamen erstellt.'
-                                : 'Nutze diesen Token, um dein FiveNet-Konto zu erstellen.'
+                                    ? t('tokenManagement.resetDescription')
+                                    : t('tokenManagement.createdDescription')
+                                : t('tokenManagement.registrationDescription')
                         "
                     />
 
@@ -130,7 +131,7 @@ async function openRegistration(): Promise<void> {
                         color="warning"
                         block
                         icon="i-mdi-lock-question"
-                        label="Setze nun hier dein Passwort zurück!"
+                        :label="t('tokenManagement.resetPassword')"
                         :loading="loading"
                         size="md"
                         @click="openResetPassword"
@@ -141,12 +142,20 @@ async function openRegistration(): Promise<void> {
                         color="warning"
                         :disabled="!!registrationToken"
                         block
-                        label="Passwort vergessen? Hier zurücksetzen"
+                        :label="t('tokenManagement.forgotPassword')"
                         :loading="loading"
                         size="md"
                         @click="resetPassword"
                     />
-                    <UButton v-else block color="green" icon="i-mdi-user-add" label="Konto erstellen" size="md" @click="openRegistration()" />
+                    <UButton
+                        v-else
+                        block
+                        color="green"
+                        icon="i-mdi-user-add"
+                        :label="t('tokenManagement.createAccount')"
+                        size="md"
+                        @click="openRegistration()"
+                    />
 
                     <UButton
                         v-if="baseUrl"
@@ -158,14 +167,20 @@ async function openRegistration(): Promise<void> {
                         :ui="{ base: 'text-center text-white font-semibold' }"
                         @click="openURLInWindow(baseUrl)"
                     >
-                        <span>FiveNet URL:</span>
+                        <span>{{ t('tokenManagement.url') }}</span>
                         <span class="font-mono">{{ baseUrl }}</span>
                     </UButton>
                 </UContainer>
 
                 <template #footer>
                     <UFieldGroup class="inline-flex w-full">
-                        <UButton color="neutral" block class="flex-1" label="Schließen" @click="open = false" />
+                        <UButton
+                            color="neutral"
+                            block
+                            class="flex-1"
+                            :label="t('tokenManagement.close')"
+                            @click="open = false"
+                        />
                     </UFieldGroup>
                 </template>
             </UCard>

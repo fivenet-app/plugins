@@ -1,10 +1,9 @@
-import { useTokenMgmtOverlay } from './useTokenMgmtOverlay';
 import { useTablet } from './useTablet';
+import { useTokenMgmtOverlay } from './useTokenMgmtOverlay';
 
 const logger = useLogger('🎮 NUI');
 
 export function getParentResourceName(): string {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return (window as any).GetParentResourceName ? (window as any).GetParentResourceName() : 'fivenet';
 }
 
@@ -64,6 +63,10 @@ export type NUIMessage =
           data: string;
       }
     | {
+          type: 'setLocale';
+          locale: string;
+      }
+    | {
           type: 'closeTablet';
       }
     | {
@@ -89,7 +92,10 @@ export type NUIMessage =
           type: undefined;
       };
 
-export async function onNUIMessage(event: MessageEvent<NUIMessage>): Promise<void> {
+export async function onNUIMessage(
+    event: MessageEvent<NUIMessage>,
+    onLocaleChange?: (locale: string) => void | Promise<void>,
+): Promise<void> {
     if (!event.data || !event.data.type) {
         return;
     }
@@ -104,6 +110,8 @@ export async function onNUIMessage(event: MessageEvent<NUIMessage>): Promise<voi
         tabletStore.username = event.data.data.username ?? '';
 
         useTokenMgmtOverlay().open();
+    } else if (event.data.type === 'setLocale') {
+        await onLocaleChange?.(event.data.locale);
     } else if (event.data.type === 'openTablet') {
         tabletStore.setBaseUrl(event.data.webUrl);
         useTokenMgmtOverlay().close();
@@ -131,15 +139,17 @@ export async function onNUIMessage(event: MessageEvent<NUIMessage>): Promise<voi
     }
 }
 
+export async function getLocale(): Promise<{ locale: string }> {
+    return fetchNUI('getLocale', {});
+}
+
 // NUI Callbacks
 
 export function openURLInWindow(url: string): void {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (!(window as any).invokeNative) {
         return;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (window as any).invokeNative('openUrl', url);
 }
 
