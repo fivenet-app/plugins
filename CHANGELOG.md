@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.0] - 2026-08-31
+
+### 🚀 Features
+
+- *(fivem)* Add shared localization support
+- *(fivem-ui)* Localize plugin UI
+- *(fivem)* Support source user attribution for props updates
+
+### 🐛 Bug Fixes
+
+- Upgrade nodejs to 24.15.0
+
 ## [1.7.2] - 2026-08-19
 
 ### 🐛 Bug Fixes
