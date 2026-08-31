@@ -45,8 +45,10 @@ exports('getUserProps', GetUserProps)
 ---@param identifier string
 ---@param reason string|nil
 ---@param data table
+---@param sourceUserId number|nil User DB ID to attribute the change to.
+---@param sourceUserJob string|nil Job to attribute the change to.
 --- The helper mutates `data` by adding `userId`.
-function SetUserProps(identifier, reason, data)
+function SetUserProps(identifier, reason, data, sourceUserId, sourceUserJob)
 	local userId = GetUserIDFromIdentifier(identifier)
 	data.userId = userId
 
@@ -55,6 +57,10 @@ function SetUserProps(identifier, reason, data)
 			reason = reason,
 			props = data,
 		},
+		sourceUser = (sourceUserId or sourceUserJob) and {
+			userId = sourceUserId,
+			job = sourceUserJob,
+		} or nil,
 	})
 end
 exports('setUserProps', SetUserProps)
@@ -62,8 +68,10 @@ exports('setUserProps', SetUserProps)
 --- Add or subtract from the open fine total for a user.
 ---@param tIdentifier string
 ---@param fine number
-function UpdateOpenFines(tIdentifier, fine)
-	SetUserProps(tIdentifier, nil, { openFines = fine })
+---@param sourceUserId number|nil
+---@param sourceUserJob string|nil
+function UpdateOpenFines(tIdentifier, fine, sourceUserId, sourceUserJob)
+	SetUserProps(tIdentifier, nil, { openFines = fine }, sourceUserId, sourceUserJob)
 end
 exports('updateOpenFines', UpdateOpenFines)
 
@@ -71,8 +79,10 @@ exports('updateOpenFines', UpdateOpenFines)
 ---@param tIdentifier string
 ---@param wanted boolean
 ---@param reason string|nil
-function SetUserWantedState(tIdentifier, wanted, reason)
-	SetUserProps(tIdentifier, reason, { wanted = wanted })
+---@param sourceUserId number|nil
+---@param sourceUserJob string|nil
+function SetUserWantedState(tIdentifier, wanted, reason, sourceUserId, sourceUserJob)
+	SetUserProps(tIdentifier, reason, { wanted = wanted }, sourceUserId, sourceUserJob)
 end
 exports('setUserWantedState', SetUserWantedState)
 
@@ -107,8 +117,10 @@ exports('addJobColleagueActivity', AddJobColleagueActivity)
 ---@param identifier string
 ---@param reason string|nil
 ---@param props table
+---@param sourceUserId number|nil User DB ID to attribute the change to.
+---@param sourceUserJob string|nil Job to attribute the change to.
 --- The helper mutates `props` by adding `userId`.
-function SetColleagueProps(identifier, reason, props)
+function SetColleagueProps(identifier, reason, props, sourceUserId, sourceUserJob)
 	local userId = GetUserIDFromIdentifier(identifier)
 	props.userId = userId
 
@@ -117,6 +129,41 @@ function SetColleagueProps(identifier, reason, props)
 			reason = reason,
 			props = props,
 		},
+		sourceUser = (sourceUserId or sourceUserJob) and {
+			userId = sourceUserId,
+			job = sourceUserJob,
+		} or nil,
 	})
 end
 exports('setColleagueProps', SetColleagueProps)
+
+--- Get vehicle props for a plate.
+---@param plate string
+---@return GetVehiclePropsResponse
+function GetVehicleProps(plate)
+	return exports[GetCurrentResourceName()]:GetVehicleProps({
+		plate = plate,
+	})
+end
+exports('getVehicleProps', GetVehicleProps)
+
+--- Set vehicle props for a plate.
+---@param plate string
+---@param reason string|nil
+---@param data table
+---@param sourceUserId number|nil User DB ID to attribute the change to.
+---@param sourceUserJob string|nil Job to attribute the change to.
+--- The helper mutates `data` by adding `plate`.
+function SetVehicleProps(plate, reason, data, sourceUserId, sourceUserJob)
+	data.plate = plate
+
+	return exports[GetCurrentResourceName()]:SetVehicleProps({
+		vehicleProps = data,
+		reason = reason,
+		sourceUser = (sourceUserId or sourceUserJob) and {
+			userId = sourceUserId,
+			job = sourceUserJob,
+		} or nil,
+	})
+end
+exports('setVehicleProps', SetVehicleProps)

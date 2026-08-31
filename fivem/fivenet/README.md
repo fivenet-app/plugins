@@ -238,7 +238,9 @@ The plugin provides the following exports on the **server side** for other resou
 | **Features**                   |                                                                                                                                                                                                     |                                                |
 | `addUserActivity`              | Adds user activity for `tIdentifier`. If `sIdentifier` is omitted, the target user's DB ID is reused as the source user.                                                                            | [`server/activity.lua`](server/activity.lua)   |
 | `getUserProps`                 | Get user props for `identifier`. The helper resolves and injects the internal user DB ID before sending.                                                                                            | [`server/activity.lua`](server/activity.lua)   |
-| `setUserProps`                 | Sets user props for `tIdentifier`. The helper resolves and injects the internal user DB ID before sending, and mutates the passed table by adding `userId`.                                         | [`server/activity.lua`](server/activity.lua)   |
+| `setUserProps`                 | Sets user props for `tIdentifier`. The helper resolves and injects the internal user DB ID before sending. Optionally attributes the change with `sourceUserId` and `sourceUserJob`.        | [`server/activity.lua`](server/activity.lua)   |
+| `getVehicleProps`              | Gets vehicle props for a license plate.                                                                                                                                                             | [`server/activity.lua`](server/activity.lua)   |
+| `setVehicleProps`              | Sets vehicle props for a license plate. Optionally attributes the change with `sourceUserId` and `sourceUserJob`.                                                                                  | [`server/activity.lua`](server/activity.lua)   |
 | `updateOpenFines`              | Adds or subtracts from the open fine total for `tIdentifier`. Positive values add, negative values subtract.                                                                                        | [`server/activity.lua`](server/activity.lua)   |
 | `setUserWantedState`           | Sets the wanted state for `tIdentifier`. Pass a reason when you want the change to be attributed.                                                                                                   | [`server/activity.lua`](server/activity.lua)   |
 | `addJobColleagueActivity`      | Adds job colleague activity for `tIdentifier`. Pass both identifiers explicitly; there is no fallback when `sIdentifier` is omitted.                                                                | [`server/activity.lua`](server/activity.lua)   |
@@ -269,6 +271,19 @@ if props and props.userProps and props.userProps.wanted then
 else
     print('User is not wanted.', props.userProps.userId)
 end
+```
+
+### Setting User Props
+
+```lua
+local sourceUserId = exports["fivenet"]:getUserDBID(source)
+local sourceUserJob = "police"
+
+-- `sourceUserId` (`source_user_id`) identifies who made the change.
+-- `sourceUserJob` (`source_user_job`) records the job under which it was made.
+exports["fivenet"]:setUserProps(identifier, "Warrant issued", {
+    wanted = true,
+}, sourceUserId, sourceUserJob)
 ```
 
 ### Creating a Dispatch
@@ -381,6 +396,36 @@ exports["fivenet"]:addMarker({
 })
 
 exports["fivenet"]:deleteMarker(markerId)
+```
+
+### Get Vehicle Props
+
+```lua
+-- Vehicle plate
+local plate = "ABC 123"
+
+local props = exports["fivenet"]:getVehicleProps(plate)
+
+-- Make sure to nil check properly
+if props and props.vehicleProps and props.vehicleProps.wanted then
+    print('Vehicle is wanted!', props.vehicleProps.plate)
+else
+    print('Vehicle is not wanted.', props.vehicleProps.plate)
+end
+```
+
+### Set Vehicle Props
+
+```lua
+local plate = "ABC 123"
+local sourceUserId = exports["fivenet"]:getUserDBID(source)
+local sourceUserJob = "police"
+
+-- `sourceUserId` (`source_user_id`) identifies who made the change.
+-- `sourceUserJob` (`source_user_job`) records the job under which it was made.
+exports["fivenet"]:setVehicleProps(plate, "Vehicle reported stolen", {
+    wanted = true,
+}, sourceUserId, sourceUserJob)
 ```
 
 ## Building

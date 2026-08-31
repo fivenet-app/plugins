@@ -24,6 +24,8 @@ import {
     GetStatusResponse,
     GetUserPropsRequest,
     GetUserPropsResponse,
+    GetVehiclePropsRequest,
+    GetVehiclePropsResponse,
     RegisterAccountRequest,
     RegisterAccountResponse,
     SendAccountsRequest,
@@ -35,6 +37,8 @@ import {
     SendUsersRequest,
     SendVehiclesRequest,
     SetLastCharIDRequest,
+    SetVehiclePropsRequest,
+    SetVehiclePropsResponse,
     TransferAccountRequest,
     TransferAccountResponse,
 } from '@fivenet-app/gen/services/sync/sync';
@@ -140,6 +144,18 @@ async function GetUserProps(request: GetUserPropsRequest): Promise<GetUserPropsR
     return callSync('GetUserProps', normalized, (client) => client.getUserProps(normalized));
 }
 exports('GetUserProps', GetUserProps);
+
+async function GetVehicleProps(request: GetVehiclePropsRequest): Promise<GetVehiclePropsResponse | undefined> {
+    const normalized = GetVehiclePropsRequest.create(request);
+    return callSync('GetVehicleProps', normalized, (client) => client.getVehicleProps(normalized));
+}
+exports('GetVehicleProps', GetVehicleProps);
+
+async function SetVehicleProps(request: SetVehiclePropsRequest): Promise<SetVehiclePropsResponse | undefined> {
+    const normalized = SetVehiclePropsRequest.create(request);
+    return callSync('SetVehicleProps', normalized, (client) => client.setVehicleProps(normalized));
+}
+exports('SetVehicleProps', SetVehicleProps);
 
 async function AddColleagueActivity(request: AddColleagueActivityRequest): Promise<AddActivityResponse | undefined> {
     const normalized = AddColleagueActivityRequest.create(request);
