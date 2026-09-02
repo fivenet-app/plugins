@@ -25,7 +25,7 @@
         "@pinia/nuxt": "1.0.1",
         "@vueuse/nuxt": "14.3.0",
         "nuxt": "4.5.1",
-        "pinia": "4.0.2",
+        "pinia": "4.0.3",
         "pinia-plugin-persistedstate": "4.7.1",
         "vue": "3.5.40",
         "vue-router": "5.2.0"
