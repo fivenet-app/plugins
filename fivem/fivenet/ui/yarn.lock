@@ -2487,10 +2487,10 @@
     "@parcel/watcher-win32-arm64" "2.6.0"
     "@parcel/watcher-win32-x64" "2.6.0"
 
-"@pinia/nuxt@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@pinia/nuxt/-/nuxt-1.0.1.tgz#e4e229cf1aac4fb5dfacae1e44c343992468f8b8"
-  integrity sha512-le5bc7KnlAg7W04XKhIQEGTrIgNPV2eNS5wj62OKfvUGGBAvdQLEoEbxKxuli4q0PPS888waxphNzCuz7ilvDQ==
+"@pinia/nuxt@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@pinia/nuxt/-/nuxt-1.0.2.tgz#1a4d845541607eddab43e65cdad6c051b8fcb91f"
+  integrity sha512-x+G/zz7SDjLq3TUf0jpaXiOb03ZY+O3i0q8aMP76Lz3MS/NaE71SJCCZjYiF8dNsz/0oOnCPT2DKghkumXlVRw==
   dependencies:
     "@nuxt/kit" "^4.4.8"
 
