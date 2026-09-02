@@ -6986,10 +6986,10 @@ pinia-plugin-persistedstate@4.7.1:
   dependencies:
     defu "^6.1.4"
 
-pinia@4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/pinia/-/pinia-4.0.2.tgz#ed71ec5818e6f26cbe8d2f552df8777d3413b615"
-  integrity sha512-yKVVA7bSj5oRZFp/Ab9wLlmyb5gPUYEiIm4ryiWTe/xe7PtkRdMVOp1X1ggvq0c6Uj7Q0Du1HnV2mtAwM0Ks1g==
+pinia@4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/pinia/-/pinia-4.0.3.tgz#9cf9e353b3602e24a96e4ca4425817ecb9993292"
+  integrity sha512-XMQqpvjgG7LMqVhhFUzKLT4KEbsYbfZZ0CZU9PgdFm1O2VKBmIkykL8+SfNhOaT7sR0wT6BEgKT0YNDYWgmVRA==
   dependencies:
     nostics "^1.1.4"
 
