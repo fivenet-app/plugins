@@ -11,12 +11,11 @@ node_version '22'
 ui_page 'ui/.output/public/index.html'
 
 files {
-	'ui/.output/public/**/*.html',
-	'ui/.output/public/**/*.js',
-	'ui/.output/public/**/*.css',
-	'ui/.output/public/**/*.woff2',
-	'ui/.output/public/**/*.json',
-	'ui/.output/public/**/*.png',
+	'ui/.output/public/index.html',
+	'ui/.output/public/_fonts/*.woff2',
+	'ui/.output/public/_nuxt/app.css',
+	'ui/.output/public/_nuxt/entry.js',
+	'ui/.output/public/_nuxt/logo.png',
 }
 
 shared_scripts {
