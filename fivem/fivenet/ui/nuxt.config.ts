@@ -38,6 +38,36 @@ export default defineNuxtConfig({
         },
     },
 
+    vite: {
+        build: {
+            cssCodeSplit: false,
+            sourcemap: false,
+
+            rolldownOptions: {
+                output: {
+                    codeSplitting: false,
+
+                    entryFileNames: '_nuxt/[name].js',
+                    chunkFileNames: '_nuxt/[name].js',
+
+                    assetFileNames: (asset) => {
+                        const name = asset.names?.[0] ?? '';
+
+                        if (name.endsWith('.css')) {
+                            return '_nuxt/app.css';
+                        }
+
+                        return '_nuxt/[name][extname]';
+                    },
+                },
+            },
+        },
+    },
+
+    experimental: {
+        appManifest: false,
+    },
+
     ui: {
         theme: {
             colors: [
