@@ -20,10 +20,15 @@
     hashery "^1.5.1"
     keyv "^5.6.0"
 
-"@citizenfx/server@2.0.35805-1":
-  version "2.0.35805-1"
-  resolved "https://registry.yarnpkg.com/@citizenfx/server/-/server-2.0.35805-1.tgz#bddfdd1b32dbc173f512e768ecd45cf86d9c3f50"
-  integrity sha512-Sj0LBQ+0t92NkMc48oSvwNitMNkg+sXm0V8NFzaujGY0v0G+Wm2nKTLL24jDSOZM2aKjW5A0y7sExrMdbtpSXg==
+"@citizenfx/server@2.0.37474-1":
+  version "2.0.37474-1"
+  resolved "https://registry.yarnpkg.com/@citizenfx/server/-/server-2.0.37474-1.tgz#544cfa2284d2f57ba0dad7dfe9d09f48b9af2848"
+  integrity sha512-F/JSoJBK9DHrO2xARMeOYr9OA/u6aPUBlj73HWR81mkd6nTv+5isTXLPbrGZNL3m92azMvTxPfto9plDfDzogA==
+
+"@dual-bundle/import-meta-resolve@^4.2.1":
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/@dual-bundle/import-meta-resolve/-/import-meta-resolve-4.2.1.tgz#cd0b25b3808cd9e684cd6cd549bbf8e1dcf05ee7"
+  integrity sha512-id+7YRUgoUX6CgV0DtuhirQWodeeA7Lf4i2x71JS/vtA5pRb/hIGWlw+G6MeXvsM+MXrz0VAydTGElX1rAfgPg==
 
 "@esbuild/aix-ppc64@0.28.2":
   version "0.28.2"
@@ -208,10 +213,10 @@
   resolved "https://registry.yarnpkg.com/@fivenet-app/gen/-/gen-2026.8.5.tgz#cbc77b59064ac021d3d13ca3ad8cb01444105cf0"
   integrity sha512-hWQrXiyKywJ3SHFSsqFw1gxRr/er6bjhI1gg6m0YiKfjUJRjD1cRKSSl0ZWVPW8IvFmYBKmX5IOeGOjXKoqOIQ==
 
-"@grpc/grpc-js@1.14.4":
-  version "1.14.4"
-  resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.14.4.tgz#e73ff57d97802f063999545f43ebb2b1eca65d9d"
-  integrity sha512-k9Dj3DV/itK9D06Y8f190Qgop7/Ui+D0njFV3LHMPwPT75DpXLQohE9Wmz0QElrJnzsjB7KPWiKJbOl7IPDArQ==
+"@grpc/grpc-js@1.14.6":
+  version "1.14.6"
+  resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.14.6.tgz#f3f3d65315bf9b45252f575e4cc142148c587cac"
+  integrity sha512-SgC/B3/VZ8lTyOZ4Cwk6f1skWhmkNAaVfiX90qd5u1rRXGKk1//8FTUEN9GvOUq7rfWIqAYkA3CoyumYVpOS6g==
   dependencies:
     "@grpc/proto-loader" "^0.8.0"
     "@js-sdsl/ordered-map" "^4.4.2"
@@ -375,10 +380,10 @@
   resolved "https://registry.npmjs.org/@types/json-schema/-/json-schema-7.0.15.tgz"
   integrity sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==
 
-"@types/node@26.5.1":
-  version "26.5.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-26.5.1.tgz#b19c390e15813f402a94b86e3af9042f792138be"
-  integrity sha512-CzNm2FezW4VR/LjG6yUdiEgLE/rAQ9Slj5gCu/C2VrdcW7I0ahNZ8DRbHT7zOZ6r3ONgd/bsQIeSaoDGrd1C6g==
+"@types/node@26.6.5":
+  version "26.6.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-26.6.5.tgz#cb35209e7767c503551b5fa42a48231c7441d979"
+  integrity sha512-uMzsv9stDdofIZBx4UGh4Z9ZgXnGC9seRDscilBcTHAeOFk67MZg/k9bWVfO+bk4qZmG+l52hRnLwUiH2LnJTg==
   dependencies:
     undici-types "~8.9.0"
 
@@ -545,13 +550,13 @@ eslint-config-prettier@10.1.8:
   resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-10.1.8.tgz#15734ce4af8c2778cc32f0b01b37b0b5cd1ecb97"
   integrity sha512-82GZUjRS0p/jganf6q1rEO25VSoHH0hKPCTrgillPjdI/3bgBhAE1QzHrHTizjpRvy6pGAvKjDJtk2pF9NDq8w==
 
-eslint-plugin-prettier@5.5.6:
-  version "5.5.6"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-5.5.6.tgz#363ebe4d769bce157ccdd8129ce3efd91dc62564"
-  integrity sha512-ifetmTcxWfz+4qRW3pH/ujdTq2jQIj59AxJMIN26K5avYgU8dxycUETQonWiW+wPrYXA0j3Try0l1CnwVQtDqQ==
+eslint-plugin-prettier@5.5.7:
+  version "5.5.7"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-5.5.7.tgz#ebef3acc2d664333b1356b717780198abc635398"
+  integrity sha512-WjHyn3GrFd+ZR0rzsLiM4zJZ35PZMOE0SUIxzGmnWNG0126yNfJKJzObmmkYDwHJfGlkz3PSlzyG9ez/LJntwg==
   dependencies:
     prettier-linter-helpers "^1.0.1"
-    synckit "^0.11.13"
+    synckit "^0.12.3"
 
 eslint-scope@^9.1.2:
   version "9.1.2"
@@ -573,10 +578,10 @@ eslint-visitor-keys@^5.0.1:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-5.0.1.tgz#9e3c9489697824d2d4ce3a8ad12628f91e9f59be"
   integrity sha512-tD40eHxA35h0PEIZNeIjkHoDR4YjjJp34biM0mDvplBe//mB+IHCqHDGV7pxF+7MklTvighcCPPZC7ynWyjdTA==
 
-eslint@10.10.0:
-  version "10.10.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-10.10.0.tgz#14b1d1849eedb2ee6805f3759050479ce2b23d71"
-  integrity sha512-NPXn6r5zl4uET1DAVPaOwzX3rut4c0wcmw3dWJAfOsTM5+TogXo0DDjz8pwm/hL8cyVNpHqeK4JpN0NjnyFFNw==
+eslint@10.13.0:
+  version "10.13.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-10.13.0.tgz#a8a4742648c0fa9131f429b509de5407682d4864"
+  integrity sha512-UohDjD4zSzEwhf58M3O7vc/ycc8O1I7dNlhtD0WxE8Px8EHNJKtUwzBqrzeGhisRuv2ag4sAYswszCJRgKXYUg==
   dependencies:
     "@eslint-community/eslint-utils" "^4.8.0"
     "@eslint-community/regexpp" "^4.12.2"
@@ -908,10 +913,10 @@ prettier-plugin-organize-imports@4.3.0:
   resolved "https://registry.yarnpkg.com/prettier-plugin-organize-imports/-/prettier-plugin-organize-imports-4.3.0.tgz#e8d392e2040b3e5fc1476967d669487dde0eea76"
   integrity sha512-FxFz0qFhyBsGdIsb697f/EkvHzi5SZOhWAjxcx2dLt+Q532bAlhswcXGYB1yzjZ69kW8UoadFBw7TyNwlq96Iw==
 
-prettier@3.9.6:
-  version "3.9.6"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.9.6.tgz#b3ea5146515d40fc53f18aa63f74dfab1e10dbf6"
-  integrity sha512-OpN0zzVdiaiAhxpuuj5efpIS4sY9j7bY6uR5mnj5yPzGkdkjNKSJeUThPb60Jw29QuAZgA4o+/iB49kFiaBX6g==
+prettier@3.9.10:
+  version "3.9.10"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.9.10.tgz#ac378e432f1a7381518f2e080816bbaefa38d585"
+  integrity sha512-skGHTH1Yb9QvaTC4hWnRTzEYtCpApF0UMBPz+t/0ZPzP8ihefo/btKd+QA7pUE0fEwA1SbS/NmhyEcstdXOIdA==
 
 protobufjs@^7.5.3:
   version "7.5.4"
@@ -984,11 +989,12 @@ strip-ansi@^6.0.0, strip-ansi@^6.0.1:
   dependencies:
     ansi-regex "^5.0.1"
 
-synckit@^0.11.13:
-  version "0.11.13"
-  resolved "https://registry.yarnpkg.com/synckit/-/synckit-0.11.13.tgz#062a5ea57d81befc35892f8254de5c567e97c80a"
-  integrity sha512-eNRKgb3z66Yp3D2CixVujOUvXLFUTij/zVnV8KRyvFdQwpz7I5DS8UfRkTeLzb64u+dkzDSdelE24izu+zSSUg==
+synckit@^0.12.3:
+  version "0.12.3"
+  resolved "https://registry.yarnpkg.com/synckit/-/synckit-0.12.3.tgz#6e30a3441d095ed04c311077350ce205465512d6"
+  integrity sha512-U+/AXT6LWsxnj2vz9HeUuPWBNgdWxjyIEjEPdbJARC9txmgPzo2VEdqnFo4hHaNyMPtycyVJrSaQYeQv/PoyyA==
   dependencies:
+    "@dual-bundle/import-meta-resolve" "^4.2.1"
     "@pkgr/core" "^0.3.6"
 
 type-check@^0.4.0, type-check@~0.4.0:
