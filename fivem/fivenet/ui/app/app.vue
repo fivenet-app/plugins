@@ -32,8 +32,8 @@ onBeforeUnmount(async () => {
 
     // NUI message handling
     window.removeEventListener('message', handleNUIMessage);
-    window.removeEventListener('focusin', onFocusHandler);
-    window.removeEventListener('focusout', onFocusHandler);
+    window.removeEventListener('focusin', onFocusHandler, true);
+    window.removeEventListener('focusout', onFocusHandler, true);
 });
 
 onMounted(async () => {

@@ -2,6 +2,46 @@
 local usingTablet = false
 -- false = unblocked, true = blocked
 local blockInputs = false
+local focusRevisions = {}
+local focusInputSources = {}
+local focusSession = 0
+
+local function resetFocusInputState()
+	blockInputs = false
+	focusRevisions = {}
+	focusInputSources = {}
+end
+
+local function updateFocusInputState(data)
+	local session = type(data) == 'table' and tonumber(data.session) or nil
+	if session ~= nil and session ~= focusSession then
+		return
+	end
+
+	local source = type(data) == 'table' and data.source or nil
+	if type(source) ~= 'string' or source == '' then
+		source = 'legacy'
+	end
+
+	local revision = type(data) == 'table' and tonumber(data.revision) or nil
+	local currentRevision = focusRevisions[source] or 0
+	if revision ~= nil and revision < currentRevision then
+		return
+	end
+
+	if revision ~= nil then
+		focusRevisions[source] = revision
+	end
+
+	focusInputSources[source] = type(data) == 'table' and data.state == true
+	blockInputs = false
+	for _, state in pairs(focusInputSources) do
+		if state then
+			blockInputs = true
+			break
+		end
+	end
+end
 
 -- Prop object
 local tablet
@@ -72,10 +112,8 @@ AddEventHandler('fivenet:viewTablet', function(state)
 	if Logger.isDebugEnabled() then Logger.debug(('fivenet:viewTablet called with state: %s'):format(tostring(state))) end
 
 	if not state then
-		blockInputs = false
 		CloseTablet()
 	elseif state then
-		blockInputs = false
 		OpenTablet()
 	end
 end)
@@ -164,6 +202,9 @@ end
 function OpenTablet()
 	if IsInTablet() then return end
 
+	resetFocusInputState()
+	focusSession = focusSession + 1
+
 	local ped = PlayerPedId()
 
 	-- Don't use tablet animation when in vehicle
@@ -211,6 +252,7 @@ function OpenTablet()
 	end)
 
 	SendNUIMessage({type = 'openTablet', state = usingTablet, webUrl = Config.WebURL})
+	SendNUIMessage({type = 'syncFocus', session = focusSession})
 
 	SetNuiFocus(true, true)
 	SetNuiFocusKeepInput(true)
@@ -218,6 +260,8 @@ end
 
 -- Close tablet
 function CloseTablet()
+	resetFocusInputState()
+
 	if not IsInTablet() then return end
 
 	if not IsInTokenMgmt() then
@@ -255,7 +299,12 @@ RegisterNUICallback('closeTablet', function(data, cb)
 end)
 
 RegisterNUICallback('focusTablet', function(data, cb)
-	blockInputs = data and data.state == true
+	if not usingTablet then
+		cb(true)
+		return
+	end
+
+	updateFocusInputState(data)
 
 	cb(true)
 end)

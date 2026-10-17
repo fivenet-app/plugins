@@ -34,9 +34,11 @@ const tabletIframe = useTemplateRef('tabletIframe');
 const iframeLoaded = ref(false);
 const iframeAppReady = ref(false);
 const iframeOrigin = ref('');
+const focusSession = ref<number>();
 
 type IframeMessage = {
     type?: string;
+    session?: number;
 };
 
 function navigateTabletTo(route: string) {
@@ -62,10 +64,34 @@ function onIframeMessage(event: MessageEvent<IframeMessage>): void {
     if (path.value) {
         navigateTabletTo(path.value);
     }
+
+    syncIframeFocus();
 }
 
-onMounted(() => window.addEventListener('message', onIframeMessage));
-onUnmounted(() => window.removeEventListener('message', onIframeMessage));
+function syncIframeFocus(): void {
+    if (!tabletIframe.value || !iframeLoaded.value || !iframeAppReady.value || focusSession.value === undefined) return;
+
+    tabletIframe.value.contentWindow?.postMessage(
+        { type: 'syncFocus', session: focusSession.value },
+        iframeOrigin.value || baseUrl.value || '',
+    );
+}
+
+function onParentMessage(event: MessageEvent<IframeMessage>): void {
+    if (event.data?.type === 'syncFocus' && typeof event.data.session === 'number') {
+        focusSession.value = event.data.session;
+        syncIframeFocus();
+    }
+}
+
+onMounted(() => {
+    window.addEventListener('message', onIframeMessage);
+    window.addEventListener('message', onParentMessage);
+});
+onUnmounted(() => {
+    window.removeEventListener('message', onIframeMessage);
+    window.removeEventListener('message', onParentMessage);
+});
 
 watch([baseUrl, reloadVersion], () => setIframeURL(path.value));
 watch([path, navigationVersion], ([route]) => {
@@ -88,6 +114,7 @@ function setIframeURL(route?: string): void {
 
 function onIframeLoad(): void {
     iframeLoaded.value = true;
+    syncIframeFocus();
 }
 
 const sizeClasses = computed(() => {

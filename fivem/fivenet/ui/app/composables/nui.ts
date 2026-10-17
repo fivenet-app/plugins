@@ -8,25 +8,56 @@ export function getParentResourceName(): string {
 }
 
 const focusNUITargets = ['input', 'textarea'];
+const focusSource = 'outer';
+let textInputFocused = false;
+let focusUpdateQueued = false;
+let focusRevision = 0;
+let focusSession: number | undefined;
+
+function isNUITextTarget(target: EventTarget | null): target is HTMLElement {
+    if (!(target instanceof HTMLElement)) return false;
+
+    return focusNUITargets.includes(target.tagName.toLowerCase());
+}
+
+function sendFocusState(state: boolean, force = false): void {
+    if (!force && state === textInputFocused) return;
+
+    textInputFocused = state;
+    focusRevision += 1;
+    void focusTablet(state, focusRevision, focusSource);
+}
+
+function updateNUIInputFocus(): void {
+    if (focusUpdateQueued) return;
+
+    focusUpdateQueued = true;
+    queueMicrotask(() => {
+        focusUpdateQueued = false;
+        sendFocusState(isNUITextTarget(document.activeElement));
+    });
+}
+
+export function syncNUIInputFocus(): void {
+    sendFocusState(isNUITextTarget(document.activeElement), true);
+}
+
+export function setNUIFocusSession(session: number): void {
+    focusSession = session;
+    focusRevision = 0;
+}
 
 /**
  *
  * @param event FocusEvent `focusin`/`focusout` event
  * @returns void promise
  */
-export async function onFocusHandler(event: FocusEvent): Promise<void> {
-    if (event.target === window) {
-        return;
-    }
+export function onFocusHandler(event: FocusEvent): void {
+    if (!isNUITextTarget(event.target) && !isNUITextTarget(document.activeElement)) return;
 
-    const element = event.target as HTMLElement;
-    if (!focusNUITargets.includes(element.tagName.toLowerCase())) {
-        return;
-    }
     event.stopPropagation();
-    logger.debug('focus handler event:', event.type, element.tagName.toLowerCase());
-
-    focusTablet(event.type === 'focusin');
+    logger.debug('focus handler event:', event.type);
+    updateNUIInputFocus();
 }
 
 type NUIRequest = boolean | string | object;
@@ -79,6 +110,10 @@ export type NUIMessage =
     | {
           type: 'tabletfix';
           webUrl: string;
+      }
+    | {
+          type: 'syncFocus';
+          session: number;
       }
     | {
           type: 'copyToClipboard';
@@ -143,6 +178,9 @@ export async function onNUIMessage(
 
             tabletStore.refreshTablet();
         }, 3000);
+    } else if (event.data.type === 'syncFocus') {
+        setNUIFocusSession(event.data.session);
+        syncNUIInputFocus();
     } else if (event.data.type === 'copyToClipboard') {
         copyToClipboard(event.data.text);
     } else if (event.data.type === 'setTabletColors') {
@@ -172,6 +210,6 @@ export async function toggleTablet(state: boolean): Promise<void> {
     return await fetchNUI(state ? 'openTablet' : 'closeTablet', { ok: true });
 }
 
-export async function focusTablet(state: boolean): Promise<void> {
-    return fetchNUI('focusTablet', { state: state });
+export async function focusTablet(state: boolean, revision?: number, source?: string): Promise<void> {
+    return fetchNUI('focusTablet', { state: state, revision: revision, source: source, session: focusSession });
 }
