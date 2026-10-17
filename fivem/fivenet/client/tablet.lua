@@ -10,6 +10,64 @@ function IsInTablet()
 	return usingTablet and true or false
 end
 
+---@param value string
+---@return string
+local function urlEncode(value)
+	return string.gsub(tostring(value), '([^%w%-_%.~])', function(character)
+		return string.format('%%%02X', string.byte(character))
+	end)
+end
+
+-- Navigates the FiveNet application inside the tablet. The route is relative
+-- to Config.WebURL, for example: /vehicles?page=1.
+---@param route string
+---@return boolean
+function NavigateTo(route)
+	if type(route) ~= 'string' or route == '' then return false end
+
+	if not IsInTablet() then
+		TriggerEvent('fivenet:viewTablet', true)
+	end
+
+	SendNUIMessage({
+		type = 'navigateTo',
+		route = route,
+	})
+
+	return true
+end
+
+exports('NavigateTo', NavigateTo)
+
+-- Opens FiveNet's vehicle search with a specific license plate.
+---@param plate string
+---@return boolean
+function OpenVehicleSearch(plate)
+	if type(plate) ~= 'string' then return false end
+
+	plate = plate:match('^%s*(.-)%s*$')
+	if plate == '' or #plate > 12 then return false end
+
+	local route = '/vehicles?licensePlate=' .. urlEncode(plate)
+		.. '&userIds=%5B%5D'
+		.. '&page=1'
+
+	return NavigateTo(route)
+end
+
+exports('OpenVehicleSearch', OpenVehicleSearch)
+
+-- Opens FiveNet's citizen profile for a database user ID.
+---@param userId number
+---@return boolean
+function OpenCitizenInfo(userId)
+	if type(userId) ~= 'number' or userId <= 0 then return false end
+
+	return NavigateTo('/citizens/' .. urlEncode(userId))
+end
+
+exports('OpenCitizenInfo', OpenCitizenInfo)
+
 AddEventHandler('fivenet:viewTablet', function(state)
 	if Logger.isDebugEnabled() then Logger.debug(('fivenet:viewTablet called with state: %s'):format(tostring(state))) end
 

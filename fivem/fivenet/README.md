@@ -16,8 +16,8 @@ For screenshots, checkout the [README FiveM Plugin section](../../README.md#five
 
 - FiveM Server version `10488` and higher.
 - Frameworks ESX and QB-Core Frameworks are supported via the `Config.Framework` option in the `config/server.lua` file
-- A running FiveNet server or at least FiveNet's DBSync configured.
-    - Must be running at least FiveNet version `v2025.5.3` or higher.
+- A running FiveNet server with the DBSync (`sync:`) API enabled and configured.
+    - Must be running at least FiveNet version `v2026.10.1` or higher.
 
 ## Installation
 
@@ -218,9 +218,12 @@ FiveM base events such as `onResourceStart`, etc. are not listed.
 
 The plugin provides the following exports on the **client side** for other resources to use:
 
-| Name             | Description                                                                                        | File                                           |
-| ---------------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| `createDispatch` | Creates a dispatch for a single job. It calls the server event `fivenet:createDispatchFromClient`. | [`client/functions.lua`](client/functions.lua) |
+| Name                | Description                                                                                        | File                                           |
+| ------------------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `createDispatch`    | Creates a dispatch for a single job. It calls the server event `fivenet:createDispatchFromClient`. | [`client/functions.lua`](client/functions.lua) |
+| `NavigateTo`        | Opens the tablet and navigates the FiveNet application to a relative route.                        | [`client/tablet.lua`](client/tablet.lua)       |
+| `OpenVehicleSearch` | Opens the tablet on the vehicle search page for a license plate.                                   | [`client/tablet.lua`](client/tablet.lua)       |
+| `OpenCitizenInfo`   | Opens the tablet on a citizen profile using its FiveNet database user ID.                          | [`client/tablet.lua`](client/tablet.lua)       |
 
 ### Server
 
@@ -238,9 +241,9 @@ The plugin provides the following exports on the **server side** for other resou
 | **Features**                   |                                                                                                                                                                                                     |                                                |
 | `addUserActivity`              | Adds user activity for `tIdentifier`. If `sIdentifier` is omitted, the target user's DB ID is reused as the source user.                                                                            | [`server/activity.lua`](server/activity.lua)   |
 | `getUserProps`                 | Get user props for `identifier`. The helper resolves and injects the internal user DB ID before sending.                                                                                            | [`server/activity.lua`](server/activity.lua)   |
-| `setUserProps`                 | Sets user props for `tIdentifier`. The helper resolves and injects the internal user DB ID before sending. Optionally attributes the change with `sourceUserId` and `sourceUserJob`.        | [`server/activity.lua`](server/activity.lua)   |
+| `setUserProps`                 | Sets user props for `tIdentifier`. The helper resolves and injects the internal user DB ID before sending. Optionally attributes the change with `sourceUserId` and `sourceUserJob`.                | [`server/activity.lua`](server/activity.lua)   |
 | `getVehicleProps`              | Gets vehicle props for a license plate.                                                                                                                                                             | [`server/activity.lua`](server/activity.lua)   |
-| `setVehicleProps`              | Sets vehicle props for a license plate. Optionally attributes the change with `sourceUserId` and `sourceUserJob`.                                                                                  | [`server/activity.lua`](server/activity.lua)   |
+| `setVehicleProps`              | Sets vehicle props for a license plate. Optionally attributes the change with `sourceUserId` and `sourceUserJob`.                                                                                   | [`server/activity.lua`](server/activity.lua)   |
 | `updateOpenFines`              | Adds or subtracts from the open fine total for `tIdentifier`. Positive values add, negative values subtract.                                                                                        | [`server/activity.lua`](server/activity.lua)   |
 | `setUserWantedState`           | Sets the wanted state for `tIdentifier`. Pass a reason when you want the change to be attributed.                                                                                                   | [`server/activity.lua`](server/activity.lua)   |
 | `addJobColleagueActivity`      | Adds job colleague activity for `tIdentifier`. Pass both identifiers explicitly; there is no fallback when `sIdentifier` is omitted.                                                                | [`server/activity.lua`](server/activity.lua)   |
@@ -426,6 +429,19 @@ local sourceUserJob = "police"
 exports["fivenet"]:setVehicleProps(plate, "Vehicle reported stolen", {
     wanted = true,
 }, sourceUserId, sourceUserJob)
+```
+
+### Client: Tablet Navigation
+
+```lua
+-- Open any FiveNet route in the tablet.
+exports['fivenet']:NavigateTo('/overview')
+
+-- Open the vehicle search for a license plate.
+exports['fivenet']:OpenVehicleSearch('ABC 123')
+
+-- Open a citizen profile using the FiveNet database user ID.
+exports['fivenet']:OpenCitizenInfo(123)
 ```
 
 ## Building

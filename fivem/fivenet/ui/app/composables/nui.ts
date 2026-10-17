@@ -63,6 +63,13 @@ export type NUIMessage =
           data: string;
       }
     | {
+          type: 'navigateTo';
+          route: string;
+      }
+    | {
+          type: 'fivenetReady';
+      }
+    | {
           type: 'setLocale';
           locale: string;
       }
@@ -110,18 +117,26 @@ export async function onNUIMessage(
         tabletStore.username = event.data.data.username ?? '';
 
         useTokenMgmtOverlay().open();
-    } else if (event.data.type === 'setLocale') {
-        await onLocaleChange?.(event.data.locale);
     } else if (event.data.type === 'openTablet') {
         tabletStore.setBaseUrl(event.data.webUrl);
         useTokenMgmtOverlay().close();
 
         useTablet().setTabletOpen(true, true);
+    } else if (event.data.type === 'navigateTo') {
+        tabletStore.navigateTo(event.data.route);
+        useTokenMgmtOverlay().close();
+        useTablet().setTabletOpen(true, true);
+    } else if (event.data.type === 'fivenetReady') {
+        // Handled by Tablet.vue after verifying the iframe source.
+        return;
+    } else if (event.data.type === 'setLocale') {
+        await onLocaleChange?.(event.data.locale);
     } else if (event.data.type === 'closeTablet') {
         useTablet().setTabletOpen(false, true);
     } else if (event.data.type === 'tabletfix') {
         tabletStore.setBaseUrl(event.data.webUrl);
         tabletStore.setPath('/api/clear-site-data');
+        tabletStore.reload();
 
         useTimeoutFn(() => {
             logger.info('Refreshing tablet after site data clear ...');

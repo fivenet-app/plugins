@@ -11,7 +11,7 @@ const { t } = useI18n();
 
 const tabletStore = useTabletStore();
 const { refreshTablet } = tabletStore;
-const { initiated, turnedOn, baseUrl, path, folded } = storeToRefs(tabletStore);
+const { initiated, turnedOn, baseUrl, path, navigationVersion, reloadVersion, folded } = storeToRefs(tabletStore);
 
 const { isTabletOpen } = useTablet();
 watch(isTabletOpen, async () => {
@@ -31,24 +31,63 @@ watch(isTabletOpen, async () => {
 });
 
 const tabletIframe = useTemplateRef('tabletIframe');
+const iframeLoaded = ref(false);
+const iframeAppReady = ref(false);
+const iframeOrigin = ref('');
+
+type IframeMessage = {
+    type?: string;
+};
 
 function navigateTabletTo(route: string) {
-    if (!tabletIframe.value) {
+    if (!tabletIframe.value || !iframeLoaded.value || !iframeAppReady.value) {
         return;
     }
 
-    tabletIframe.value.contentWindow?.postMessage({ type: 'navigateTo', route: route }, baseUrl.value ?? '');
+    const iframeRoute = route.startsWith('/') ? route : '/' + route;
+    tabletIframe.value.contentWindow?.postMessage(
+        { type: 'navigateTo', route: iframeRoute },
+        iframeOrigin.value || baseUrl.value || '',
+    );
 }
 
-watch([baseUrl, path], setIframeURL);
+function onIframeMessage(event: MessageEvent<IframeMessage>): void {
+    if (event.source !== tabletIframe.value?.contentWindow || event.data?.type !== 'fivenetReady') {
+        return;
+    }
 
-function setIframeURL(): void {
+    iframeAppReady.value = true;
+    iframeOrigin.value = event.origin;
+
+    if (path.value) {
+        navigateTabletTo(path.value);
+    }
+}
+
+onMounted(() => window.addEventListener('message', onIframeMessage));
+onUnmounted(() => window.removeEventListener('message', onIframeMessage));
+
+watch([baseUrl, reloadVersion], () => setIframeURL(path.value));
+watch([path, navigationVersion], ([route]) => {
+    if (initiated.value) {
+        navigateTabletTo(route);
+    }
+});
+
+function setIframeURL(route?: string): void {
     if (!tabletIframe.value) {
         return;
     }
 
-    const p = path.value ? '/' + path.value : `?nui=${getParentResourceName()}`;
+    iframeLoaded.value = false;
+    iframeAppReady.value = false;
+    iframeOrigin.value = '';
+    const p = route ? '/' + route : `?nui=${getParentResourceName()}`;
     tabletIframe.value.src = `${baseUrl.value}${p}`;
+}
+
+function onIframeLoad(): void {
+    iframeLoaded.value = true;
 }
 
 const sizeClasses = computed(() => {
@@ -133,6 +172,7 @@ onClickOutside(modalRef, (event) => {
                         allow="autoplay *; clipboard-read *; clipboard-write *"
                         class="hero absolute inset-0 block size-full border-0 bg-neutral-900"
                         :class="turnedOn ? '' : 'screenOff opacity-0'"
+                        @load="onIframeLoad"
                     />
                 </div>
 

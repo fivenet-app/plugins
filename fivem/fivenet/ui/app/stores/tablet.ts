@@ -11,6 +11,8 @@ export const useTabletStore = defineStore(
         const turnedOn = ref(true);
         const baseUrl = ref<string>();
         const path = ref('');
+        const navigationVersion = ref(0);
+        const reloadVersion = ref(0);
         const folded = ref(true);
         const color = ref<TabletColors>({
             primary: 'blue',
@@ -29,6 +31,15 @@ export const useTabletStore = defineStore(
         function setPath(value: string): void {
             // Remove first slash
             path.value = value.replace(/^\//g, '');
+        }
+
+        function navigateTo(value: string): void {
+            setPath(value);
+            navigationVersion.value++;
+        }
+
+        function reload(): void {
+            reloadVersion.value++;
         }
 
         function refreshTablet(): void {
@@ -75,11 +86,15 @@ export const useTabletStore = defineStore(
             turnedOn,
             baseUrl,
             path,
+            navigationVersion,
+            reloadVersion,
             folded,
             username,
             registrationToken,
             setBaseUrl,
             setPath,
+            navigateTo,
+            reload,
             refreshTablet,
             setTabletColors,
         };
