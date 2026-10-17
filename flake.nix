@@ -1,6 +1,6 @@
 # Based upon https://github.com/the-nix-way/dev-templates
 {
-  description = "Basic flake for FiveNet docs development";
+  description = "Basic flake for FiveNet plugins development";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=release-26.05";
@@ -27,7 +27,7 @@
 
             # NodeJS stuff
             nodejs_22
-            pnpm_10
+            pnpm_12
             yarn
 
             # Utilities
