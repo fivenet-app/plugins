@@ -1991,7 +1991,29 @@
     pathe "^2.0.3"
     unimport "^6.4.0"
 
-"@nuxt/fonts@0.14.0", "@nuxt/fonts@^0.14.0":
+"@nuxt/fonts@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@nuxt/fonts/-/fonts-1.2.0.tgz#96fef074cca035430418ea82a189690cba0a3bcb"
+  integrity sha512-Z2DXpzxMnAWqZElth9RVw+bZCbnVR6QuPBRuuYmDWSIpTVhADcDZUPf/boiWJRz06fwmf13i+pDebQapciLf7A==
+  dependencies:
+    "@nuxt/kit" "^4.6.2"
+    defu "^6.1.7"
+    devframe "^1.2.5"
+    exsolve "^1.1.3"
+    fontless "^1.3.2"
+    h3 "^1.15.11"
+    magic-regexp "^0.11.2"
+    nypm "^0.6.10"
+    ofetch "^1.5.1"
+    pathe "^2.0.3"
+    std-env "^4.3.0"
+    tinyglobby "^0.2.17"
+    ufo "^1.6.4"
+    unifont "^1.0.3"
+    unplugin "^3.4.0"
+    unstorage "^1.17.6"
+
+"@nuxt/fonts@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@nuxt/fonts/-/fonts-0.14.0.tgz#8f98c39b5073c6811be7e24638e6ce5665118a66"
   integrity sha512-4uXQl9fa5F4ibdgU8zomoOcyMdnwgdem+Pi8JEqeDYI5yPR32Kam6HnuRr47dTb97CstaepAvXPWQUUHMtjsFQ==
@@ -2032,7 +2054,7 @@
     tinyglobby "^0.2.17"
     ufo "^1.6.4"
 
-"@nuxt/kit@4.6.2", "@nuxt/kit@^4.6.0", "@nuxt/kit@^4.6.1":
+"@nuxt/kit@4.6.2", "@nuxt/kit@^4.6.0", "@nuxt/kit@^4.6.1", "@nuxt/kit@^4.6.2":
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/@nuxt/kit/-/kit-4.6.2.tgz#e43baa999dcbb2f415e7ba1ed9e4bed0392d1e4d"
   integrity sha512-Vn9DJobc30WdR1vrlRcEAFSFy7NV5CWq3o6gxsfrdGb2FmCh0fuDyvbZC30rm2enyiPaOUPafKctFE/ToBjybw==
@@ -5043,6 +5065,16 @@ devframe@^0.9.18:
     pathe "^2.0.3"
     ufo "^1.6.4"
 
+devframe@^1.2.5:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/devframe/-/devframe-1.2.6.tgz#19c169d6c90ed878fea3a6e3845dd3d7609f60b1"
+  integrity sha512-mHzcm6ADzXgRMWdoSX+5PjwhmwAuC3SpDPi3+URznlpzxJF6tXwy5h1xr82zPKju38EVtdnYRnnP4hZwLK01vA==
+  dependencies:
+    crossws "^0.4.12"
+    h3 "^2.0.1"
+    nostics "^1.3.0"
+    pathe "^2.0.3"
+
 diff@^8.0.4:
   version "8.0.4"
   resolved "https://registry.yarnpkg.com/diff/-/diff-8.0.4.tgz#4f5baf3188b9b2431117b962eb20ba330fadf696"
@@ -5812,6 +5844,16 @@ fontaine@0.8.0:
     ufo "^1.6.1"
     unplugin "^2.3.10"
 
+fontaine@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/fontaine/-/fontaine-1.0.3.tgz#36b659083d110f142e53ff3f5715f0a70754a37c"
+  integrity sha512-mCeB9tcB2qeDJYVp/f55ZUQMOkOaZn4MFDlsCsy8Vggsju47egnH1+qzWwderp3BuX2EyezhdsjNX64df6M5mg==
+  dependencies:
+    "@capsizecss/unpack" "^4.0.0"
+    css-tree "^3.1.0"
+    magic-string "^1.0.0"
+    unplugin "^3.0.0"
+
 fontkitten@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/fontkitten/-/fontkitten-1.0.3.tgz#bbafdeddbb1e054967f0846fdc757accab88bb68"
@@ -5837,6 +5879,18 @@ fontless@^0.2.1:
     ufo "^1.6.1"
     unifont "^0.7.4"
     unstorage "^1.17.1"
+
+fontless@^1.3.2:
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/fontless/-/fontless-1.3.4.tgz#be22e40b2d088a8b031b16a6de5e63156f1cec23"
+  integrity sha512-GVj56LLcqGsBY9A2Pp2vJxmYFXNIAJUjPdLBFlJJXfKnZ/ta7mgT8a6kS2mx5tNsjWhhz6HiwSamzc2q80UpHQ==
+  dependencies:
+    css-tree "^3.1.0"
+    defu "^6.1.4"
+    exsolve "^1.1.1"
+    fontaine "1.0.3"
+    magic-string "^1.0.0"
+    unifont "^1.0.2"
 
 foreground-child@^3.1.0:
   version "3.3.1"
@@ -6020,6 +6074,14 @@ h3@^1.15.10, h3@^1.15.11, h3@^1.15.5:
     radix3 "^1.1.2"
     ufo "^1.6.3"
     uncrypto "^0.1.3"
+
+h3@^2.0.1:
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/h3/-/h3-2.0.8.tgz#f46691a063d15297292154181804a3340bfa9c3b"
+  integrity sha512-ENuKlF9kC6E6PrvY1PUyE0qkrnnPTIt2/v48uyEEfTVfgoiqBCE0uwwf++2XrWwT1gxjQBDLQ8PAsmZVniKvTw==
+  dependencies:
+    rou3 "^1.0.0"
+    srvx "^1.0.6"
 
 h3@^2.0.1-rc.31:
   version "2.0.1-rc.31"
@@ -6677,6 +6739,11 @@ lru-cache@^11.0.0, lru-cache@^11.2.7:
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-11.5.2.tgz#00e16665c90c620fba14a3c368732a976493f760"
   integrity sha512-4pfM1Ff0x50o0tQwb5ucw/RzNyD0/YJME6IVcStalZuMWxdt3sR3huStTtxz4PUmvZfRguvDejasvQ2kifR11g==
 
+lru-cache@^11.5.3:
+  version "11.5.3"
+  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-11.5.3.tgz#a7767b4034e35269562d2b9da2b185b5df70c421"
+  integrity sha512-U4N8FgzmWxc8k1VH8Kr6lQg18U7Fjvby6wXHVRX/ZZ7IwWbRMgrRbP0Wrb5q5NVinryp4SQampHKdvtecItxUg==
+
 lru-cache@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-5.1.1.tgz#1da27e6710271947695daf6848e847f01d84b920"
@@ -6696,6 +6763,16 @@ magic-regexp@^0.10.0:
     type-level-regexp "~0.1.17"
     ufo "^1.5.4"
     unplugin "^2.0.0"
+
+magic-regexp@^0.11.2:
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/magic-regexp/-/magic-regexp-0.11.2.tgz#931f94c35859a881499be42bcaee0b4d19da4e96"
+  integrity sha512-s4i7mq2jJnkB5J1HDX67GmdRoWrgo8tE0cL91bKO+HaquxyR5TiqkjVfLhgS2PXretsN/Gv9kSnRBgQxrLO/Qw==
+  dependencies:
+    magic-string "^1.1.0"
+    regexp-tree "^0.1.27"
+    type-level-regexp "~0.1.17"
+    unplugin "^3.3.0"
 
 magic-string-ast@^1.0.2:
   version "1.0.3"
@@ -7177,6 +7254,15 @@ nuxt@4.6.2:
     vue-bundle-renderer "^2.4.0"
     vue-component-type-helpers "^3.3.13"
     vue-router "^5.4.0"
+
+nypm@^0.6.10:
+  version "0.6.12"
+  resolved "https://registry.yarnpkg.com/nypm/-/nypm-0.6.12.tgz#129efa71956148d0b04c3eb80d5450ae81c89d46"
+  integrity sha512-4AhWntz+ds/P5kz1rN25yGegTPYsO5ffOy+8S0TeuXKZrgjlmgcEBLA1xubzcP/dWX4zYfNybv4TQERlL9Z0LQ==
+  dependencies:
+    citty "^0.2.2"
+    pathe "^2.0.3"
+    tinyexec "^1.3.1"
 
 object-deep-merge@^2.0.1:
   version "2.0.1"
@@ -8323,6 +8409,11 @@ rou3@^0.9.2:
   resolved "https://registry.yarnpkg.com/rou3/-/rou3-0.9.2.tgz#4deea937ad3b9df79bb0b09ffc97c616db56c0e4"
   integrity sha512-3SOzvaAg8rkHrXtRjpCvCvbyO5to9oOO27Z/XqHEYXfMRVSw/qMIVdmaOk9W2lcRLtR6dlqTjo9hDeJk70QBYQ==
 
+rou3@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/rou3/-/rou3-1.0.0.tgz#86f260b2ed813f99ccbe549d1de9f453c6600fcc"
+  integrity sha512-ySeaQkSrua+ut9g+65I7FHqOFBaY8tV0FmccXItoq0q21se32Q3u4YiW7/RqXSosWgYJaaKwRHXy3BST9PeCNQ==
+
 run-applescript@^7.0.0:
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/run-applescript/-/run-applescript-7.1.0.tgz#2e9e54c4664ec3106c5b5630e249d3d6595c4911"
@@ -8678,6 +8769,11 @@ srvx@^1.0.5:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/srvx/-/srvx-1.0.6.tgz#55f550f63bd94289ae2bc8ba28c17c86f7d0695a"
   integrity sha512-QeTKgAhk8OSsfeq60bl3wuVs9PmBftzmk7owBInA/F1YQne+TRw0UcPymNpURldAmx8hfmM2PNNGH/zgo3GpLA==
+
+srvx@^1.0.6:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/srvx/-/srvx-1.0.7.tgz#804498e7455799a6f4d4e068de76dcda3a415484"
+  integrity sha512-8h30Qy2cpYkcXgByHNpV4+jp609bU3ic7MqnfyLQ2Fpa8BgjIaI2zfsDKAIbwm8DcYDrCLqm5izF5KeL2nxdvg==
 
 stable-hash-x@^0.2.0:
   version "0.2.0"
@@ -9141,6 +9237,16 @@ unifont@^0.7.4:
     ohash "^2.0.11"
     undici "^8.0.0"
 
+unifont@^1.0.2, unifont@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/unifont/-/unifont-1.0.3.tgz#e33c242afc18111a858a0a51c29e2ef766586a36"
+  integrity sha512-XGnEwj5sWdCbiBX01mWLSBncS0yMRjnLygau3IfdOlfjMacNIQvTGW4VH7pWBq+gGWArfSef/CensMLjMmIr/A==
+  dependencies:
+    css-tree "^3.1.0"
+    fnv1a-64 "^0.1.2"
+    std-env "^4.2.0"
+    undici "^8.0.0"
+
 unimport@^6.2.0, unimport@^6.4.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/unimport/-/unimport-6.4.0.tgz#7f55106af1ec070bf67a5083a59bccde044a60dc"
@@ -9294,6 +9400,20 @@ unstorage@^1.17.1, unstorage@^1.17.4, unstorage@^1.17.5:
     node-fetch-native "^1.6.7"
     ofetch "^1.5.1"
     ufo "^1.6.3"
+
+unstorage@^1.17.6:
+  version "1.17.6"
+  resolved "https://registry.yarnpkg.com/unstorage/-/unstorage-1.17.6.tgz#589919a118a43b93b2beed85e391f690aa1d6eb3"
+  integrity sha512-gjKtcmn/KwZuJZO9o2sc0esAQnhmTw0LviDHwevTXbJMYs0dRTp8ZEEWXHU0vTpzbN3cA0yxlTeyXssMp3zDqw==
+  dependencies:
+    anymatch "^3.1.3"
+    chokidar "^5.0.0"
+    destr "^2.0.5"
+    h3 "^1.15.11"
+    lru-cache "^11.5.3"
+    node-fetch-native "^1.6.7"
+    ofetch "^1.5.1"
+    ufo "^1.6.4"
 
 untun@^0.2.2:
   version "0.2.2"
