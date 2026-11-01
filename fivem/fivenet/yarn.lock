@@ -208,10 +208,10 @@
     "@eslint/core" "^1.2.1"
     levn "^0.4.1"
 
-"@fivenet-app/gen@2026.8.5":
-  version "2026.8.5"
-  resolved "https://registry.yarnpkg.com/@fivenet-app/gen/-/gen-2026.8.5.tgz#cbc77b59064ac021d3d13ca3ad8cb01444105cf0"
-  integrity sha512-hWQrXiyKywJ3SHFSsqFw1gxRr/er6bjhI1gg6m0YiKfjUJRjD1cRKSSl0ZWVPW8IvFmYBKmX5IOeGOjXKoqOIQ==
+"@fivenet-app/gen@2026.10.2":
+  version "2026.10.2"
+  resolved "https://registry.yarnpkg.com/@fivenet-app/gen/-/gen-2026.10.2.tgz#d09b451ddbeb3ccd74f607a6f6545054475fab81"
+  integrity sha512-utugnJqMsDONA9Shp12+h/r79JhMGjn2ZPHxnRrbCCh49iV+wM/QWno6jWn4c72grRhi9lgTqyvX6xLQV/xtFg==
 
 "@grpc/grpc-js@1.14.6":
   version "1.14.6"
