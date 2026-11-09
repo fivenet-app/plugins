@@ -12,7 +12,7 @@
         "format": "prettier --write ./src/"
     },
     "dependencies": {
-        "@fivenet-app/gen": "2026.10.2",
+        "@fivenet-app/gen": "2026.11.0",
         "@grpc/grpc-js": "1.14.7",
         "@protobuf-ts/grpc-transport": "2.11.1"
     },
