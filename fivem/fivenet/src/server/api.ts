@@ -9,7 +9,6 @@ import {
     AddMarkerRequest,
     AddUserActivityRequest,
     AddUserOAuth2ConnRequest,
-    AddUserPropsRequest,
     AddUserUpdateRequest,
     CloseUserDispatchesRequest,
     CloseUserDispatchesResponse,
@@ -37,8 +36,10 @@ import {
     SendUsersRequest,
     SendVehiclesRequest,
     SetLastCharIDRequest,
-    SetVehiclePropsRequest,
-    SetVehiclePropsResponse,
+    SetUserPropertiesRequest,
+    SetUserPropertiesResponse,
+    SetVehiclePropertiesRequest,
+    SetVehiclePropertiesResponse,
     TransferAccountRequest,
     TransferAccountResponse,
 } from '@fivenet-app/gen/services/sync/sync';
@@ -133,17 +134,19 @@ async function AddUserActivity(request: AddUserActivityRequest): Promise<AddActi
 }
 exports('AddUserActivity', AddUserActivity);
 
-async function AddUserProps(request: AddUserPropsRequest): Promise<AddActivityResponse | undefined> {
-    const normalized = AddUserPropsRequest.create(request);
-    return callSync('AddUserProps', normalized, (client) => client.addUserProps(normalized));
-}
-exports('AddUserProps', AddUserProps);
-
 async function GetUserProps(request: GetUserPropsRequest): Promise<GetUserPropsResponse | undefined> {
     const normalized = GetUserPropsRequest.create(request);
     return callSync('GetUserProps', normalized, (client) => client.getUserProps(normalized));
 }
 exports('GetUserProps', GetUserProps);
+
+async function SetUserProperties(
+    request: SetUserPropertiesRequest,
+): Promise<SetUserPropertiesResponse | undefined> {
+    const normalized = SetUserPropertiesRequest.create(request);
+    return callSync('SetUserProperties', normalized, (client) => client.setUserProperties(normalized));
+}
+exports('SetUserProperties', SetUserProperties);
 
 async function GetVehicleProps(request: GetVehiclePropsRequest): Promise<GetVehiclePropsResponse | undefined> {
     const normalized = GetVehiclePropsRequest.create(request);
@@ -151,11 +154,13 @@ async function GetVehicleProps(request: GetVehiclePropsRequest): Promise<GetVehi
 }
 exports('GetVehicleProps', GetVehicleProps);
 
-async function SetVehicleProps(request: SetVehiclePropsRequest): Promise<SetVehiclePropsResponse | undefined> {
-    const normalized = SetVehiclePropsRequest.create(request);
-    return callSync('SetVehicleProps', normalized, (client) => client.setVehicleProps(normalized));
+async function SetVehicleProperties(
+    request: SetVehiclePropertiesRequest,
+): Promise<SetVehiclePropertiesResponse | undefined> {
+    const normalized = SetVehiclePropertiesRequest.create(request);
+    return callSync('SetVehicleProperties', normalized, (client) => client.setVehicleProperties(normalized));
 }
-exports('SetVehicleProps', SetVehicleProps);
+exports('SetVehicleProperties', SetVehicleProperties);
 
 async function AddColleagueActivity(request: AddColleagueActivityRequest): Promise<AddActivityResponse | undefined> {
     const normalized = AddColleagueActivityRequest.create(request);

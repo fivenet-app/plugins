@@ -241,11 +241,30 @@ The plugin provides the following exports on the **server side** for other resou
 | **Features**                   |                                                                                                                                                                                                     |                                                |
 | `addUserActivity`              | Adds user activity for `tIdentifier`. If `sIdentifier` is omitted, the target user's DB ID is reused as the source user.                                                                            | [`server/activity.lua`](server/activity.lua)   |
 | `getUserProps`                 | Get user props for `identifier`. The helper resolves and injects the internal user DB ID before sending.                                                                                            | [`server/activity.lua`](server/activity.lua)   |
-| `setUserProps`                 | Sets user props for `tIdentifier`. The helper resolves and injects the internal user DB ID before sending. Optionally attributes the change with `sourceUserId` and `sourceUserJob`.                | [`server/activity.lua`](server/activity.lua)   |
+| `getUserProperties`            | Gets the dynamic user-property list for `identifier`.                                                                                                                                              | [`server/activity.lua`](server/activity.lua)   |
+| `getUserProperty`              | Gets one dynamic user property by its namespaced key.                                                                                                                                               | [`server/activity.lua`](server/activity.lua)   |
+| `getUserPropertyValue`         | Gets the unwrapped scalar value of one dynamic user property.                                                                                                                                        | [`server/activity.lua`](server/activity.lua)   |
+| `setUserProperties`            | Applies one or more dynamic user-property mutations.                                                                                                                                                 | [`server/activity.lua`](server/activity.lua)   |
+| `setUserProperty`              | Sets or clears one dynamic user property.                                                                                                                                                            | [`server/activity.lua`](server/activity.lua)   |
+| `getUserWantedState`           | Gets the managed `user.wanted` state.                                                                                                                                                                | [`server/activity.lua`](server/activity.lua)   |
+| `setUserWantedState`           | Sets the managed `user.wanted` state, optionally with an expiry timestamp.                                                                                                                          | [`server/activity.lua`](server/activity.lua)   |
+| `getUserTrafficInfractionPoints` | Gets `user.traffic_infraction_points`.                                                                                                                                                             | [`server/activity.lua`](server/activity.lua)   |
+| `setUserTrafficInfractionPoints` | Sets `user.traffic_infraction_points`.                                                                                                                                                             | [`server/activity.lua`](server/activity.lua)   |
+| `getUserOpenFines`             | Gets `user.open_fines` in minor currency units.                                                                                                                                                      | [`server/activity.lua`](server/activity.lua)   |
+| `setUserOpenFines`             | Sets `user.open_fines` in minor currency units.                                                                                                                                                      | [`server/activity.lua`](server/activity.lua)   |
+| `setUserProps`                 | Compatibility helper that maps legacy user-prop fields to dynamic properties.                                                                                                                       | [`server/activity.lua`](server/activity.lua)   |
 | `getVehicleProps`              | Gets vehicle props for a license plate.                                                                                                                                                             | [`server/activity.lua`](server/activity.lua)   |
-| `setVehicleProps`              | Sets vehicle props for a license plate. Optionally attributes the change with `sourceUserId` and `sourceUserJob`.                                                                                   | [`server/activity.lua`](server/activity.lua)   |
-| `updateOpenFines`              | Adds or subtracts from the open fine total for `tIdentifier`. Positive values add, negative values subtract.                                                                                        | [`server/activity.lua`](server/activity.lua)   |
-| `setUserWantedState`           | Sets the wanted state for `tIdentifier`. Pass a reason when you want the change to be attributed.                                                                                                   | [`server/activity.lua`](server/activity.lua)   |
+| `getVehicleProperties`         | Gets the dynamic vehicle-property list for a license plate.                                                                                                                                        | [`server/activity.lua`](server/activity.lua)   |
+| `getVehicleProperty`           | Gets one dynamic vehicle property by its namespaced key.                                                                                                                                           | [`server/activity.lua`](server/activity.lua)   |
+| `getVehiclePropertyValue`      | Gets the unwrapped scalar value of one dynamic vehicle property.                                                                                                                                   | [`server/activity.lua`](server/activity.lua)   |
+| `setVehicleProperties`         | Applies one or more dynamic vehicle-property mutations.                                                                                                                                             | [`server/activity.lua`](server/activity.lua)   |
+| `setVehicleProperty`           | Sets or clears one dynamic vehicle property.                                                                                                                                                        | [`server/activity.lua`](server/activity.lua)   |
+| `getVehicleWantedState`        | Gets the managed `vehicle.wanted` state.                                                                                                                                                             | [`server/activity.lua`](server/activity.lua)   |
+| `setVehicleWantedState`        | Sets the managed `vehicle.wanted` state, optionally with an expiry timestamp.                                                                                                                       | [`server/activity.lua`](server/activity.lua)   |
+| `getPropertyFromList`          | Looks up a property in an already-fetched dynamic property list.                                                                                                                                   | [`server/activity.lua`](server/activity.lua)   |
+| `getPropertyValue`             | Unwraps a property value; timestamps and dates are returned as tables.                                                                                                                             | [`server/activity.lua`](server/activity.lua)   |
+| `setVehicleProps`              | Compatibility helper that maps legacy vehicle-prop fields to dynamic properties.                                                                                                                    | [`server/activity.lua`](server/activity.lua)   |
+| `updateOpenFines`              | Atomically adds or subtracts from the open fine total.                                                                                                                                              | [`server/activity.lua`](server/activity.lua)   |
 | `addJobColleagueActivity`      | Adds job colleague activity for `tIdentifier`. Pass both identifiers explicitly; there is no fallback when `sIdentifier` is omitted.                                                                | [`server/activity.lua`](server/activity.lua)   |
 | `setColleagueProps`            | Sets colleague props for `tIdentifier`. The helper resolves and injects the internal user DB ID before sending, and mutates the passed table by adding `userId`.                                    | [`server/activity.lua`](server/activity.lua)   |
 | `createDispatch`               | Creates a dispatch for the given user DB ID. `job` can be a string or a list of jobs.                                                                                                               | [`server/dispatch.lua`](server/dispatch.lua)   |
@@ -258,7 +277,7 @@ The plugin provides the following exports on the **server side** for other resou
 
 ## Examples
 
-### Getting User Props
+### Checking a User's Wanted Status
 
 ```lua
 -- ESX example to get the player's identifier
@@ -266,17 +285,16 @@ local xPlayer = ESX.GetPlayerFromId(source)
 if not xPlayer then return end
 local identifier = xPlayer.identifier
 
-local props = exports["fivenet"]:getUserProps(identifier)
+local wanted = exports["fivenet"]:getUserWantedState(identifier)
 
--- Make sure to nil check properly
-if props and props.userProps and props.userProps.wanted then
-    print('User is wanted!', props.userProps.userId)
+if wanted then
+    print('User is wanted!')
 else
-    print('User is not wanted.', props.userProps.userId)
+    print('User is not wanted.')
 end
 ```
 
-### Setting User Props
+### Setting a User's Wanted Status
 
 ```lua
 local sourceUserId = exports["fivenet"]:getUserDBID(source)
@@ -284,9 +302,46 @@ local sourceUserJob = "police"
 
 -- `sourceUserId` (`source_user_id`) identifies who made the change.
 -- `sourceUserJob` (`source_user_job`) records the job under which it was made.
-exports["fivenet"]:setUserProps(identifier, "Warrant issued", {
-    wanted = true,
-}, sourceUserId, sourceUserJob)
+exports["fivenet"]:setUserWantedState(
+    identifier,
+    true,
+    "Warrant issued",
+    sourceUserId,
+    sourceUserJob
+)
+```
+
+### Reading and Writing Dynamic Properties
+
+Dynamic properties use namespaced keys such as `user.wanted`, `user.open_fines`, or an
+instance-defined key. The value helpers unwrap scalar values; dates and timestamps are
+returned as their FiveNet table payloads.
+
+```lua
+local wanted = exports["fivenet"]:getUserPropertyValue(identifier, "user.wanted")
+if wanted then
+    print("User is wanted")
+end
+
+local inspectionDue = exports["fivenet"]:getVehicleProperty(plate, "vehicle.inspection_due")
+if inspectionDue and inspectionDue.definition then
+    print("Inspection property label:", inspectionDue.definition.label)
+end
+```
+
+Use `setUserProperty` and `setVehicleProperty` for generic keys. The legacy
+`setUserProps`, `setUserWantedState`, and `setVehicleProps` helpers now create the
+equivalent managed-property mutations for backwards compatibility.
+
+```lua
+-- Set a generic scalar property, or pass nil as the value to clear it.
+exports["fivenet"]:setUserProperty(identifier, "user.firearms_training", "advanced", "Training completed")
+
+-- Supply a protobuf value oneof for types Lua cannot infer, such as a date.
+exports["fivenet"]:setVehicleProperty(plate, "vehicle.inspection_due", {
+    oneofKind = "dateValue",
+    dateValue = { year = 2027, month = 1, day = 15 },
+}, "Inspection scheduled")
 ```
 
 ### Creating a Dispatch
@@ -407,13 +462,12 @@ exports["fivenet"]:deleteMarker(markerId)
 -- Vehicle plate
 local plate = "ABC 123"
 
-local props = exports["fivenet"]:getVehicleProps(plate)
+local wanted = exports["fivenet"]:getVehicleWantedState(plate)
 
--- Make sure to nil check properly
-if props and props.vehicleProps and props.vehicleProps.wanted then
-    print('Vehicle is wanted!', props.vehicleProps.plate)
+if wanted then
+    print('Vehicle is wanted!')
 else
-    print('Vehicle is not wanted.', props.vehicleProps.plate)
+    print('Vehicle is not wanted.')
 end
 ```
 
