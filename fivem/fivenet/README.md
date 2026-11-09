@@ -17,7 +17,7 @@ For screenshots, checkout the [README FiveM Plugin section](../../README.md#five
 - FiveM Server version `10488` and higher.
 - Frameworks ESX and QB-Core Frameworks are supported via the `Config.Framework` option in the `config/server.lua` file
 - A running FiveNet server with the DBSync (`sync:`) API enabled and configured.
-    - Must be running at least FiveNet version `v2026.10.1` or higher.
+    - Must be running at least FiveNet version `v2026.11.1` or higher.
 
 ## Installation
 
