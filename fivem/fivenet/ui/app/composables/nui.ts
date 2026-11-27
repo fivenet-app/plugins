@@ -7,7 +7,7 @@ export function getParentResourceName(): string {
     return (window as any).GetParentResourceName ? (window as any).GetParentResourceName() : 'fivenet';
 }
 
-const focusNUITargets = ['input', 'textarea'];
+const focusNUITargets = ['input', 'textarea', 'select'];
 const focusSource = 'outer';
 let textInputFocused = false;
 let focusUpdateQueued = false;
@@ -17,7 +17,7 @@ let focusSession: number | undefined;
 function isNUITextTarget(target: EventTarget | null): target is HTMLElement {
     if (!(target instanceof HTMLElement)) return false;
 
-    return focusNUITargets.includes(target.tagName.toLowerCase());
+    return focusNUITargets.includes(target.tagName.toLowerCase()) || target.isContentEditable;
 }
 
 function sendFocusState(state: boolean, force = false): void {
@@ -53,11 +53,31 @@ export function setNUIFocusSession(session: number): void {
  * @returns void promise
  */
 export function onFocusHandler(event: FocusEvent): void {
-    if (!isNUITextTarget(event.target) && !isNUITextTarget(document.activeElement)) return;
-
-    event.stopPropagation();
     logger.debug('focus handler event:', event.type);
+
+    // Do not defer focusin: FiveM keeps game controls active until the NUI
+    // callback reaches the client. Only focusout needs settling so moving
+    // between text controls cannot briefly unblock those controls.
+    if (event.type === 'focusin' && isNUITextTarget(event.target)) {
+        sendFocusState(true);
+        return;
+    }
+
+    if (event.type !== 'focusout' || !isNUITextTarget(event.target)) return;
+
     updateNUIInputFocus();
+}
+
+/**
+ * Start the NUI callback before a pointer interaction assigns focus. This
+ * hides its round trip behind mouse or touch down, including contenteditable
+ * editors such as Tiptap.
+ */
+export function onTextInputPointerDownHandler(event: PointerEvent): void {
+    if (!isNUITextTarget(event.target)) return;
+
+    logger.debug('text input pointer down');
+    sendFocusState(true);
 }
 
 type NUIRequest = boolean | string | object;

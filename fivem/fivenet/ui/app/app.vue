@@ -3,7 +3,7 @@ import Tablet from './components/Tablet.vue';
 import { useTokenMgmtOverlay } from './composables/useTokenMgmtOverlay';
 import { useTablet } from './composables/useTablet';
 import { useTabletStore } from './stores/tablet';
-import { getLocale, onNUIMessage, type NUIMessage } from './composables/nui';
+import { getLocale, onFocusHandler, onNUIMessage, onTextInputPointerDownHandler, type NUIMessage } from './composables/nui';
 
 const tokenMgmtOverlay = useTokenMgmtOverlay();
 const { setLocale } = useI18n();
@@ -25,6 +25,7 @@ onMounted(async () => {
     window.addEventListener('message', handleNUIMessage);
     window.addEventListener('focusin', onFocusHandler, true);
     window.addEventListener('focusout', onFocusHandler, true);
+    window.addEventListener('pointerdown', onTextInputPointerDownHandler, true);
 });
 
 onBeforeUnmount(async () => {
@@ -34,6 +35,7 @@ onBeforeUnmount(async () => {
     window.removeEventListener('message', handleNUIMessage);
     window.removeEventListener('focusin', onFocusHandler, true);
     window.removeEventListener('focusout', onFocusHandler, true);
+    window.removeEventListener('pointerdown', onTextInputPointerDownHandler, true);
 });
 
 onMounted(async () => {
