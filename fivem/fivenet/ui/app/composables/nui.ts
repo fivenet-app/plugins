@@ -54,17 +54,20 @@ export function setNUIFocusSession(session: number): void {
  */
 export function onFocusHandler(event: FocusEvent): void {
     logger.debug('focus handler event:', event.type);
+    const targetIsTextInput = isNUITextTarget(event.target);
 
     // Do not defer focusin: FiveM keeps game controls active until the NUI
     // callback reaches the client. Only focusout needs settling so moving
     // between text controls cannot briefly unblock those controls.
-    if (event.type === 'focusin' && isNUITextTarget(event.target)) {
+    if (event.type === 'focusin' && targetIsTextInput) {
+        event.stopPropagation();
         sendFocusState(true);
         return;
     }
 
-    if (event.type !== 'focusout' || !isNUITextTarget(event.target)) return;
+    if (event.type !== 'focusout' || !targetIsTextInput) return;
 
+    event.stopPropagation();
     updateNUIInputFocus();
 }
 
